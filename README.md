@@ -3,5 +3,7 @@
 ## Usage
 
 ```purescript
-width (42.0 # px)
+[ width $ 42 # px
+, height auto
+]
 ```
