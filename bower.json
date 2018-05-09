@@ -1,0 +1,23 @@
+{
+  "name": "purescript-style",
+  "license": "Apache-2.0",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/paulyoung/purescript-style.git"
+  },
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "output"
+  ],
+  "dependencies": {
+    "purescript-prelude": "^3.3.0",
+    "purescript-console": "^3.0.0",
+    "purescript-variant": "^4.1.0",
+    "purescript-symbols": "^3.0.0"
+  },
+  "devDependencies": {
+    "purescript-psci-support": "^3.0.0"
+  }
+}
