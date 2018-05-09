@@ -13,7 +13,6 @@
   ],
   "dependencies": {
     "purescript-prelude": "^3.3.0",
-    "purescript-console": "^3.0.0",
     "purescript-variant": "^4.1.0",
     "purescript-symbols": "^3.0.0"
   },
