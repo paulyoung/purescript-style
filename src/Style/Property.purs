@@ -20,15 +20,16 @@ instance showProperty :: Show Property where
 
 
 type HeightValue =
-  ( auto :: Unit
-  , pct :: Number
-  , px :: Number
-  )
+  Variant
+    ( auto :: Unit
+    , pct :: Number
+    , px :: Number
+    )
 
-height :: Variant HeightValue -> Property
+height :: HeightValue -> Property
 height = Height <<< value
   where
-  value :: Variant HeightValue -> Value
+  value :: HeightValue -> Value
   value = case_
     # on _auto (const Auto)
     # on _pct Percent
@@ -36,15 +37,16 @@ height = Height <<< value
 
 
 type WidthValue =
-  ( auto :: Unit
-  , pct :: Number
-  , px :: Number
-  )
+  Variant
+    ( auto :: Unit
+    , pct :: Number
+    , px :: Number
+    )
 
-width :: Variant WidthValue -> Property
+width :: WidthValue -> Property
 width = Width <<< value
   where
-  value :: Variant WidthValue -> Value
+  value :: WidthValue -> Value
   value = case_
     # on _auto (const Auto)
     # on _pct Percent
