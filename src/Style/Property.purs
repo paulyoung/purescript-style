@@ -3,6 +3,8 @@ module Style.Property where
 import Prelude
 
 import Data.Variant (Variant)
+import Style.Value (Auto, Percent, Pixels)
+import Type.Row (type (+))
 
 
 data Property
@@ -20,9 +22,10 @@ instance showProperty :: Show Property where
 
 type HeightValue =
   Variant
-    ( auto :: Unit
-    , pct :: Number
-    , px :: Number
+    ( Auto
+    + Percent
+    + Pixels
+    + ()
     )
 
 height :: HeightValue -> Property
@@ -31,9 +34,10 @@ height = Height
 
 type WidthValue =
   Variant
-    ( auto :: Unit
-    , pct :: Number
-    , px :: Number
+    ( Auto
+    + Percent
+    + Pixels
+    + ()
     )
 
 width :: WidthValue -> Property
