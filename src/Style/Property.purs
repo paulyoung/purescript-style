@@ -2,13 +2,12 @@ module Style.Property where
 
 import Prelude
 
-import Data.Variant (Variant, case_, on)
-import Style.Value (Value(..), _auto, _pct, _px)
+import Data.Variant (Variant)
 
 
 data Property
-  = Height Value
-  | Width Value
+  = Height HeightValue
+  | Width WidthValue
 
 derive instance eqProperty :: Eq Property
 derive instance ordProperty :: Ord Property
@@ -27,13 +26,7 @@ type HeightValue =
     )
 
 height :: HeightValue -> Property
-height = Height <<< value
-  where
-  value :: HeightValue -> Value
-  value = case_
-    # on _auto (const Auto)
-    # on _pct Percent
-    # on _px Pixels
+height = Height
 
 
 type WidthValue =
@@ -44,10 +37,4 @@ type WidthValue =
     )
 
 width :: WidthValue -> Property
-width = Width <<< value
-  where
-  value :: WidthValue -> Value
-  value = case_
-    # on _auto (const Auto)
-    # on _pct Percent
-    # on _px Pixels
+width = Width

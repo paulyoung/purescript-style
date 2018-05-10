@@ -6,21 +6,6 @@ import Data.Symbol (SProxy(..))
 import Data.Variant (Variant, inj)
 
 
-data Value
-  = Auto
-  | Percent Number
-  | Pixels Number
-
-derive instance eqValue :: Eq Value
-derive instance ordValue :: Ord Value
-
-instance showValue :: Show Value where
-  show = case _ of
-    Auto -> "Auto"
-    Percent n -> "(Percent " <> show n <> ")"
-    Pixels n -> "(Pixels " <> show n <> ")"
-
-
 _auto = SProxy :: SProxy "auto"
 
 auto :: forall v. Variant (auto :: Unit | v)
