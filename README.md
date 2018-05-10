@@ -3,7 +3,6 @@
 ## Usage
 
 ```purescript
-[ width $ 42 # px
-, height auto
-]
+> inline [ width $ 42 # px, height auto ]
+"width: 42px; height: auto;"
 ```

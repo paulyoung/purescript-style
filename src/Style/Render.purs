@@ -2,15 +2,17 @@ module Style.Render where
 
 import Prelude
 
+import Data.Array (intercalate)
 import Data.Number.Format (toString)
 import Data.Variant (match)
 import Style.Property (Property(..))
-import Style.Value (Value)
+import Style.Property.Name (Name(..))
+import Style.Property.Value (Value)
 
-name :: Property -> String
+name :: Name -> String
 name = case _ of
-  Height _ -> "height"
-  Width _ -> "width"
+  Height -> "height"
+  Width -> "width"
 
 value :: Value -> String
 value = match
@@ -19,5 +21,8 @@ value = match
   , px: \n -> toString n <> "px"
   }
 
--- property :: Property -> String
--- property = 
+property :: Property -> String
+property (Property n v) = name n <> ": " <> value v <> ";"
+
+inline :: Array Property -> String
+inline = intercalate " " <<< map property

@@ -1,11 +1,10 @@
-module Style.Value where
+module Style.Property.Value where
 
 import Prelude
 
 import Data.Symbol (SProxy(..))
 import Data.Variant (Variant, inj)
 import Type.Row (type (+))
-
 
 type Value =
   Variant

@@ -3,21 +3,17 @@ module Style.Property where
 import Prelude
 
 import Data.Variant (Variant)
-import Style.Value (Auto, Percent, Pixels)
+import Style.Property.Name (Name(..))
+import Style.Property.Value (Auto, Percent, Value, Pixels)
 import Type.Row (type (+))
 
-
-data Property
-  = Height HeightValue
-  | Width WidthValue
+data Property = Property Name Value
 
 derive instance eqProperty :: Eq Property
 derive instance ordProperty :: Ord Property
 
 instance showProperty :: Show Property where
-  show = case _ of
-    Height v -> "(Height " <> show v <> ")"
-    Width v -> "(Width " <> show v <> ")"
+  show (Property n v) = "(Property " <> show n <> show v <> ")"
 
 
 type HeightValue =
@@ -29,7 +25,7 @@ type HeightValue =
     )
 
 height :: HeightValue -> Property
-height = Height
+height = Property Height
 
 
 type WidthValue =
@@ -41,4 +37,4 @@ type WidthValue =
     )
 
 width :: WidthValue -> Property
-width = Width
+width = Property Width
