@@ -1,5 +1,7 @@
 # purescript-style
 
+[![Build Status](https://travis-ci.com/paulyoung/purescript-style.svg?branch=master)](https://travis-ci.com/paulyoung/purescript-style)
+
 ## Usage
 
 ```purescript
