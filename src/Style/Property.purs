@@ -13,7 +13,7 @@ derive instance eqProperty :: Eq Property
 derive instance ordProperty :: Ord Property
 
 instance showProperty :: Show Property where
-  show (Property n v) = "(Property " <> show n <> show v <> ")"
+  show (Property n v) = "(Property " <> show n <> " " <> show v <> ")"
 
 
 type HeightValue =
