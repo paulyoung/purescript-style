@@ -9,8 +9,8 @@ import Type.Row (type (+))
 type Value =
   Variant
    ( Auto
-   + Percent
-   + Pixels
+   + Pct
+   + Px
    + ()
    )
 
@@ -23,17 +23,17 @@ auto :: forall v. Variant (Auto v)
 auto = inj _auto unit
 
 
-type Percent v = (pct :: Number | v)
+type Pct v = (pct :: Number | v)
 
 _pct = SProxy :: SProxy "pct"
 
-pct :: forall v. Number -> Variant (Percent v)
+pct :: forall v. Number -> Variant (Pct v)
 pct = inj _pct
 
 
-type Pixels v = (px :: Number | v)
+type Px v = (px :: Number | v)
 
 _px = SProxy :: SProxy "px"
 
-px :: forall v. Number -> Variant (Pixels v)
+px :: forall v. Number -> Variant (Px v)
 px x = inj _px x
