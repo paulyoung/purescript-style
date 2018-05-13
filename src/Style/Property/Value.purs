@@ -9,6 +9,7 @@ import Type.Row (type (+))
 type Value =
   Variant
    ( Auto
+   + Em
    + Pct
    + Px
    + ()
@@ -21,6 +22,14 @@ _auto = SProxy :: SProxy "auto"
 
 auto :: forall v. Variant (Auto v)
 auto = inj _auto unit
+
+
+type Em v = (em :: Number | v)
+
+_em = SProxy :: SProxy "em"
+
+em :: forall v. Number -> Variant (Em v)
+em = inj _em
 
 
 type Pct v = (pct :: Number | v)

@@ -17,6 +17,7 @@ name = case _ of
 value :: Value -> String
 value = match
   { auto: const "auto"
+  , em: \n -> toString n <> "em"
   , pct: \n -> toString n <> "%"
   , px: \n -> toString n <> "px"
   }
