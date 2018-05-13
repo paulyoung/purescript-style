@@ -12,6 +12,8 @@ import Style.Property.Value (Value)
 name :: Name -> String
 name = case _ of
   Height -> "height"
+  Margin -> "margin"
+  Padding -> "padding"
   Width -> "width"
 
 value :: Value -> String

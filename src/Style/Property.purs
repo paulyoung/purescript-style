@@ -29,6 +29,32 @@ height :: HeightValue -> Property
 height = Property Height
 
 
+type MarginValue =
+  Variant
+    ( Auto
+    + Em
+    + Pct
+    + Px
+    + ()
+    )
+
+margin :: MarginValue -> Property
+margin = Property Margin
+
+
+type PaddingValue =
+  Variant
+    ( Auto
+    + Em
+    + Pct
+    + Px
+    + ()
+    )
+
+padding :: PaddingValue -> Property
+padding = Property Padding
+
+
 type WidthValue =
   Variant
     ( Auto
