@@ -4,7 +4,7 @@ import Prelude
 
 import Data.Variant (Variant)
 import Style.Property.Name (Name(..))
-import Style.Property.Value (Auto, Percent, Value, Pixels)
+import Style.Property.Value (Auto, Em, Pct, Px, Value)
 import Type.Row (type (+))
 
 data Property = Property Name Value
@@ -19,8 +19,9 @@ instance showProperty :: Show Property where
 type HeightValue =
   Variant
     ( Auto
-    + Percent
-    + Pixels
+    + Em
+    + Pct
+    + Px
     + ()
     )
 
@@ -28,11 +29,38 @@ height :: HeightValue -> Property
 height = Property Height
 
 
+type MarginValue =
+  Variant
+    ( Auto
+    + Em
+    + Pct
+    + Px
+    + ()
+    )
+
+margin :: MarginValue -> Property
+margin = Property Margin
+
+
+type PaddingValue =
+  Variant
+    ( Auto
+    + Em
+    + Pct
+    + Px
+    + ()
+    )
+
+padding :: PaddingValue -> Property
+padding = Property Padding
+
+
 type WidthValue =
   Variant
     ( Auto
-    + Percent
-    + Pixels
+    + Em
+    + Pct
+    + Px
     + ()
     )
 
