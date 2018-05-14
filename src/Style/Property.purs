@@ -16,6 +16,16 @@ instance showProperty :: Show Property where
   show (Property n v) = "(Property " <> show n <> " " <> show v <> ")"
 
 
+type FontSizeValue =
+  Variant
+    ( Px
+    + ()
+    )
+
+fontSize :: FontSizeValue -> Property
+fontSize = Property FontSize
+
+
 type HeightValue =
   Variant
     ( Auto
