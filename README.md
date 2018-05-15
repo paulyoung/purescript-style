@@ -5,6 +5,17 @@
 ## Usage
 
 ```purescript
-> inline [ width $ 42 # px, height auto ]
-"width: 42px; height: auto;"
+inline
+  [ backgroundColor $ rgb 127 127 127
+  , color black
+  , fontSize $ 16.0 # px
+  , height $ 100.0 # pct
+  , margin zero
+  , padding $ 2.0 # em
+  , width auto
+  ]
+```
+
+```
+"background-color: rgb(127, 127, 127); color: rgb(0, 0, 0); font-size: 16px; height: 100%; margin: 0; padding: 2em; width: auto;"
 ```
