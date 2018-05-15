@@ -2,7 +2,7 @@ module Style.Property where
 
 import Prelude
 
-import Data.Variant (Variant)
+import Data.Variant (Variant, expand)
 import Style.Property.Name (Name(..))
 import Style.Property.Value (Auto, Em, Pct, Px, Value)
 import Type.Row (type (+))
@@ -23,7 +23,7 @@ type FontSizeValue =
     )
 
 fontSize :: FontSizeValue -> Property
-fontSize = Property FontSize
+fontSize = Property FontSize <<< expand
 
 
 type HeightValue =
@@ -36,7 +36,7 @@ type HeightValue =
     )
 
 height :: HeightValue -> Property
-height = Property Height
+height = Property Height <<< expand
 
 
 type MarginValue =
@@ -49,7 +49,7 @@ type MarginValue =
     )
 
 margin :: MarginValue -> Property
-margin = Property Margin
+margin = Property Margin <<< expand
 
 
 type PaddingValue =
@@ -62,7 +62,7 @@ type PaddingValue =
     )
 
 padding :: PaddingValue -> Property
-padding = Property Padding
+padding = Property Padding <<< expand
 
 
 type WidthValue =
@@ -75,4 +75,4 @@ type WidthValue =
     )
 
 width :: WidthValue -> Property
-width = Property Width
+width = Property Width <<< expand
