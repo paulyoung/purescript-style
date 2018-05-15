@@ -17,7 +17,8 @@
     "purescript-symbols": "^3.0.0",
     "purescript-typelevel-prelude": "^2.7.0",
     "purescript-numbers": "^5.0.0",
-    "purescript-arrays": "^4.4.0"
+    "purescript-arrays": "^4.4.0",
+    "purescript-colors": "^4.3.0"
   },
   "devDependencies": {
     "purescript-psci-support": "^3.0.0"
