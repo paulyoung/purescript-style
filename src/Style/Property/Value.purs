@@ -45,4 +45,4 @@ type Px v = (px :: Number | v)
 _px = SProxy :: SProxy "px"
 
 px :: forall v. Number -> Variant (Px v)
-px x = inj _px x
+px = inj _px
