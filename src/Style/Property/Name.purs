@@ -3,7 +3,9 @@ module Style.Property.Name where
 import Prelude
 
 data Name
-  = FontSize
+  = BackgroundColor
+  | Color
+  | FontSize
   | Height
   | Margin
   | Padding
@@ -14,6 +16,8 @@ derive instance ordName :: Ord Name
 
 instance showName :: Show Name where
   show = case _ of
+    BackgroundColor -> "BackgroundColor"
+    Color -> "Color"
     FontSize -> "FontSize"
     Height -> "Height"
     Margin -> "Margin"

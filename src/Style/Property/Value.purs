@@ -2,6 +2,7 @@ module Style.Property.Value where
 
 import Prelude
 
+import Color as C
 import Data.Symbol (SProxy(..))
 import Data.Variant (Variant, inj)
 import Type.Row (type (+))
@@ -9,9 +10,11 @@ import Type.Row (type (+))
 type Value =
   Variant
    ( Auto
+   + Color
    + Em
    + Pct
    + Px
+   + Zero
    + ()
    )
 
@@ -22,6 +25,14 @@ _auto = SProxy :: SProxy "auto"
 
 auto :: forall v. Variant (Auto v)
 auto = inj _auto unit
+
+
+type Color v = (color :: C.Color | v)
+
+_color = SProxy :: SProxy "color"
+
+color :: forall v. C.Color -> Variant (Color v)
+color = inj _color
 
 
 type Em v = (em :: Number | v)
@@ -46,3 +57,11 @@ _px = SProxy :: SProxy "px"
 
 px :: forall v. Number -> Variant (Px v)
 px = inj _px
+
+
+type Zero v = (zero :: Unit | v)
+
+_zero = SProxy :: SProxy "zero"
+
+zero :: forall v. Variant (Zero v)
+zero = inj _zero unit
