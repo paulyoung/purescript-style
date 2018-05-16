@@ -9,6 +9,7 @@ data Name
   | Height
   | Margin
   | Padding
+  | TextAlign
   | Width
 
 derive instance eqName :: Eq Name
@@ -22,4 +23,5 @@ instance showName :: Show Name where
     Height -> "Height"
     Margin -> "Margin"
     Padding -> "Padding"
+    TextAlign -> "TextAlign"
     Width -> "Width"
