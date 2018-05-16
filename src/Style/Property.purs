@@ -50,7 +50,8 @@ color = color' <<< V.color
 
 type FontSizeValue =
   Variant
-    ( Px
+    ( Em
+    + Px
     + Zero
     + ()
     )
