@@ -5,7 +5,7 @@ import Prelude
 import Color as C
 import Data.Variant (Variant, expand)
 import Style.Property.Name (Name(..))
-import Style.Property.Value (Auto, Color, Em, Pct, Px, Value, Zero)
+import Style.Property.Value (Auto, Center, Color, Em, Justified, Left, Pct, Px, Value, Zero, Right)
 import Style.Property.Value (color) as V
 import Style.Render.Value (value)
 import Type.Row (type (+))
@@ -50,7 +50,8 @@ color = color' <<< V.color
 
 type FontSizeValue =
   Variant
-    ( Px
+    ( Em
+    + Px
     + Zero
     + ()
     )
@@ -99,6 +100,19 @@ type PaddingValue =
 
 padding :: PaddingValue -> Property
 padding = Property Padding <<< expand
+
+
+type TextAlignValue =
+  Variant
+    ( Center
+    + Justified
+    + Left
+    + Right
+    + ()
+    )
+
+textAlign :: TextAlignValue -> Property
+textAlign = Property TextAlign <<< expand
 
 
 type WidthValue =

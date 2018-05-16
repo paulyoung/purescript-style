@@ -15,6 +15,7 @@ name = case _ of
   Height -> "height"
   Margin -> "margin"
   Padding -> "padding"
+  TextAlign -> "text-align"
   Width -> "width"
 
 property :: Property -> String
