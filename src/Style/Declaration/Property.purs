@@ -1,8 +1,8 @@
-module Style.Property.Name where
+module Style.Declaration.Property where
 
 import Prelude
 
-data Name
+data Property
   = BackgroundColor
   | Color
   | FontSize
@@ -12,10 +12,10 @@ data Name
   | TextAlign
   | Width
 
-derive instance eqName :: Eq Name
-derive instance ordName :: Ord Name
+derive instance eqProperty :: Eq Property
+derive instance ordProperty :: Ord Property
 
-instance showName :: Show Name where
+instance showProperty :: Show Property where
   show = case _ of
     BackgroundColor -> "BackgroundColor"
     Color -> "Color"

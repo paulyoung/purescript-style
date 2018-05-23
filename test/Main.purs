@@ -5,8 +5,8 @@ import Prelude hiding (zero)
 import Color (black, rgb)
 import Control.Monad.Eff (Eff)
 import Control.Monad.Eff.Console (CONSOLE, log)
-import Style.Property (backgroundColor, color, fontSize, height, margin, padding, textAlign, width)
-import Style.Property.Value (auto, center, em, pct, px, zero)
+import Style.Declaration (backgroundColor, color, fontSize, height, margin, padding, textAlign, width)
+import Style.Declaration.Value (auto, center, em, pct, px, zero)
 import Style.Render (inline)
 
 main :: forall e. Eff (console :: CONSOLE | e) Unit

@@ -1,4 +1,4 @@
-module Style.Property.Value where
+module Style.Declaration.Value where
 
 import Prelude
 
