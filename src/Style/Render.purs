@@ -3,12 +3,12 @@ module Style.Render where
 import Prelude
 
 import Data.Array (intercalate)
-import Style.Property (Property(..))
-import Style.Property.Name (Name(..))
+import Style.Declaration (Declaration(..))
+import Style.Declaration.Property (Property(..))
 import Style.Render.Value (value)
 
-name :: Name -> String
-name = case _ of
+property :: Property -> String
+property = case _ of
   BackgroundColor -> "background-color"
   Color -> "color"
   FontSize -> "font-size"
@@ -18,8 +18,8 @@ name = case _ of
   TextAlign -> "text-align"
   Width -> "width"
 
-property :: Property -> String
-property (Property n v) = name n <> ": " <> value v <> ";"
+declaration :: Declaration -> String
+declaration (Declaration p v) = property p <> ": " <> value v <> ";"
 
-inline :: Array Property -> String
-inline = intercalate " " <<< map property
+inline :: Array Declaration -> String
+inline = intercalate " " <<< map declaration

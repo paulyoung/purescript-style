@@ -5,7 +5,7 @@ import Prelude
 import Color (cssStringRGBA)
 import Data.Number.Format (toString)
 import Data.Variant (match)
-import Style.Property.Value (Value)
+import Style.Declaration.Value (Value)
 
 value :: Value -> String
 value = match
