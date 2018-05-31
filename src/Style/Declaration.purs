@@ -6,8 +6,7 @@ import Color as C
 import Data.Variant (Variant, expand)
 import Style.Declaration.Property (Property(..))
 import Style.Declaration.Value (Auto, Center, Color, Em, Justified, Left, Pct, Px, Value, Zero, Right)
-import Style.Declaration.Value (color) as V
-import Style.Render.Value (value)
+import Style.Declaration.Value as Value
 import Type.Row (type (+))
 
 data Declaration = Declaration Property Value
@@ -16,7 +15,7 @@ derive instance eqDeclaration :: Eq Declaration
 
 instance ordDeclaration :: Ord Declaration where
   compare (Declaration p1 v1) (Declaration p2 v2) =
-    p1 `compare` p2 <> value v1 `compare` value v2
+    p1 `compare` p2 <> Value.render v1 `compare` Value.render v2
 
 instance showDeclaration :: Show Declaration where
   show (Declaration p v) = "(Declaration " <> show p <> " " <> show v <> ")"
@@ -29,7 +28,7 @@ type BackgroundColorValue =
     )
 
 backgroundColor :: C.Color -> Declaration
-backgroundColor = backgroundColor' <<< V.color
+backgroundColor = backgroundColor' <<< Value.color
   where
   backgroundColor' :: BackgroundColorValue -> Declaration
   backgroundColor' = Declaration BackgroundColor <<< expand
@@ -42,7 +41,7 @@ type ColorValue =
     )
 
 color :: C.Color -> Declaration
-color = color' <<< V.color
+color = color' <<< Value.color
   where
   color' :: ColorValue -> Declaration
   color' = Declaration Color <<< expand

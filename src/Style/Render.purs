@@ -4,22 +4,11 @@ import Prelude
 
 import Data.Array (intercalate)
 import Style.Declaration (Declaration(..))
-import Style.Declaration.Property (Property(..))
-import Style.Render.Value (value)
-
-property :: Property -> String
-property = case _ of
-  BackgroundColor -> "background-color"
-  Color -> "color"
-  FontSize -> "font-size"
-  Height -> "height"
-  Margin -> "margin"
-  Padding -> "padding"
-  TextAlign -> "text-align"
-  Width -> "width"
+import Style.Declaration.Property as Property
+import Style.Declaration.Value as Value
 
 declaration :: Declaration -> String
-declaration (Declaration p v) = property p <> ": " <> value v <> ";"
+declaration (Declaration p v) = Property.render p <> ": " <> Value.render v <> ";"
 
 inline :: Array Declaration -> String
 inline = intercalate " " <<< map declaration
