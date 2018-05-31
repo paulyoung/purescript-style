@@ -25,3 +25,14 @@ instance showProperty :: Show Property where
     Padding -> "Padding"
     TextAlign -> "TextAlign"
     Width -> "Width"
+
+render :: Property -> String
+render = case _ of
+  BackgroundColor -> "background-color"
+  Color -> "color"
+  FontSize -> "font-size"
+  Height -> "height"
+  Margin -> "margin"
+  Padding -> "padding"
+  TextAlign -> "text-align"
+  Width -> "width"
