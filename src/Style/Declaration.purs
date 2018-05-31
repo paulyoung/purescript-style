@@ -5,6 +5,7 @@ import Prelude
 import Color as C
 import Data.Variant (Variant, expand)
 import Style.Declaration.Property (Property(..))
+import Style.Declaration.Property as Property
 import Style.Declaration.Value (Auto, Center, Color, Em, Justified, Left, Pct, Px, Value, Zero, Right)
 import Style.Declaration.Value as Value
 import Type.Row (type (+))
@@ -19,6 +20,9 @@ instance ordDeclaration :: Ord Declaration where
 
 instance showDeclaration :: Show Declaration where
   show (Declaration p v) = "(Declaration " <> show p <> " " <> show v <> ")"
+
+render :: Declaration -> String
+render (Declaration p v) = Property.render p <> ": " <> Value.render v <> ";"
 
 
 type BackgroundColorValue =
