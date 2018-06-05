@@ -3,8 +3,8 @@ module Test.Main where
 import Prelude hiding (zero)
 
 import Color (black, rgb)
-import Control.Monad.Eff (Eff)
-import Control.Monad.Eff.Console (CONSOLE, log)
+import Effect (Effect)
+import Effect.Console (log)
 import Style.Declaration (Declaration, backgroundColor, color, fontSize, height, margin, padding, textAlign, width)
 import Style.Declaration.Value (auto, center, em, pct, px, zero)
 import Style.Render (inline)
@@ -34,7 +34,7 @@ declarations =
 ruleset :: Ruleset
 ruleset = Ruleset selectors declarations
 
-main :: forall e. Eff (console :: CONSOLE | e) Unit
+main :: Effect Unit
 main = do
   log ""
   log $ inline declarations
