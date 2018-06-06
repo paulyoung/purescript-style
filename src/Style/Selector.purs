@@ -16,6 +16,9 @@ data Selector
   | PseudoClassSelector Selector PseudoClass
   | PseudoElementSelector Selector PseudoElement
 
+derive instance eqSelector :: Eq Selector
+derive instance ordSelector :: Ord Selector
+
 render :: Selector -> String
 render = case _ of
   TypeSelector el -> el
@@ -38,6 +41,9 @@ data Attribute
  | AsteriskEqual AttributeName AttributeValue
  | CaseInsensitive Attribute
 
+derive instance eqAttribute :: Eq Attribute
+derive instance ordAttribute :: Ord Attribute
+
 renderAttribute :: Attribute -> String
 renderAttribute = case _ of
   Equal n v -> renderAttribute' "=" n v
@@ -58,6 +64,8 @@ renderAttribute = case _ of
 newtype AttributeName = AttributeName String
 
 derive instance newtypeAttributeName :: Newtype AttributeName _
+derive newtype instance eqAttributeName :: Eq AttributeName
+derive newtype instance ordAttributeName :: Ord AttributeName
 
 renderAttributeName :: AttributeName -> String
 renderAttributeName = unwrap
@@ -66,6 +74,8 @@ renderAttributeName = unwrap
 newtype AttributeValue = AttributeValue String
 
 derive instance newtypeAttributeValue :: Newtype AttributeValue _
+derive newtype instance eqAttributeValue :: Eq AttributeValue
+derive newtype instance ordAttributeValue :: Ord AttributeValue
 
 renderAttributeValue :: AttributeValue -> String
 renderAttributeValue = unwrap
@@ -76,6 +86,9 @@ data Combinator
   | GeneralSibling
   | Child
   | Descendant
+
+derive instance eqCombinator :: Eq Combinator
+derive instance ordCombinator :: Ord Combinator
 
 renderCombinator :: Combinator -> String
 renderCombinator = case _ of
@@ -89,6 +102,9 @@ data Directionality
   = LeftToRight
   | RightToLeft
 
+derive instance eqDirectionality :: Eq Directionality
+derive instance ordDirectionality :: Ord Directionality
+
 renderDirectionality :: Directionality -> String
 renderDirectionality = case _ of
   LeftToRight -> "ltr"
@@ -98,6 +114,8 @@ renderDirectionality = case _ of
 newtype LanguageCode = LanguageCode String
 
 derive instance newtypeLanguageCode :: Newtype LanguageCode _
+derive newtype instance eqLanguageCode :: Eq LanguageCode
+derive newtype instance ordLanguageCode :: Ord LanguageCode
 
 renderLanguageCode :: LanguageCode -> String
 renderLanguageCode = unwrap
@@ -107,6 +125,9 @@ data Position
   = AnPlusB Int (Maybe Int)
   | Even
   | Odd
+
+derive instance eqPosition :: Eq Position
+derive instance ordPosition :: Ord Position
 
 renderPosition :: Position -> String
 renderPosition = case _ of
@@ -167,6 +188,9 @@ data PseudoClass
   | Target
   | Valid
   | Visited
+
+derive instance eqPseudoClass :: Eq PseudoClass
+derive instance ordPseudoClass :: Ord PseudoClass
 
 renderPseudoClass :: PseudoClass -> String
 renderPseudoClass pc = ":" <> case pc of
@@ -230,6 +254,9 @@ data PseudoElement
   | Selection
   | Slotted
   | SpellingError
+
+derive instance eqPseudoElement :: Eq PseudoElement
+derive instance ordPseudoElement :: Ord PseudoElement
 
 renderPseudoElement :: PseudoElement -> String
 renderPseudoElement pe = "::" <> case pe of

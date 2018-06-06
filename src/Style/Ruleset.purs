@@ -10,6 +10,9 @@ import Style.Selector as Selector
 
 data Ruleset = Ruleset (Array Selector) (Array Declaration)
 
+derive instance eqRuleset :: Eq Ruleset
+derive instance ordRuleset :: Ord Ruleset
+
 render :: Ruleset -> String
 render (Ruleset ss ds) = selectors <> "{" <> declarations <> "}"
 
