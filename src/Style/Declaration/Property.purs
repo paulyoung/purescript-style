@@ -9,7 +9,15 @@ data Property
   | FontSize
   | Height
   | Margin
+  | MarginBottom
+  | MarginLeft
+  | MarginRight
+  | MarginTop
   | Padding
+  | PaddingBottom
+  | PaddingLeft
+  | PaddingRight
+  | PaddingTop
   | TextAlign
   | Width
 
@@ -24,7 +32,15 @@ instance showProperty :: Show Property where
     FontSize -> "FontSize"
     Height -> "Height"
     Margin -> "Margin"
+    MarginBottom -> "MarginBottom"
+    MarginLeft -> "MarginLeft"
+    MarginRight -> "MarginRight"
+    MarginTop -> "MarginTop"
     Padding -> "Padding"
+    PaddingBottom -> "PaddingBottom"
+    PaddingLeft -> "PaddingLeft"
+    PaddingRight -> "PaddingRight"
+    PaddingTop -> "PaddingTop"
     TextAlign -> "TextAlign"
     Width -> "Width"
 
@@ -36,6 +52,14 @@ render = case _ of
   FontSize -> "font-size"
   Height -> "height"
   Margin -> "margin"
+  MarginBottom -> "margin-bottom"
+  MarginLeft -> "margin-left"
+  MarginRight -> "margin-right"
+  MarginTop -> "margin-top"
   Padding -> "padding"
+  PaddingBottom -> "padding-bottom"
+  PaddingLeft -> "padding-left"
+  PaddingRight -> "padding-right"
+  PaddingTop -> "padding-top"
   TextAlign -> "text-align"
   Width -> "width"

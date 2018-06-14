@@ -107,6 +107,18 @@ type MarginValue =
 margin :: MarginValue -> Declaration
 margin = Declaration Margin <<< expand
 
+marginBottom :: MarginValue -> Declaration
+marginBottom = Declaration MarginBottom <<< expand
+
+marginLeft :: MarginValue -> Declaration
+marginLeft = Declaration MarginLeft <<< expand
+
+marginRight :: MarginValue -> Declaration
+marginRight = Declaration MarginRight <<< expand
+
+marginTop :: MarginValue -> Declaration
+marginTop = Declaration MarginTop <<< expand
+
 
 type PaddingValue =
   Variant
@@ -119,6 +131,18 @@ type PaddingValue =
 
 padding :: PaddingValue -> Declaration
 padding = Declaration Padding <<< expand
+
+paddingBottom :: PaddingValue -> Declaration
+paddingBottom = Declaration PaddingBottom <<< expand
+
+paddingLeft :: PaddingValue -> Declaration
+paddingLeft = Declaration PaddingLeft <<< expand
+
+paddingRight :: PaddingValue -> Declaration
+paddingRight = Declaration PaddingRight <<< expand
+
+paddingTop :: PaddingValue -> Declaration
+paddingTop = Declaration PaddingTop <<< expand
 
 
 type TextAlignValue =
