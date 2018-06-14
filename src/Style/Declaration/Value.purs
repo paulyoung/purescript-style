@@ -275,7 +275,7 @@ justifyAll :: forall v. Variant (JustifyAll v)
 justifyAll = inj _justifyAll unit
 
 renderJustifyAll :: forall v. (Variant v -> String) -> Variant (JustifyAll v) -> String
-renderJustifyAll = on _justifyAll $ const "justifyAll"
+renderJustifyAll = on _justifyAll $ const "justify-all"
 
 
 type Large v = (large :: Unit | v)
@@ -484,7 +484,7 @@ xLarge :: forall v. Variant (XLarge v)
 xLarge = inj _xLarge unit
 
 renderXLarge :: forall v. (Variant v -> String) -> Variant (XLarge v) -> String
-renderXLarge = on _xLarge $ const "xLarge"
+renderXLarge = on _xLarge $ const "x-large"
 
 
 type XSmall v = (xSmall :: Unit | v)
@@ -495,7 +495,7 @@ xSmall :: forall v. Variant (XSmall v)
 xSmall = inj _xSmall unit
 
 renderXSmall :: forall v. (Variant v -> String) -> Variant (XSmall v) -> String
-renderXSmall = on _xSmall $ const "xSmall"
+renderXSmall = on _xSmall $ const "x-small"
 
 
 type XxLarge v = (xxLarge :: Unit | v)
@@ -506,7 +506,7 @@ xxLarge :: forall v. Variant (XxLarge v)
 xxLarge = inj _xxLarge unit
 
 renderXxLarge :: forall v. (Variant v -> String) -> Variant (XxLarge v) -> String
-renderXxLarge = on _xxLarge $ const "xxLarge"
+renderXxLarge = on _xxLarge $ const "xx-large"
 
 
 type XxSmall v = (xxSmall :: Unit | v)
@@ -517,7 +517,7 @@ xxSmall :: forall v. Variant (XxSmall v)
 xxSmall = inj _xxSmall unit
 
 renderXxSmall :: forall v. (Variant v -> String) -> Variant (XxSmall v) -> String
-renderXxSmall = on _xxSmall $ const "xxSmall"
+renderXxSmall = on _xxSmall $ const "xx-small"
 
 
 type Zero v = (zero :: Unit | v)
