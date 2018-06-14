@@ -4,6 +4,7 @@ import Prelude
 
 data Property
   = BackgroundColor
+  | BorderRadius
   | Color
   | FontSize
   | Height
@@ -18,6 +19,7 @@ derive instance ordProperty :: Ord Property
 instance showProperty :: Show Property where
   show = case _ of
     BackgroundColor -> "BackgroundColor"
+    BorderRadius -> "BorderRadius"
     Color -> "Color"
     FontSize -> "FontSize"
     Height -> "Height"
@@ -29,6 +31,7 @@ instance showProperty :: Show Property where
 render :: Property -> String
 render = case _ of
   BackgroundColor -> "background-color"
+  BorderRadius -> "border-radius"
   Color -> "color"
   FontSize -> "font-size"
   Height -> "height"
