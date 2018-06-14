@@ -5,7 +5,7 @@ import Prelude hiding (zero)
 import Color (black, rgb)
 import Effect (Effect)
 import Effect.Console (log)
-import Style.Declaration (Declaration, backgroundColor, color, fontSize, height, margin, padding, textAlign, width)
+import Style.Declaration (Declaration, backgroundColor, borderRadius, color, fontSize, height, margin, padding, textAlign, width)
 import Style.Declaration.Value (auto, center, em, pct, px, zero)
 import Style.Render (inline)
 import Style.Ruleset (Ruleset(..))
@@ -22,6 +22,7 @@ selectors =
 declarations :: Array Declaration
 declarations =
   [ backgroundColor $ rgb 127 127 127
+  , borderRadius $ 8.0 # px
   , color black
   , fontSize $ 16.0 # px
   , height $ 100.0 # pct
