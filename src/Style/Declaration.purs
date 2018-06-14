@@ -67,24 +67,12 @@ color = color' <<< V.color
 
 type FontSizeValue =
   Variant
-    ( V.Global
+    ( V.AbsoluteSize
+    + V.Global
     + V.Length
     + V.Pct
+    + V.RelativeSize
     + V.Zero
-
-    -- Absolute size values
-    + V.XxSmall
-    + V.XSmall
-    + V.Small
-    + V.Medium
-    + V.Large
-    + V.XLarge
-    + V.XxLarge
-
-    -- Relative size values
-    + V.Smaller
-    + V.Larger
-
     + ()
     )
 

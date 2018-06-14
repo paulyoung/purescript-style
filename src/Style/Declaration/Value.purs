@@ -88,6 +88,34 @@ render =
     >>> renderXxSmall
     >>> renderZero
 
+type AbsoluteLength r =
+  ( Cm
+  + In
+  + Mm
+  + Pc
+  + Pt
+  + Px
+  + r
+  )
+
+type AbsoluteSize r =
+  ( XxSmall
+  + XSmall
+  + Small
+  + Medium
+  + Large
+  + XLarge
+  + XxLarge
+  + r
+  )
+
+type FontRelativeLength r =
+  ( Ch
+  + Em
+  + Ex
+  + Rem
+  + r
+  )
 
 type Global r =
   ( Inherit
@@ -96,27 +124,24 @@ type Global r =
   + r
   )
 
-
 type Length r =
-  -- Font-relative lengths
-  ( Ch
-  + Em
-  + Ex
-  + Rem
+  ( AbsoluteLength
+  + FontRelativeLength
+  + ViewportPercentageLength
+  + r
+  )
 
-  -- Viewport-percentage lengths
-  + Vh
+type RelativeSize r =
+  ( Smaller
+  + Larger
+  + r
+  )
+
+type ViewportPercentageLength r =
+  ( Vh
   + Vmax
   + Vmin
   + Vw
-
-  -- Absolute length units
-  + Cm
-  + In
-  + Mm
-  + Pc
-  + Pt
-  + Px
   + r
   )
 
