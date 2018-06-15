@@ -14,6 +14,8 @@ derive instance eqRuleset :: Eq Ruleset
 derive instance ordRuleset :: Ord Ruleset
 
 render :: Ruleset -> String
+render (Ruleset [] _) = ""
+render (Ruleset _ []) = ""
 render (Ruleset ss ds) = selectors <> "{" <> declarations <> "}"
 
   where
