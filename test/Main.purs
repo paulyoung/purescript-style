@@ -3,6 +3,8 @@ module Test.Main where
 import Prelude hiding (zero)
 
 import Color (black, rgb)
+import Data.Array.NonEmpty (NonEmptyArray, fromArray)
+import Data.Maybe (Maybe, maybe)
 import Effect (Effect)
 import Effect.Console (log)
 import Style.Declaration (Declaration, backgroundColor, borderRadius, color, fontSize, fontWeight, height, margin, padding, textAlign, width)
@@ -12,15 +14,15 @@ import Style.Ruleset (Ruleset(..))
 import Style.Ruleset as Ruleset
 import Style.Selector (Selector(..))
 
-selectors :: Array Selector
-selectors =
+selectors :: Maybe (NonEmptyArray Selector)
+selectors = fromArray
   [ TypeSelector "body"
   , ClassSelector "foo"
   , IDSelector "bar"
   ]
 
-declarations :: Array Declaration
-declarations =
+declarations :: Maybe (NonEmptyArray Declaration)
+declarations = fromArray
   [ backgroundColor $ rgb 127 127 127
   , borderRadius $ 8.0 # px
   , color black
@@ -33,13 +35,13 @@ declarations =
   , width auto
   ]
 
-ruleset :: Ruleset
-ruleset = Ruleset selectors declarations
+ruleset :: Maybe Ruleset
+ruleset = Ruleset <$> selectors <*> declarations
 
 main :: Effect Unit
 main = do
   log ""
-  log $ inline declarations
+  log $ maybe "" inline declarations
   log ""
-  log $ Ruleset.render ruleset
+  log $ maybe "" Ruleset.render ruleset
   log ""
