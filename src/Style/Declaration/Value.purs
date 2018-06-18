@@ -16,6 +16,8 @@ type Value =
    + Ch
    + Cm
    + Color
+   + Bold
+   + Bolder
    + Em
    + Ex
    + In
@@ -26,8 +28,11 @@ type Value =
    + Large
    + Larger
    + Left
+   + Lighter
    + Medium
    + Mm
+   + Normal
+   + Number_
    + Pc
    + Pct
    + Pt
@@ -53,6 +58,8 @@ render :: Value -> String
 render =
   case_
     # renderAuto
+    >>> renderBold
+    >>> renderBolder
     >>> renderCenter
     >>> renderCh
     >>> renderCm
@@ -67,8 +74,11 @@ render =
     >>> renderLarge
     >>> renderLarger
     >>> renderLeft
+    >>> renderLighter
     >>> renderMedium
     >>> renderMm
+    >>> renderNormal
+    >>> renderNumber
     >>> renderPc
     >>> renderPct
     >>> renderPt
@@ -117,6 +127,18 @@ type FontRelativeLength r =
   + r
   )
 
+type FontWeightKeyword r =
+  ( Bold
+  + Normal
+  + r
+  )
+
+type FontWeightKeywordRelative r =
+  ( Bolder
+  + Lighter
+  + r
+  )
+
 type Global r =
   ( Inherit
   + Initial
@@ -155,6 +177,28 @@ auto = inj _auto unit
 
 renderAuto :: forall v. (Variant v -> String) -> Variant (Auto v) -> String
 renderAuto = on _auto $ const "auto"
+
+
+type Bold v = (bold :: Unit | v)
+
+_bold = SProxy :: SProxy "bold"
+
+bold :: forall v. Variant (Bold v)
+bold = inj _bold unit
+
+renderBold :: forall v. (Variant v -> String) -> Variant (Bold v) -> String
+renderBold = on _bold $ const "bold"
+
+
+type Bolder v = (bolder :: Unit | v)
+
+_bolder = SProxy :: SProxy "bolder"
+
+bolder :: forall v. Variant (Bolder v)
+bolder = inj _bolder unit
+
+renderBolder :: forall v. (Variant v -> String) -> Variant (Bolder v) -> String
+renderBolder = on _bolder $ const "bolder"
 
 
 type Center v = (center :: Unit | v)
@@ -311,6 +355,17 @@ renderLeft :: forall v. (Variant v -> String) -> Variant (Left v) -> String
 renderLeft = on _left $ const "left"
 
 
+type Lighter v = (lighter :: Unit | v)
+
+_lighter = SProxy :: SProxy "lighter"
+
+lighter :: forall v. Variant (Lighter v)
+lighter = inj _lighter unit
+
+renderLighter :: forall v. (Variant v -> String) -> Variant (Lighter v) -> String
+renderLighter = on _lighter $ const "lighter"
+
+
 type Medium v = (medium :: Unit | v)
 
 _medium = SProxy :: SProxy "medium"
@@ -331,6 +386,28 @@ mm = inj _mm
 
 renderMm :: forall v. (Variant v -> String) -> Variant (Mm v) -> String
 renderMm = on _mm \n -> Number.toString n <> "mm"
+
+
+type Normal v = (normal :: Unit | v)
+
+_normal = SProxy :: SProxy "normal"
+
+normal :: forall v. Variant (Normal v)
+normal = inj _normal unit
+
+renderNormal :: forall v. (Variant v -> String) -> Variant (Normal v) -> String
+renderNormal = on _normal $ const "normal"
+
+
+type Number_ v = (number :: Number | v)
+
+_number = SProxy :: SProxy "number"
+
+number :: forall v. Number -> Variant (Number_ v)
+number = inj _number
+
+renderNumber :: forall v. (Variant v -> String) -> Variant (Number_ v) -> String
+renderNumber = on _number Number.toString
 
 
 type Pc v = (pc :: Number | v)
