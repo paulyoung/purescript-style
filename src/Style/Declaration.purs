@@ -80,6 +80,19 @@ fontSize :: FontSizeValue -> Declaration
 fontSize = Declaration FontSize <<< expand
 
 
+type FontWeightValue =
+  Variant
+    ( V.FontWeightKeyword
+    + V.FontWeightKeywordRelative
+    + V.Global
+    + V.Number_
+    + ()
+    )
+
+fontWeight :: FontWeightValue -> Declaration
+fontWeight = Declaration FontWeight <<< expand
+
+
 type HeightValue =
   Variant
     ( V.Auto
