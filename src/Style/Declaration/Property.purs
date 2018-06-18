@@ -7,6 +7,7 @@ data Property
   | BorderRadius
   | Color
   | FontSize
+  | FontWeight
   | Height
   | Margin
   | MarginBottom
@@ -30,6 +31,7 @@ instance showProperty :: Show Property where
     BorderRadius -> "BorderRadius"
     Color -> "Color"
     FontSize -> "FontSize"
+    FontWeight -> "FontWeight"
     Height -> "Height"
     Margin -> "Margin"
     MarginBottom -> "MarginBottom"
@@ -50,6 +52,7 @@ render = case _ of
   BorderRadius -> "border-radius"
   Color -> "color"
   FontSize -> "font-size"
+  FontWeight -> "font-weight"
   Height -> "height"
   Margin -> "margin"
   MarginBottom -> "margin-bottom"
