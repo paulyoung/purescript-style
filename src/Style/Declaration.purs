@@ -28,6 +28,7 @@ render (Declaration p v) = Property.render p <> ": " <> V.render v <> ";"
 type BackgroundColorValue =
   Variant
     ( V.Color
+    + V.CurrentColor
     + V.Global
     + ()
     )
@@ -54,6 +55,7 @@ borderRadius = Declaration BorderRadius <<< expand
 type ColorValue =
   Variant
     ( V.Color
+    + V.CurrentColor
     + V.Global
     + ()
     )
@@ -131,6 +133,51 @@ marginRight = Declaration MarginRight <<< expand
 
 marginTop :: MarginValue -> Declaration
 marginTop = Declaration MarginTop <<< expand
+
+
+type OutlineColorValue =
+  Variant
+    ( V.Color
+    + V.CurrentColor
+    + V.Global
+    + V.Invert
+    + ()
+    )
+
+outlineColor :: OutlineColorValue -> Declaration
+outlineColor = Declaration OutlineColor <<< expand
+
+
+type OutlineStyleValue =
+  Variant
+    ( V.Auto
+    + V.Dashed
+    + V.Dotted
+    + V.Double
+    + V.Global
+    + V.Groove
+    + V.Inset
+    + V.None
+    + V.Outset
+    + V.Ridge
+    + V.Solid
+    + ()
+    )
+
+outlineStyle :: OutlineStyleValue -> Declaration
+outlineStyle = Declaration OutlineStyle <<< expand
+
+
+type OutlineWidthValue =
+  Variant
+    ( V.Global
+    + V.Length
+    + V.OutlineWidthKeyword
+    + ()
+    )
+
+outlineWidth :: OutlineWidthValue -> Declaration
+outlineWidth = Declaration OutlineWidth <<< expand
 
 
 type PaddingValue =
