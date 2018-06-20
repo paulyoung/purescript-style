@@ -12,17 +12,24 @@ import Type.Row (type (+))
 type Value =
   Variant
    ( Auto
+   + Bold
+   + Bolder
    + Center
    + Ch
    + Cm
    + Color
-   + Bold
-   + Bolder
+   + CurrentColor
+   + Dashed
+   + Dotted
+   + Double
    + Em
    + Ex
+   + Groove
    + In
    + Inherit
    + Initial
+   + Inset
+   + Invert
    + Justify
    + JustifyAll
    + Large
@@ -31,16 +38,22 @@ type Value =
    + Lighter
    + Medium
    + Mm
+   + None
    + Normal
    + Number_
+   + Outset
    + Pc
    + Pct
    + Pt
    + Px
    + Rem
+   + Ridge
    + Right
    + Small
    + Smaller
+   + Solid
+   + Thick
+   + Thin
    + Unset
    + Vh
    + Vmax
@@ -64,29 +77,42 @@ render =
     >>> renderCh
     >>> renderCm
     >>> renderColor
+    >>> renderCurrentColor
+    >>> renderDashed
+    >>> renderDotted
+    >>> renderDouble
     >>> renderEm
     >>> renderEx
+    >>> renderGroove
     >>> renderIn
     >>> renderInherit
     >>> renderInitial
+    >>> renderInset
     >>> renderJustify
     >>> renderJustifyAll
+    >>> renderInvert
     >>> renderLarge
     >>> renderLarger
     >>> renderLeft
     >>> renderLighter
     >>> renderMedium
     >>> renderMm
+    >>> renderNone
     >>> renderNormal
     >>> renderNumber
+    >>> renderOutset
     >>> renderPc
     >>> renderPct
     >>> renderPt
     >>> renderPx
     >>> renderRem
+    >>> renderRidge
     >>> renderRight
     >>> renderSmall
     >>> renderSmaller
+    >>> renderSolid
+    >>> renderThick
+    >>> renderThin
     >>> renderUnset
     >>> renderVh
     >>> renderVmax
@@ -150,6 +176,13 @@ type Length r =
   ( AbsoluteLength
   + FontRelativeLength
   + ViewportPercentageLength
+  + r
+  )
+
+type OutlineWidthKeyword r =
+  ( Medium
+  + Thick
+  + Thin
   + r
   )
 
@@ -223,6 +256,17 @@ renderColor :: forall v. (Variant v -> String) -> Variant (Color v) -> String
 renderColor = on _color cssStringRGBA
 
 
+type CurrentColor v = (currentColor :: Unit | v)
+
+_currentColor = SProxy :: SProxy "currentColor"
+
+currentColor :: forall v. Variant (CurrentColor v)
+currentColor = inj _currentColor unit
+
+renderCurrentColor :: forall v. (Variant v -> String) -> Variant (CurrentColor v) -> String
+renderCurrentColor = on _currentColor $ const "currentColor"
+
+
 type Ch v = (ch :: Number | v)
 
 _ch = SProxy :: SProxy "ch"
@@ -243,6 +287,39 @@ cm = inj _cm
 
 renderCm :: forall v. (Variant v -> String) -> Variant (Cm v) -> String
 renderCm = on _cm \n -> Number.toString n <> "cm"
+
+
+type Dashed v = (dashed :: Unit | v)
+
+_dashed = SProxy :: SProxy "dashed"
+
+dashed :: forall v. Variant (Dashed v)
+dashed = inj _dashed unit
+
+renderDashed :: forall v. (Variant v -> String) -> Variant (Dashed v) -> String
+renderDashed = on _dashed $ const "dashed"
+
+
+type Dotted v = (dotted :: Unit | v)
+
+_dotted = SProxy :: SProxy "dotted"
+
+dotted :: forall v. Variant (Dotted v)
+dotted = inj _dotted unit
+
+renderDotted :: forall v. (Variant v -> String) -> Variant (Dotted v) -> String
+renderDotted = on _dotted $ const "dotted"
+
+
+type Double v = (double :: Unit | v)
+
+_double = SProxy :: SProxy "double"
+
+double :: forall v. Variant (Double v)
+double = inj _double unit
+
+renderDouble :: forall v. (Variant v -> String) -> Variant (Double v) -> String
+renderDouble = on _double $ const "double"
 
 
 type Em v = (em :: Number | v)
@@ -300,6 +377,17 @@ renderInitial :: forall v. (Variant v -> String) -> Variant (Initial v) -> Strin
 renderInitial = on _initial $ const "initial"
 
 
+type Invert v = (invert :: Unit | v)
+
+_invert = SProxy :: SProxy "invert"
+
+invert :: forall v. Variant (Invert v)
+invert = inj _invert unit
+
+renderInvert :: forall v. (Variant v -> String) -> Variant (Invert v) -> String
+renderInvert = on _invert $ const "invert"
+
+
 type Justify v = (justify :: Unit | v)
 
 _justify = SProxy :: SProxy "justify"
@@ -320,6 +408,28 @@ justifyAll = inj _justifyAll unit
 
 renderJustifyAll :: forall v. (Variant v -> String) -> Variant (JustifyAll v) -> String
 renderJustifyAll = on _justifyAll $ const "justify-all"
+
+
+type Groove v = (groove :: Unit | v)
+
+_groove = SProxy :: SProxy "groove"
+
+groove :: forall v. Variant (Groove v)
+groove = inj _groove unit
+
+renderGroove :: forall v. (Variant v -> String) -> Variant (Groove v) -> String
+renderGroove = on _groove $ const "groove"
+
+
+type Inset v = (inset :: Unit | v)
+
+_inset = SProxy :: SProxy "inset"
+
+inset :: forall v. Variant (Inset v)
+inset = inj _inset unit
+
+renderInset :: forall v. (Variant v -> String) -> Variant (Inset v) -> String
+renderInset = on _inset $ const "inset"
 
 
 type Large v = (large :: Unit | v)
@@ -388,6 +498,17 @@ renderMm :: forall v. (Variant v -> String) -> Variant (Mm v) -> String
 renderMm = on _mm \n -> Number.toString n <> "mm"
 
 
+type None v = (none :: Unit | v)
+
+_none = SProxy :: SProxy "none"
+
+none :: forall v. Variant (None v)
+none = inj _none unit
+
+renderNone :: forall v. (Variant v -> String) -> Variant (None v) -> String
+renderNone = on _none $ const "none"
+
+
 type Normal v = (normal :: Unit | v)
 
 _normal = SProxy :: SProxy "normal"
@@ -408,6 +529,17 @@ number = inj _number
 
 renderNumber :: forall v. (Variant v -> String) -> Variant (Number_ v) -> String
 renderNumber = on _number Number.toString
+
+
+type Outset v = (outset :: Unit | v)
+
+_outset = SProxy :: SProxy "outset"
+
+outset :: forall v. Variant (Outset v)
+outset = inj _outset unit
+
+renderOutset :: forall v. (Variant v -> String) -> Variant (Outset v) -> String
+renderOutset = on _outset $ const "outset"
 
 
 type Pc v = (pc :: Number | v)
@@ -465,6 +597,17 @@ renderRem :: forall v. (Variant v -> String) -> Variant (Rem v) -> String
 renderRem = on _rem \n -> Number.toString n <> "rem"
 
 
+type Ridge v = (ridge :: Unit | v)
+
+_ridge = SProxy :: SProxy "ridge"
+
+ridge :: forall v. Variant (Ridge v)
+ridge = inj _ridge unit
+
+renderRidge :: forall v. (Variant v -> String) -> Variant (Ridge v) -> String
+renderRidge = on _ridge $ const "ridge"
+
+
 type Right v = (right :: Unit | v)
 
 _right = SProxy :: SProxy "right"
@@ -496,6 +639,39 @@ smaller = inj _smaller unit
 
 renderSmaller :: forall v. (Variant v -> String) -> Variant (Smaller v) -> String
 renderSmaller = on _smaller $ const "smaller"
+
+
+type Solid v = (solid :: Unit | v)
+
+_solid = SProxy :: SProxy "solid"
+
+solid :: forall v. Variant (Solid v)
+solid = inj _solid unit
+
+renderSolid :: forall v. (Variant v -> String) -> Variant (Solid v) -> String
+renderSolid = on _solid $ const "solid"
+
+
+type Thick v = (thick :: Unit | v)
+
+_thick = SProxy :: SProxy "thick"
+
+thick :: forall v. Variant (Thick v)
+thick = inj _thick unit
+
+renderThick :: forall v. (Variant v -> String) -> Variant (Thick v) -> String
+renderThick = on _thick $ const "thick"
+
+
+type Thin v = (thin :: Unit | v)
+
+_thin = SProxy :: SProxy "thin"
+
+thin :: forall v. Variant (Thin v)
+thin = inj _thin unit
+
+renderThin :: forall v. (Variant v -> String) -> Variant (Thin v) -> String
+renderThin = on _thin $ const "thin"
 
 
 type Unset v = (unset :: Unit | v)

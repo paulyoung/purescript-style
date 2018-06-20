@@ -7,8 +7,8 @@ import Data.Array.NonEmpty (NonEmptyArray, fromArray)
 import Data.Maybe (Maybe, maybe)
 import Effect (Effect)
 import Effect.Console (log)
-import Style.Declaration (Declaration, backgroundColor, borderRadius, color, fontSize, fontWeight, height, margin, padding, textAlign, width)
-import Style.Declaration.Value (auto, center, bold, em, number, pct, px, zero)
+import Style.Declaration (Declaration, backgroundColor, borderRadius, color, fontSize, fontWeight, height, margin, outlineStyle, padding, textAlign, width)
+import Style.Declaration.Value (auto, center, em, none, number, pct, px, zero)
 import Style.Render (inline)
 import Style.Ruleset (Ruleset(..))
 import Style.Ruleset as Ruleset
@@ -30,6 +30,7 @@ declarations = fromArray
   , fontWeight $ number 300.0
   , height $ 100.0 # pct
   , margin zero
+  , outlineStyle none
   , padding $ 2.0 # em
   , textAlign center
   , width auto
