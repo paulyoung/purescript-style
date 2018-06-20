@@ -4,12 +4,14 @@ import Prelude
 
 data Property
   = BackgroundColor
-  | BorderRadius
+  | BorderBottomLeftRadius
+  | BorderBottomRightRadius
+  | BorderTopLeftRadius
+  | BorderTopRightRadius
   | Color
   | FontSize
   | FontWeight
   | Height
-  | Margin
   | MarginBottom
   | MarginLeft
   | MarginRight
@@ -17,7 +19,6 @@ data Property
   | OutlineColor
   | OutlineStyle
   | OutlineWidth
-  | Padding
   | PaddingBottom
   | PaddingLeft
   | PaddingRight
@@ -31,12 +32,14 @@ derive instance ordProperty :: Ord Property
 instance showProperty :: Show Property where
   show = case _ of
     BackgroundColor -> "BackgroundColor"
-    BorderRadius -> "BorderRadius"
+    BorderBottomLeftRadius -> "BorderBottomLeftRadius"
+    BorderBottomRightRadius -> "BorderBottomRightRadius"
+    BorderTopLeftRadius -> "BorderTopLeftRadius"
+    BorderTopRightRadius -> "BorderTopRightRadius"
     Color -> "Color"
     FontSize -> "FontSize"
     FontWeight -> "FontWeight"
     Height -> "Height"
-    Margin -> "Margin"
     MarginBottom -> "MarginBottom"
     MarginLeft -> "MarginLeft"
     MarginRight -> "MarginRight"
@@ -44,7 +47,6 @@ instance showProperty :: Show Property where
     OutlineColor -> "OutlineColor"
     OutlineStyle -> "OutlineStyle"
     OutlineWidth -> "OutlineWidth"
-    Padding -> "Padding"
     PaddingBottom -> "PaddingBottom"
     PaddingLeft -> "PaddingLeft"
     PaddingRight -> "PaddingRight"
@@ -55,12 +57,14 @@ instance showProperty :: Show Property where
 render :: Property -> String
 render = case _ of
   BackgroundColor -> "background-color"
-  BorderRadius -> "border-radius"
+  BorderBottomLeftRadius -> "border-bottom-left-radius"
+  BorderBottomRightRadius -> "border-bottom-right-radius"
+  BorderTopLeftRadius -> "border-top-left-radius"
+  BorderTopRightRadius -> "border-top-right-radius"
   Color -> "color"
   FontSize -> "font-size"
   FontWeight -> "font-weight"
   Height -> "height"
-  Margin -> "margin"
   MarginBottom -> "margin-bottom"
   MarginLeft -> "margin-left"
   MarginRight -> "margin-right"
@@ -68,7 +72,6 @@ render = case _ of
   OutlineColor -> "outline-color"
   OutlineStyle -> "outline-style"
   OutlineWidth -> "outline-width"
-  Padding -> "padding"
   PaddingBottom -> "padding-bottom"
   PaddingLeft -> "padding-left"
   PaddingRight -> "padding-right"

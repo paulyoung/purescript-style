@@ -48,8 +48,30 @@ type BorderRadiusValue =
     + ()
     )
 
-borderRadius :: BorderRadiusValue -> Declaration
-borderRadius = Declaration BorderRadius <<< expand
+borderRadius
+  :: BorderRadiusValue
+  -> BorderRadiusValue
+  -> BorderRadiusValue
+  -> BorderRadiusValue
+  -> Array Declaration
+borderRadius tl tr br bl =
+  [ borderTopLeftRadius tl
+  , borderTopRightRadius tr
+  , borderBottomRightRadius br
+  , borderBottomLeftRadius bl
+  ]
+
+borderBottomLeftRadius :: BorderRadiusValue -> Declaration
+borderBottomLeftRadius = Declaration BorderBottomLeftRadius <<< expand
+
+borderBottomRightRadius :: BorderRadiusValue -> Declaration
+borderBottomRightRadius = Declaration BorderBottomRightRadius <<< expand
+
+borderTopLeftRadius :: BorderRadiusValue -> Declaration
+borderTopLeftRadius = Declaration BorderTopLeftRadius <<< expand
+
+borderTopRightRadius :: BorderRadiusValue -> Declaration
+borderTopRightRadius = Declaration BorderTopRightRadius <<< expand
 
 
 type ColorValue =
@@ -119,8 +141,18 @@ type MarginValue =
     + ()
     )
 
-margin :: MarginValue -> Declaration
-margin = Declaration Margin <<< expand
+margin
+  :: MarginValue
+  -> MarginValue
+  -> MarginValue
+  -> MarginValue
+  -> Array Declaration
+margin t r b l =
+  [ marginTop t
+  , marginRight r
+  , marginBottom b
+  , marginLeft l
+  ]
 
 marginBottom :: MarginValue -> Declaration
 marginBottom = Declaration MarginBottom <<< expand
@@ -134,6 +166,17 @@ marginRight = Declaration MarginRight <<< expand
 marginTop :: MarginValue -> Declaration
 marginTop = Declaration MarginTop <<< expand
 
+
+outline
+  :: OutlineWidthValue
+  -> OutlineStyleValue
+  -> OutlineColorValue
+  -> Array Declaration
+outline w s c =
+  [ outlineWidth w
+  , outlineStyle s
+  , outlineColor c
+  ]
 
 type OutlineColorValue =
   Variant
@@ -189,8 +232,18 @@ type PaddingValue =
     + ()
     )
 
-padding :: PaddingValue -> Declaration
-padding = Declaration Padding <<< expand
+padding
+  :: PaddingValue
+  -> PaddingValue
+  -> PaddingValue
+  -> PaddingValue
+  -> Array Declaration
+padding t r b l =
+  [ paddingTop t
+  , paddingRight r
+  , paddingBottom b
+  , paddingLeft l
+  ]
 
 paddingBottom :: PaddingValue -> Declaration
 paddingBottom = Declaration PaddingBottom <<< expand
