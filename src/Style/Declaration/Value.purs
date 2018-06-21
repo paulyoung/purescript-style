@@ -781,4 +781,4 @@ zero :: forall v. Variant (Zero v)
 zero = inj _zero unit
 
 renderZero :: forall v. (Variant v -> String) -> Variant (Zero v) -> String
-renderZero = on _zero $ const "zero"
+renderZero = on _zero $ const "0"
