@@ -8,6 +8,7 @@ data Property
   | BorderBottomRightRadius
   | BorderTopLeftRadius
   | BorderTopRightRadius
+  | BoxShadow
   | Color
   | FontSize
   | FontWeight
@@ -36,6 +37,7 @@ instance showProperty :: Show Property where
     BorderBottomRightRadius -> "BorderBottomRightRadius"
     BorderTopLeftRadius -> "BorderTopLeftRadius"
     BorderTopRightRadius -> "BorderTopRightRadius"
+    BoxShadow -> "BoxShadow"
     Color -> "Color"
     FontSize -> "FontSize"
     FontWeight -> "FontWeight"
@@ -61,6 +63,7 @@ render = case _ of
   BorderBottomRightRadius -> "border-bottom-right-radius"
   BorderTopLeftRadius -> "border-top-left-radius"
   BorderTopRightRadius -> "border-top-right-radius"
+  BoxShadow -> "box-shadow"
   Color -> "color"
   FontSize -> "font-size"
   FontWeight -> "font-weight"

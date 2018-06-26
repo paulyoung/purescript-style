@@ -3,12 +3,13 @@ module Test.Main where
 import Prelude hiding (zero)
 
 import Color (black, rgb)
+import Color.Scheme.HTML (red)
 import Data.Array.NonEmpty (NonEmptyArray, fromArray)
 import Data.Maybe (Maybe, maybe)
 import Effect (Effect)
 import Effect.Console (log)
-import Style.Declaration (Declaration, backgroundColor, borderRadius, color, fontSize, fontWeight, height, margin, outline, padding, textAlign, width)
-import Style.Declaration.Value (auto, center, currentColor, em, in_, mm, number, pct, px, rem, solid, zero)
+import Style.Declaration (Declaration, backgroundColor, borderRadius, boxShadow, color, fontSize, fontWeight, height, margin, outline', padding, textAlign, width)
+import Style.Declaration.Value (auto, boxShadow_, boxShadow_', center, currentColor, em, in_, invert, mm, number_, pct, px, rem, solid, zero)
 import Style.Render (inline)
 import Style.Ruleset (Ruleset(..))
 import Style.Ruleset as Ruleset
@@ -24,16 +25,20 @@ selectors = fromArray
 declarations :: Maybe (NonEmptyArray Declaration)
 declarations = fromArray $
   [ backgroundColor $ rgb 127 127 127
+  , boxShadow
+      [ boxShadow_ false (3.0 # px) (3.0 # px) zero zero red
+      , boxShadow_' true (-1.0 # em) zero zero (0.4 # em) currentColor
+      ]
   , color black
   , fontSize $ 16.0 # px
-  , fontWeight $ number 300.0
+  , fontWeight $ number_ 300.0
   , height $ 100.0 # pct
   , textAlign center
   , width auto
   ]
   <> borderRadius (8.0 # px) (8.0 # px) (8.0 # px) (8.0 # px)
   <> margin auto (8.0 # px) (50.0 # pct) zero
-  <> outline (1.0 # px) solid currentColor
+  <> outline' (1.0 # px) solid invert
   <> padding (1.0 # em) (2.0 # in_) (3.0 # mm) (4.0 # rem)
 
 ruleset :: Maybe Ruleset
