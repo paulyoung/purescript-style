@@ -28,16 +28,15 @@ render (Declaration p v) = Property.render p <> ": " <> V.render v <> ";"
 type BackgroundColorValue =
   Variant
     ( V.Color
-    + V.CurrentColor
     + V.Global
     + ()
     )
 
+backgroundColor' :: BackgroundColorValue -> Declaration
+backgroundColor' = Declaration BackgroundColor <<< expand
+
 backgroundColor :: C.Color -> Declaration
-backgroundColor = backgroundColor' <<< V.color
-  where
-  backgroundColor' :: BackgroundColorValue -> Declaration
-  backgroundColor' = Declaration BackgroundColor <<< expand
+backgroundColor = backgroundColor' <<< V.color_
 
 
 type BorderRadiusValue =
@@ -74,19 +73,32 @@ borderTopRightRadius :: BorderRadiusValue -> Declaration
 borderTopRightRadius = Declaration BorderTopRightRadius <<< expand
 
 
-type ColorValue =
+type BoxShadowValue =
   Variant
-    ( V.Color
-    + V.CurrentColor
+    ( V.BoxShadow
     + V.Global
     + ()
     )
 
+boxShadow :: Array V.BoxShadow_ -> Declaration
+boxShadow =
+  Declaration BoxShadow
+    <<< (expand :: BoxShadowValue -> Value)
+    <<< V.boxShadow
+
+
+type ColorValue =
+  Variant
+    ( V.Color
+    + V.Global
+    + ()
+    )
+
+color' :: ColorValue -> Declaration
+color' = Declaration Color <<< expand
+
 color :: C.Color -> Declaration
-color = color' <<< V.color
-  where
-  color' :: ColorValue -> Declaration
-  color' = Declaration Color <<< expand
+color = color' <<< V.color_
 
 
 type FontSizeValue =
@@ -167,28 +179,37 @@ marginTop :: MarginValue -> Declaration
 marginTop = Declaration MarginTop <<< expand
 
 
-outline
+outline'
   :: OutlineWidthValue
   -> OutlineStyleValue
   -> OutlineColorValue
   -> Array Declaration
-outline w s c =
+outline' w s c =
   [ outlineWidth w
   , outlineStyle s
-  , outlineColor c
+  , outlineColor' c
   ]
+
+outline
+  :: OutlineWidthValue
+  -> OutlineStyleValue
+  -> C.Color
+  -> Array Declaration
+outline w s = outline' w s <<< V.color_
 
 type OutlineColorValue =
   Variant
     ( V.Color
-    + V.CurrentColor
     + V.Global
     + V.Invert
     + ()
     )
 
-outlineColor :: OutlineColorValue -> Declaration
-outlineColor = Declaration OutlineColor <<< expand
+outlineColor' :: OutlineColorValue -> Declaration
+outlineColor' = Declaration OutlineColor <<< expand
+
+outlineColor :: C.Color -> Declaration
+outlineColor = outlineColor' <<< V.color_
 
 
 type OutlineStyleValue =

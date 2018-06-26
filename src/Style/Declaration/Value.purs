@@ -4,6 +4,7 @@ import Prelude
 
 import Color (cssStringRGBA)
 import Color as C
+import Data.Array as Array
 import Data.Number.Format as Number
 import Data.Symbol (SProxy(..))
 import Data.Variant (Variant, case_, inj, on)
@@ -14,10 +15,11 @@ type Value =
    ( Auto
    + Bold
    + Bolder
+   + BoxShadow
    + Center
    + Ch
    + Cm
-   + Color
+   + Color_
    + CurrentColor
    + Dashed
    + Dotted
@@ -54,6 +56,7 @@ type Value =
    + Solid
    + Thick
    + Thin
+   + Transparent
    + Unset
    + Vh
    + Vmax
@@ -73,10 +76,11 @@ render =
     # renderAuto
     >>> renderBold
     >>> renderBolder
+    >>> renderBoxShadow
     >>> renderCenter
     >>> renderCh
     >>> renderCm
-    >>> renderColor
+    >>> renderColor_
     >>> renderCurrentColor
     >>> renderDashed
     >>> renderDotted
@@ -99,7 +103,7 @@ render =
     >>> renderMm
     >>> renderNone
     >>> renderNormal
-    >>> renderNumber
+    >>> renderNumber_
     >>> renderOutset
     >>> renderPc
     >>> renderPct
@@ -113,6 +117,7 @@ render =
     >>> renderSolid
     >>> renderThick
     >>> renderThin
+    >>> renderTransparent
     >>> renderUnset
     >>> renderVh
     >>> renderVmax
@@ -134,6 +139,20 @@ type AbsoluteLength r =
   + r
   )
 
+renderAbsoluteLength
+  :: forall v
+   . (Variant v -> String)
+  -> Variant (AbsoluteLength v)
+  -> String
+renderAbsoluteLength =
+  renderCm
+    >>> renderIn
+    >>> renderMm
+    >>> renderPc
+    >>> renderPt
+    >>> renderPx
+
+
 type AbsoluteSize r =
   ( XxSmall
   + XSmall
@@ -145,6 +164,39 @@ type AbsoluteSize r =
   + r
   )
 
+renderAbsoluteSize
+  :: forall v
+   . (Variant v -> String)
+  -> Variant (AbsoluteSize v)
+  -> String
+renderAbsoluteSize =
+  renderXxSmall
+    >>> renderXSmall
+    >>> renderSmall
+    >>> renderMedium
+    >>> renderLarge
+    >>> renderXLarge
+    >>> renderXxLarge
+
+
+type Color r =
+  ( Color_
+  + CurrentColor
+  + Transparent
+  + r
+  )
+
+renderColor
+  :: forall v
+   . (Variant v -> String)
+  -> Variant (Color v)
+  -> String
+renderColor =
+  renderColor_
+    >>> renderCurrentColor
+    >>> renderTransparent
+
+
 type FontRelativeLength r =
   ( Ch
   + Em
@@ -153,17 +205,45 @@ type FontRelativeLength r =
   + r
   )
 
+renderFontRelativeLength
+  :: forall v
+   . (Variant v -> String)
+  -> Variant (FontRelativeLength v)
+  -> String
+renderFontRelativeLength =
+  renderCh
+    >>> renderEm
+    >>> renderEx
+    >>> renderRem
+
+
 type FontWeightKeyword r =
   ( Bold
   + Normal
   + r
   )
 
+renderFontWeightKeyword
+  :: forall v
+   . (Variant v -> String)
+  -> Variant (FontWeightKeyword v)
+  -> String
+renderFontWeightKeyword = renderBold >>> renderNormal
+
+
 type FontWeightKeywordRelative r =
   ( Bolder
   + Lighter
   + r
   )
+
+renderFontWeightKeywordRelative
+  :: forall v
+   . (Variant v -> String)
+  -> Variant (FontWeightKeywordRelative v)
+  -> String
+renderFontWeightKeywordRelative = renderBolder >>> renderLighter
+
 
 type Global r =
   ( Inherit
@@ -172,12 +252,48 @@ type Global r =
   + r
   )
 
+renderGlobal
+  :: forall v
+   . (Variant v -> String)
+  -> Variant (Global v)
+  -> String
+renderGlobal =
+  renderInherit
+    >>> renderInitial
+    >>> renderUnset
+
+
 type Length r =
   ( AbsoluteLength
   + FontRelativeLength
   + ViewportPercentageLength
   + r
   )
+
+renderLength
+  :: forall v
+   . (Variant v -> String)
+  -> Variant (Length v)
+  -> String
+renderLength =
+  renderAbsoluteLength
+    >>> renderFontRelativeLength
+    >>> renderViewportPercentageLength
+
+
+type Length_ r =
+  ( Length
+  + Zero
+  + r
+  )
+
+renderLength_
+  :: forall v
+   . (Variant v -> String)
+  -> Variant (Length_ v)
+  -> String
+renderLength_ = renderLength >>> renderZero
+
 
 type OutlineWidthKeyword r =
   ( Medium
@@ -186,11 +302,30 @@ type OutlineWidthKeyword r =
   + r
   )
 
+renderOutlineWidthKeyword
+  :: forall v
+   . (Variant v -> String)
+  -> Variant (OutlineWidthKeyword v)
+  -> String
+renderOutlineWidthKeyword =
+  renderMedium
+    >>> renderThick
+    >>> renderThin
+
+
 type RelativeSize r =
   ( Smaller
   + Larger
   + r
   )
+
+renderRelativeSize
+  :: forall v
+   . (Variant v -> String)
+  -> Variant (RelativeSize v)
+  -> String
+renderRelativeSize = renderLarger >>> renderSmaller
+
 
 type ViewportPercentageLength r =
   ( Vh
@@ -199,6 +334,17 @@ type ViewportPercentageLength r =
   + Vw
   + r
   )
+
+renderViewportPercentageLength
+  :: forall v
+   . (Variant v -> String)
+  -> Variant (ViewportPercentageLength v)
+  -> String
+renderViewportPercentageLength =
+  renderVh
+    >>> renderVmax
+    >>> renderVmin
+    >>> renderVw
 
 
 type Auto v = (auto :: Unit | v)
@@ -234,6 +380,79 @@ renderBolder :: forall v. (Variant v -> String) -> Variant (Bolder v) -> String
 renderBolder = on _bolder $ const "bolder"
 
 
+type BoxShadow_ =
+  { inset :: Boolean
+  , offsetX :: Variant (Length_ ())
+  , offsetY :: Variant (Length_ ())
+  , blurRadius :: Variant (Length_ ())
+  , spreadRadius :: Variant (Length_ ())
+  , color :: Variant (Color ())
+  }
+
+boxShadow_'
+  :: Boolean
+  -> Variant (Length_ ())
+  -> Variant (Length_ ())
+  -> Variant (Length_ ())
+  -> Variant (Length_ ())
+  -> Variant (Color ())
+  -> BoxShadow_
+boxShadow_' =
+  { inset: _
+  , offsetX: _
+  , offsetY: _
+  , blurRadius: _
+  , spreadRadius: _
+  , color: _
+  }
+
+boxShadow_
+  :: Boolean
+  -> Variant (Length_ ())
+  -> Variant (Length_ ())
+  -> Variant (Length_ ())
+  -> Variant (Length_ ())
+  -> C.Color
+  -> BoxShadow_
+boxShadow_ i x y b s = boxShadow_' i x y b s <<< color_
+
+
+type BoxShadow v = (boxShadow :: Array BoxShadow_ | v)
+
+_boxShadow = SProxy :: SProxy "boxShadow"
+
+boxShadow :: forall v. Array BoxShadow_ -> Variant (BoxShadow v)
+boxShadow = inj _boxShadow
+
+renderBoxShadow
+  :: forall v
+   . (Variant v -> String)
+  -> Variant (BoxShadow v)
+  -> String
+renderBoxShadow = on _boxShadow renderShadows
+  where
+
+  renderShadows :: Array BoxShadow_ -> String
+  renderShadows = Array.intercalate ", " <<< map renderShadow
+
+  renderShadow :: BoxShadow_ -> String
+  renderShadow shadow =
+    shadowInset <> Array.intercalate " "
+      [ renderLength_ case_ $ shadow.offsetX
+      , renderLength_ case_ $ shadow.offsetY
+      , renderLength_ case_ $ shadow.blurRadius
+      , renderLength_ case_ $ shadow.spreadRadius
+      , renderColor case_ $ shadow.color
+      ]
+
+    where
+
+    shadowInset :: String
+    shadowInset
+      | shadow.inset = "inset "
+      | otherwise = ""
+
+
 type Center v = (center :: Unit | v)
 
 _center = SProxy :: SProxy "center"
@@ -245,15 +464,15 @@ renderCenter :: forall v. (Variant v -> String) -> Variant (Center v) -> String
 renderCenter = on _center $ const "center"
 
 
-type Color v = (color :: C.Color | v)
+type Color_ v = (color_ :: C.Color | v)
 
-_color = SProxy :: SProxy "color"
+_color_ = SProxy :: SProxy "color_"
 
-color :: forall v. C.Color -> Variant (Color v)
-color = inj _color
+color_ :: forall v. C.Color -> Variant (Color v)
+color_ = inj _color_
 
-renderColor :: forall v. (Variant v -> String) -> Variant (Color v) -> String
-renderColor = on _color cssStringRGBA
+renderColor_ :: forall v. (Variant v -> String) -> Variant (Color_ v) -> String
+renderColor_ = on _color_ cssStringRGBA
 
 
 type CurrentColor v = (currentColor :: Unit | v)
@@ -520,15 +739,15 @@ renderNormal :: forall v. (Variant v -> String) -> Variant (Normal v) -> String
 renderNormal = on _normal $ const "normal"
 
 
-type Number_ v = (number :: Number | v)
+type Number_ v = (number_ :: Number | v)
 
-_number = SProxy :: SProxy "number"
+_number_ = SProxy :: SProxy "number_"
 
-number :: forall v. Number -> Variant (Number_ v)
-number = inj _number
+number_ :: forall v. Number -> Variant (Number_ v)
+number_ = inj _number_
 
-renderNumber :: forall v. (Variant v -> String) -> Variant (Number_ v) -> String
-renderNumber = on _number Number.toString
+renderNumber_ :: forall v. (Variant v -> String) -> Variant (Number_ v) -> String
+renderNumber_ = on _number_ Number.toString
 
 
 type Outset v = (outset :: Unit | v)
@@ -672,6 +891,17 @@ thin = inj _thin unit
 
 renderThin :: forall v. (Variant v -> String) -> Variant (Thin v) -> String
 renderThin = on _thin $ const "thin"
+
+
+type Transparent v = (transparent :: Unit | v)
+
+_transparent = SProxy :: SProxy "transparent"
+
+transparent :: forall v. Variant (Transparent v)
+transparent = inj _transparent unit
+
+renderTransparent :: forall v. (Variant v -> String) -> Variant (Transparent v) -> String
+renderTransparent = on _transparent $ const "transparent"
 
 
 type Unset v = (unset :: Unit | v)
