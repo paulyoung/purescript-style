@@ -179,6 +179,24 @@ renderAbsoluteSize =
     >>> renderXxLarge
 
 
+type BorderWidthKeyword r =
+  ( Medium
+  + Thick
+  + Thin
+  + r
+  )
+
+renderBorderWidthKeyword
+  :: forall v
+   . (Variant v -> String)
+  -> Variant (BorderWidthKeyword v)
+  -> String
+renderBorderWidthKeyword =
+  renderMedium
+    >>> renderThick
+    >>> renderThin
+
+
 type Color r =
   ( Color_
   + CurrentColor
@@ -638,6 +656,17 @@ groove = inj _groove unit
 
 renderGroove :: forall v. (Variant v -> String) -> Variant (Groove v) -> String
 renderGroove = on _groove $ const "groove"
+
+
+type Hidden v = (hidden :: Unit | v)
+
+_hidden = SProxy :: SProxy "hidden"
+
+hidden :: forall v. Variant (Hidden v)
+hidden = inj _hidden unit
+
+renderHidden :: forall v. (Variant v -> String) -> Variant (Hidden v) -> String
+renderHidden = on _hidden $ const "hidden"
 
 
 type Inset v = (inset :: Unit | v)
