@@ -44,6 +44,7 @@ type BorderRadiusValue =
     ( V.Global
     + V.Length
     + V.Pct
+    + V.Zero
     + ()
     )
 
@@ -237,6 +238,7 @@ type OutlineWidthValue =
     ( V.Global
     + V.Length
     + V.OutlineWidthKeyword
+    + V.Zero
     + ()
     )
 
