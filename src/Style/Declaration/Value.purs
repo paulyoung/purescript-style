@@ -27,6 +27,7 @@ type Value =
    + Em
    + Ex
    + Groove
+   + Hidden
    + In
    + Inherit
    + Initial
@@ -88,6 +89,7 @@ render =
     >>> renderEm
     >>> renderEx
     >>> renderGroove
+    >>> renderHidden
     >>> renderIn
     >>> renderInherit
     >>> renderInitial
