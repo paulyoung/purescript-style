@@ -39,6 +39,87 @@ backgroundColor :: C.Color -> Declaration
 backgroundColor = backgroundColor' <<< V.color_
 
 
+-- border'
+--   :: BorderWidthValue
+--   -> BorderStyleValue
+--   -> BorderColorValue
+--   -> Array Declaration
+-- border' w s c =
+--   [ borderWidth w
+--   , borderStyle s
+--   , borderColor' c
+--   ]
+
+-- border
+--   :: BorderWidthValue
+--   -> BorderStyleValue
+--   -> C.Color
+--   -> Array Declaration
+-- border w s = border' w s <<< V.color_
+
+
+type BorderColorValue =
+  Variant
+    ( V.Color
+    + V.Global
+    + ()
+    )
+
+borderColor'
+  :: BorderColorValue
+  -> BorderColorValue
+  -> BorderColorValue
+  -> BorderColorValue
+  -> Array Declaration
+borderColor' t r b l =
+  [ borderTopColor' t
+  , borderRightColor' r
+  , borderBottomColor' b
+  , borderLeftColor' l
+  ]
+
+borderColor
+  :: C.Color
+  -> C.Color
+  -> C.Color
+  -> C.Color
+  -> Array Declaration
+borderColor t r b l =
+  [ borderTopColor t
+  , borderRightColor r
+  , borderBottomColor b
+  , borderLeftColor l
+  ]
+
+
+borderTopColor' :: BorderColorValue -> Declaration
+borderTopColor' = Declaration BorderTopColor <<< expand
+
+borderTopColor :: C.Color -> Declaration
+borderTopColor = borderTopColor' <<< V.color_
+
+
+borderRightColor' :: BorderColorValue -> Declaration
+borderRightColor' = Declaration BorderRightColor <<< expand
+
+borderRightColor :: C.Color -> Declaration
+borderRightColor = borderRightColor' <<< V.color_
+
+
+borderBottomColor' :: BorderColorValue -> Declaration
+borderBottomColor' = Declaration BorderBottomColor <<< expand
+
+borderBottomColor :: C.Color -> Declaration
+borderBottomColor = borderBottomColor' <<< V.color_
+
+
+borderLeftColor' :: BorderColorValue -> Declaration
+borderLeftColor' = Declaration BorderLeftColor <<< expand
+
+borderLeftColor :: C.Color -> Declaration
+borderLeftColor = borderLeftColor' <<< V.color_
+
+
 type BorderRadiusValue =
   Variant
     ( V.Global
