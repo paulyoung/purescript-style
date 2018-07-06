@@ -15,6 +15,11 @@ type Value =
    ( Auto
    + Bold
    + Bolder
+   + Border
+   -- + BorderTop
+   -- + BorderRight
+   -- + BorderBottom
+   -- + BorderLeft
    + BoxShadow
    + Center
    + Ch
@@ -77,6 +82,11 @@ render =
     # renderAuto
     >>> renderBold
     >>> renderBolder
+    >>> renderBorder
+    -- >>> renderBorderTop
+    -- >>> renderBorderRight
+    -- >>> renderBorderBottom
+    -- >>> renderBorderLeft
     >>> renderBoxShadow
     >>> renderCenter
     >>> renderCh
@@ -398,6 +408,31 @@ bolder = inj _bolder unit
 
 renderBolder :: forall v. (Variant v -> String) -> Variant (Bolder v) -> String
 renderBolder = on _bolder $ const "bolder"
+
+
+type Border_ =
+  -- FIXME: move from Declaration module
+  { width :: BorderWidthValue
+  , style :: BorderStyleValue
+  , color :: BorderColorValue
+  }
+
+type Border v = (border :: Border_ | v)
+
+_border = SProxy :: SProxy "border"
+
+border :: forall v. Border_ -> Variant (Border v)
+border = inj _border
+
+renderBorder
+  :: forall v
+   . (Variant v -> String)
+  -> Variant (Border v)
+  -> String
+renderBorder = on _border \b ->
+  Array.intercalate " "
+    [ renderColor case_ $ b.color
+    ]
 
 
 type BoxShadow_ =

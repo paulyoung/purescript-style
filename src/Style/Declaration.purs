@@ -39,22 +39,31 @@ backgroundColor :: C.Color -> Declaration
 backgroundColor = backgroundColor' <<< V.color_
 
 
+-- border'
+--   :: BorderWidthValue
+--   -> BorderStyleValue
+--   -> BorderColorValue
+--   -> Array Declaration
+-- border' w s c =
+--   borderWidth w w w w
+--     <> borderStyle s s s s
+--     <> borderColor' c c c c
+
 border'
   :: BorderWidthValue
   -> BorderStyleValue
   -> BorderColorValue
   -> Array Declaration
-border' w s c =
-  borderWidth w w w w
-    <> borderStyle s s s s
-    <> borderColor' c c c c
+border' =
+  Declaration Border <<< expand <<< { width: _, style: _, color: _ }
+  -- Declaration Border $ expand $ V.border { width: w, style: s, color: c }
 
-border
-  :: BorderWidthValue
-  -> BorderStyleValue
-  -> C.Color
-  -> Array Declaration
-border w s = border' w s <<< V.color_
+-- border
+--   :: BorderWidthValue
+--   -> BorderStyleValue
+--   -> C.Color
+--   -> Array Declaration
+-- border w s = border' w s <<< V.color_
 
 
 borderTop'

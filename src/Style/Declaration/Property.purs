@@ -4,6 +4,11 @@ import Prelude
 
 data Property
   = BackgroundColor
+  | Border
+  | BorderTop
+  | BorderRight
+  | BorderBottom
+  | BorderLeft
   | BorderBottomColor
   | BorderLeftColor
   | BorderRightColor
@@ -45,6 +50,11 @@ derive instance ordProperty :: Ord Property
 instance showProperty :: Show Property where
   show = case _ of
     BackgroundColor -> "BackgroundColor"
+    Border -> "Border"
+    BorderTop -> "BorderTop"
+    BorderRight -> "BorderRight"
+    BorderBottom -> "BorderBottom"
+    BorderLeft -> "BorderLeft"
     BorderBottomColor -> "BorderBottomColor"
     BorderLeftColor -> "BorderLeftColor"
     BorderRightColor -> "BorderRightColor"
@@ -83,6 +93,11 @@ instance showProperty :: Show Property where
 render :: Property -> String
 render = case _ of
   BackgroundColor -> "background-color"
+  Border -> "border"
+  BorderTop -> "border-top"
+  BorderRight -> "border-right"
+  BorderBottom -> "border-bottom"
+  BorderLeft -> "border-left"
   BorderBottomColor -> "border-bottom-color"
   BorderLeftColor -> "border-left-color"
   BorderRightColor -> "border-right-color"
