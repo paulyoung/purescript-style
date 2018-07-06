@@ -38,6 +38,7 @@ declarations = fromArray $
   , CSS.textAlign center
   , CSS.width auto
   ]
+  <> CSS.border (1.0 # px) solid gold
   <> CSS.borderRadius (8.0 # px) (8.0 # px) (8.0 # px) (8.0 # px)
   <> CSS.margin auto (8.0 # px) (50.0 # pct) zero
   <> CSS.outline' (1.0 # px) solid invert
