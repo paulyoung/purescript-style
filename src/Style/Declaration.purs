@@ -45,10 +45,9 @@ border'
   -> BorderColorValue
   -> Array Declaration
 border' w s c =
-  [ borderWidth w
-  , borderStyle s
-  , borderColor' c
-  ]
+  borderWidth w w w w
+    <> borderStyle s s s s
+    <> borderColor' c c c c
 
 border
   :: BorderWidthValue
