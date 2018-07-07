@@ -16,10 +16,6 @@ type Value =
    + Bold
    + Bolder
    + Border
-   -- + BorderTop
-   -- + BorderRight
-   -- + BorderBottom
-   -- + BorderLeft
    + BoxShadow
    + Center
    + Ch
@@ -83,10 +79,6 @@ render =
     >>> renderBold
     >>> renderBolder
     >>> renderBorder
-    -- >>> renderBorderTop
-    -- >>> renderBorderRight
-    -- >>> renderBorderBottom
-    -- >>> renderBorderLeft
     >>> renderBoxShadow
     >>> renderCenter
     >>> renderCh
