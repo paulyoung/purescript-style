@@ -4,6 +4,18 @@ import Prelude
 
 data Property
   = BackgroundColor
+  | BorderBottomColor
+  | BorderLeftColor
+  | BorderRightColor
+  | BorderTopColor
+  | BorderBottomStyle
+  | BorderLeftStyle
+  | BorderRightStyle
+  | BorderTopStyle
+  | BorderBottomWidth
+  | BorderLeftWidth
+  | BorderRightWidth
+  | BorderTopWidth
   | BorderBottomLeftRadius
   | BorderBottomRightRadius
   | BorderTopLeftRadius
@@ -33,6 +45,18 @@ derive instance ordProperty :: Ord Property
 instance showProperty :: Show Property where
   show = case _ of
     BackgroundColor -> "BackgroundColor"
+    BorderBottomColor -> "BorderBottomColor"
+    BorderLeftColor -> "BorderLeftColor"
+    BorderRightColor -> "BorderRightColor"
+    BorderTopColor -> "BorderTopColor"
+    BorderBottomStyle -> "BorderBottomStyle"
+    BorderLeftStyle -> "BorderLeftStyle"
+    BorderRightStyle -> "BorderRightStyle"
+    BorderTopStyle -> "BorderTopStyle"
+    BorderBottomWidth -> "BorderBottomWidth"
+    BorderLeftWidth -> "BorderLeftWidth"
+    BorderRightWidth -> "BorderRightWidth"
+    BorderTopWidth -> "BorderTopWidth"
     BorderBottomLeftRadius -> "BorderBottomLeftRadius"
     BorderBottomRightRadius -> "BorderBottomRightRadius"
     BorderTopLeftRadius -> "BorderTopLeftRadius"
@@ -59,6 +83,18 @@ instance showProperty :: Show Property where
 render :: Property -> String
 render = case _ of
   BackgroundColor -> "background-color"
+  BorderBottomColor -> "border-bottom-color"
+  BorderLeftColor -> "border-left-color"
+  BorderRightColor -> "border-right-color"
+  BorderTopColor -> "border-top-color"
+  BorderBottomStyle -> "border-bottom-style"
+  BorderLeftStyle -> "border-left-style"
+  BorderRightStyle -> "border-right-style"
+  BorderTopStyle -> "border-top-style"
+  BorderBottomWidth -> "border-bottom-width"
+  BorderLeftWidth -> "border-left-width"
+  BorderRightWidth -> "border-right-width"
+  BorderTopWidth -> "border-top-width"
   BorderBottomLeftRadius -> "border-bottom-left-radius"
   BorderBottomRightRadius -> "border-bottom-right-radius"
   BorderTopLeftRadius -> "border-top-left-radius"
