@@ -39,13 +39,20 @@ backgroundColor :: C.Color -> Declaration
 backgroundColor = backgroundColor' <<< V.color_
 
 
+mkBorder
+  :: Property
+  -> V.BorderWidthValue
+  -> V.BorderStyleValue
+  -> V.BorderColorValue
+  -> Declaration
+mkBorder p w s c = Declaration p $ V.border { width: w, style: s, color: c }
+
 border'
   :: V.BorderWidthValue
   -> V.BorderStyleValue
   -> V.BorderColorValue
   -> Declaration
-border' w s c =
-  Declaration Border $ V.border { width: w, style: s, color: c }
+border' = mkBorder Border
 
 border
   :: V.BorderWidthValue
@@ -59,18 +66,14 @@ borderTop'
   :: V.BorderWidthValue
   -> V.BorderStyleValue
   -> V.BorderColorValue
-  -> Array Declaration
-borderTop' w s c =
-  [ borderTopWidth w
-  , borderTopStyle s
-  , borderTopColor' c
-  ]
+  -> Declaration
+borderTop' = mkBorder BorderTop
 
 borderTop
   :: V.BorderWidthValue
   -> V.BorderStyleValue
   -> C.Color
-  -> Array Declaration
+  -> Declaration
 borderTop w s = borderTop' w s <<< V.color_
 
 
@@ -78,18 +81,14 @@ borderRight'
   :: V.BorderWidthValue
   -> V.BorderStyleValue
   -> V.BorderColorValue
-  -> Array Declaration
-borderRight' w s c =
-  [ borderRightWidth w
-  , borderRightStyle s
-  , borderRightColor' c
-  ]
+  -> Declaration
+borderRight' = mkBorder BorderRight
 
 borderRight
   :: V.BorderWidthValue
   -> V.BorderStyleValue
   -> C.Color
-  -> Array Declaration
+  -> Declaration
 borderRight w s = borderRight' w s <<< V.color_
 
 
@@ -97,18 +96,14 @@ borderBottom'
   :: V.BorderWidthValue
   -> V.BorderStyleValue
   -> V.BorderColorValue
-  -> Array Declaration
-borderBottom' w s c =
-  [ borderBottomWidth w
-  , borderBottomStyle s
-  , borderBottomColor' c
-  ]
+  -> Declaration
+borderBottom' = mkBorder BorderBottom
 
 borderBottom
   :: V.BorderWidthValue
   -> V.BorderStyleValue
   -> C.Color
-  -> Array Declaration
+  -> Declaration
 borderBottom w s = borderBottom' w s <<< V.color_
 
 
@@ -116,18 +111,14 @@ borderLeft'
   :: V.BorderWidthValue
   -> V.BorderStyleValue
   -> V.BorderColorValue
-  -> Array Declaration
-borderLeft' w s c =
-  [ borderLeftWidth w
-  , borderLeftStyle s
-  , borderLeftColor' c
-  ]
+  -> Declaration
+borderLeft' = mkBorder BorderLeft
 
 borderLeft
   :: V.BorderWidthValue
   -> V.BorderStyleValue
   -> C.Color
-  -> Array Declaration
+  -> Declaration
 borderLeft w s = borderLeft' w s <<< V.color_
 
 

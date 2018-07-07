@@ -3,7 +3,7 @@ module Test.Main where
 import Prelude hiding (zero)
 
 import Color (black, rgb)
-import Color.Scheme.HTML (red)
+import Color.Scheme.HTML (red, silver)
 import Color.Scheme.X11 (gold)
 import Data.Array.NonEmpty (NonEmptyArray, fromArray)
 import Data.Maybe (Maybe, maybe)
@@ -11,7 +11,7 @@ import Effect (Effect)
 import Effect.Console (log)
 import Style.Declaration (Declaration)
 import Style.Declaration as CSS
-import Style.Declaration.Value (auto, boxShadow_, boxShadow_', center, currentColor, em, in_, invert, mm, number_, pct, px, rem, solid, zero)
+import Style.Declaration.Value (auto, boxShadow_, boxShadow_', center, currentColor, double, em, in_, invert, mm, number_, pct, px, rem, solid, zero)
 import Style.Render (inline)
 import Style.Ruleset (Ruleset(..))
 import Style.Ruleset as Ruleset
@@ -28,6 +28,8 @@ declarations :: Maybe (NonEmptyArray Declaration)
 declarations = fromArray $
   [ CSS.backgroundColor $ rgb 127 127 127
   , CSS.border (1.0 # px) solid gold
+  , CSS.borderTop (2.0 # px) double silver
+  , CSS.borderTopWidth (3.0 # px)
   , CSS.boxShadow
       [ boxShadow_ false (3.0 # px) (3.0 # px) zero zero red
       , boxShadow_' true (-1.0 # em) zero zero (0.4 # em) currentColor
