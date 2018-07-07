@@ -2,8 +2,8 @@ module Test.Main where
 
 import Prelude hiding (zero)
 
-import Color (black, rgb)
-import Color.Scheme.HTML (red, silver)
+import Color (black, rgb, white)
+import Color.Scheme.HTML (blue, green, red, silver)
 import Color.Scheme.X11 (gold)
 import Data.Array.NonEmpty (NonEmptyArray, fromArray)
 import Data.Maybe (Maybe, maybe)
@@ -11,7 +11,7 @@ import Effect (Effect)
 import Effect.Console (log)
 import Style.Declaration (Declaration)
 import Style.Declaration as CSS
-import Style.Declaration.Value (auto, boxShadow_, boxShadow_', center, currentColor, double, em, in_, invert, mm, number_, pct, px, rem, solid, zero)
+import Style.Declaration.Value (auto, boxShadow_, boxShadow_', center, currentColor, dashed, dotted, double, em, groove, hidden, in_, inset, invert, mm, none, number_, outset, pct, px, rem, ridge, solid, zero)
 import Style.Render (inline)
 import Style.Ruleset (Ruleset(..))
 import Style.Ruleset as Ruleset
@@ -27,10 +27,18 @@ selectors = fromArray
 declarations :: Maybe (NonEmptyArray Declaration)
 declarations = fromArray $
   [ CSS.backgroundColor $ rgb 127 127 127
+  , CSS.border' (1.0 # px) solid currentColor
   , CSS.border (1.0 # px) solid gold
-  , CSS.borderTop (2.0 # px) double silver
-  , CSS.borderTopWidth $ 3.0 # px
-  , CSS.borderWidth $ 2.0 # px
+  , CSS.borderTop (2.0 # px) dashed silver
+  , CSS.borderRight (3.0 # px) dotted red
+  , CSS.borderBottom (4.0 # px) double green
+  , CSS.borderBottom (5.0 # px) groove blue
+  , CSS.borderWidth (6.0 # px) (2.0 # px) (3.0 # px) (4.0 # px)
+  , CSS.borderStyle hidden inset none outset
+  -- , CSS.borderColor red orange yellow green
+  , CSS.borderTopWidth $ 7.0 # px
+  , CSS.borderTopStyle ridge
+  , CSS.borderTopColor white
   , CSS.boxShadow
       [ boxShadow_ false (3.0 # px) (3.0 # px) zero zero red
       , boxShadow_' true (-1.0 # em) zero zero (0.4 # em) currentColor
@@ -41,9 +49,9 @@ declarations = fromArray $
   , CSS.height $ 100.0 # pct
   , CSS.outline' (1.0 # px) solid invert
   , CSS.outline (1.0 # px) solid gold
-  , CSS.outlineColor gold
-  , CSS.outlineStyle solid
-  , CSS.outlineWidth $ 1.0 # px
+  -- , CSS.outlineWidth $ 1.0 # px
+  -- , CSS.outlineStyle solid
+  -- , CSS.outlineColor gold
   , CSS.textAlign center
   , CSS.width auto
   ]

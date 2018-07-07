@@ -16,6 +16,8 @@ type Value =
    + Bold
    + Bolder
    + Border
+   + BorderStyle
+   + BorderWidth
    + BoxShadow
    + Center
    + Ch
@@ -45,6 +47,7 @@ type Value =
    + None
    + Normal
    + Number_
+   + Outline
    + Outset
    + Pc
    + Pct
@@ -79,6 +82,8 @@ render =
     >>> renderBold
     >>> renderBolder
     >>> renderBorder
+    >>> renderBorderStyle
+    >>> renderBorderWidth
     >>> renderBoxShadow
     >>> renderCenter
     >>> renderCh
@@ -108,6 +113,7 @@ render =
     >>> renderNone
     >>> renderNormal
     >>> renderNumber_
+    >>> renderOutline
     >>> renderOutset
     >>> renderPc
     >>> renderPct
@@ -334,17 +340,17 @@ renderBolder :: forall v. (Variant v -> String) -> Variant (Bolder v) -> String
 renderBolder = on _bolder $ const "bolder"
 
 
-type Border_ =
+type BorderRep =
   { width :: BorderWidthValue
   , style :: BorderStyleValue
   , color :: BorderColorValue
   }
 
-type Border v = (border :: Border_ | v)
+type Border v = (border :: BorderRep | v)
 
 _border = SProxy :: SProxy "border"
 
-border :: forall v. Border_ -> Variant (Border v)
+border :: forall v. BorderRep -> Variant (Border v)
 border = inj _border
 
 renderBorder
@@ -354,29 +360,36 @@ renderBorder
   -> String
 renderBorder = on _border \b ->
   Array.intercalate " "
-    [ renderBorderWidth case_ $ b.width
-    , renderBorderStyle case_ $ b.style
+    [ renderBorderWidth' case_ $ b.width
+    , renderBorderStyle' case_ $ b.style
     , renderBorderColor case_ $ b.color
     ]
 
 
-type BorderColor r =
+type BorderColorFields r =
   ( Color
   + Global
   + r
   )
 
-type BorderColorValue = Variant (BorderColor ())
+type BorderColorValue = Variant (BorderColorFields ())
+
+-- type BorderColor v = (borderColor :: BorderColorFields () | v)
+
+-- _borderColor = SProxy :: SProxy "borderColor"
+
+-- borderColor :: forall v. _ -> Variant (BorderColorFields v)
+-- borderColor = inj _borderColor
 
 renderBorderColor
   :: forall v
    . (Variant v -> String)
-  -> Variant (BorderColor v)
+  -> Variant (BorderColorFields v)
   -> String
 renderBorderColor = renderColor >>> renderGlobal
 
 
-type BorderStyle r =
+type BorderStyleFields r =
   ( Dashed
   + Dotted
   + Double
@@ -391,14 +404,28 @@ type BorderStyle r =
   + r
   )
 
-type BorderStyleValue = Variant (BorderStyle ())
+type BorderStyleValue = Variant (BorderStyleFields ())
 
-renderBorderStyle
+type BorderStyleRep =
+  { top :: BorderStyleValue
+  , right :: BorderStyleValue
+  , bottom :: BorderStyleValue
+  , left :: BorderStyleValue
+  }
+
+type BorderStyle v = (borderStyle :: BorderStyleRep | v)
+
+_borderStyle = SProxy :: SProxy "borderStyle"
+
+borderStyle :: forall v. BorderStyleRep -> Variant (BorderStyle v)
+borderStyle = inj _borderStyle
+
+renderBorderStyle'
   :: forall v
    . (Variant v -> String)
-  -> Variant (BorderStyle v)
+  -> Variant (BorderStyleFields v)
   -> String
-renderBorderStyle =
+renderBorderStyle' =
   renderDashed
     >>> renderDotted
     >>> renderDouble
@@ -411,30 +438,69 @@ renderBorderStyle =
     >>> renderRidge
     >>> renderSolid
 
+renderBorderStyle
+  :: forall v
+   . (Variant v -> String)
+  -> Variant (BorderStyle v)
+  -> String
+renderBorderStyle = on _borderStyle \s ->
+  Array.intercalate " "
+    [ renderBorderStyle' case_ $ s.top
+    , renderBorderStyle' case_ $ s.right
+    , renderBorderStyle' case_ $ s.bottom
+    , renderBorderStyle' case_ $ s.left
+    ]
 
-type BorderWidth r =
+
+type BorderWidthFields r =
   ( Global
   + Length
-  + BorderWidthKeyword
+  + BorderWidthKeywordFields
   + Zero
   + r
   )
 
-type BorderWidthValue = Variant (BorderWidth ())
+type BorderWidthValue = Variant (BorderWidthFields ())
+
+type BorderWidthRep =
+  { top :: BorderWidthValue
+  , right :: BorderWidthValue
+  , bottom :: BorderWidthValue
+  , left :: BorderWidthValue
+  }
+
+type BorderWidth v = (borderWidth :: BorderWidthRep | v)
+
+_borderWidth = SProxy :: SProxy "borderWidth"
+
+borderWidth :: forall v. BorderWidthRep -> Variant (BorderWidth v)
+borderWidth = inj _borderWidth
+
+renderBorderWidth'
+  :: forall v
+   . (Variant v -> String)
+  -> Variant (BorderWidthFields v)
+  -> String
+renderBorderWidth' =
+  renderBorderWidthKeyword
+    >>> renderGlobal
+    >>> renderLength
+    >>> renderZero
 
 renderBorderWidth
   :: forall v
    . (Variant v -> String)
   -> Variant (BorderWidth v)
   -> String
-renderBorderWidth =
-  renderBorderWidthKeyword
-    >>> renderGlobal
-    >>> renderLength
-    >>> renderZero
+renderBorderWidth = on _borderWidth \s ->
+  Array.intercalate " "
+    [ renderBorderWidth' case_ $ s.top
+    , renderBorderWidth' case_ $ s.right
+    , renderBorderWidth' case_ $ s.bottom
+    , renderBorderWidth' case_ $ s.left
+    ]
 
-
-type BorderWidthKeyword r =
+type BorderWidthKeywordFields r =
   ( Medium
   + Thick
   + Thin
@@ -444,7 +510,7 @@ type BorderWidthKeyword r =
 renderBorderWidthKeyword
   :: forall v
    . (Variant v -> String)
-  -> Variant (BorderWidthKeyword v)
+  -> Variant (BorderWidthKeywordFields v)
   -> String
 renderBorderWidthKeyword =
   renderMedium

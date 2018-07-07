@@ -5,6 +5,9 @@ import Prelude
 data Property
   = BackgroundColor
   | Border
+  | BorderColor
+  | BorderStyle
+  | BorderWidth
   | BorderTop
   | BorderRight
   | BorderBottom
@@ -52,6 +55,9 @@ instance showProperty :: Show Property where
   show = case _ of
     BackgroundColor -> "BackgroundColor"
     Border -> "Border"
+    BorderColor -> "BorderColor"
+    BorderStyle -> "BorderStyle"
+    BorderWidth -> "BorderWidth"
     BorderTop -> "BorderTop"
     BorderRight -> "BorderRight"
     BorderBottom -> "BorderBottom"
@@ -96,6 +102,9 @@ render :: Property -> String
 render = case _ of
   BackgroundColor -> "background-color"
   Border -> "border"
+  BorderColor -> "border-color"
+  BorderStyle -> "border-style"
+  BorderWidth -> "border-width"
   BorderTop -> "border-top"
   BorderRight -> "border-right"
   BorderBottom -> "border-bottom"

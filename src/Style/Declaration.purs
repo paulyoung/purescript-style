@@ -25,6 +25,29 @@ render :: Declaration -> String
 render (Declaration p v) = Property.render p <> ": " <> V.render v <> ";"
 
 
+wsc
+  :: forall w s c
+   . Property
+  -> ({ width :: w, style :: s, color :: c } -> Value)
+  -> w
+  -> s
+  -> c
+  -> Declaration
+wsc p v w s c = Declaration p $ v { width: w, style: s, color: c }
+
+trbl
+  :: forall a
+   . Property
+  -> ({ top :: a, right :: a, bottom :: a, left :: a } -> Value)
+  -> a
+  -> a
+  -> a
+  -> a
+  -> Declaration
+trbl p v t r b l =
+  Declaration p $ v { top: t, right: r, bottom: b, left: l }
+
+
 type BackgroundColorValue =
   Variant
     ( V.Color
@@ -39,20 +62,12 @@ backgroundColor :: C.Color -> Declaration
 backgroundColor = backgroundColor' <<< V.color_
 
 
-mkBorder
-  :: Property
-  -> V.BorderWidthValue
-  -> V.BorderStyleValue
-  -> V.BorderColorValue
-  -> Declaration
-mkBorder p w s c = Declaration p $ V.border { width: w, style: s, color: c }
-
 border'
   :: V.BorderWidthValue
   -> V.BorderStyleValue
   -> V.BorderColorValue
   -> Declaration
-border' = mkBorder Border
+border' = wsc Border V.border
 
 border
   :: V.BorderWidthValue
@@ -67,7 +82,7 @@ borderTop'
   -> V.BorderStyleValue
   -> V.BorderColorValue
   -> Declaration
-borderTop' = mkBorder BorderTop
+borderTop' = wsc BorderTop V.border
 
 borderTop
   :: V.BorderWidthValue
@@ -82,7 +97,7 @@ borderRight'
   -> V.BorderStyleValue
   -> V.BorderColorValue
   -> Declaration
-borderRight' = mkBorder BorderRight
+borderRight' = wsc BorderRight V.border
 
 borderRight
   :: V.BorderWidthValue
@@ -97,7 +112,7 @@ borderBottom'
   -> V.BorderStyleValue
   -> V.BorderColorValue
   -> Declaration
-borderBottom' = mkBorder BorderBottom
+borderBottom' = wsc BorderBottom V.border
 
 borderBottom
   :: V.BorderWidthValue
@@ -112,7 +127,7 @@ borderLeft'
   -> V.BorderStyleValue
   -> V.BorderColorValue
   -> Declaration
-borderLeft' = mkBorder BorderLeft
+borderLeft' = wsc BorderLeft V.border
 
 borderLeft
   :: V.BorderWidthValue
@@ -122,31 +137,22 @@ borderLeft
 borderLeft w s = borderLeft' w s <<< V.color_
 
 
-borderColor'
-  :: V.BorderColorValue
-  -> V.BorderColorValue
-  -> V.BorderColorValue
-  -> V.BorderColorValue
-  -> Array Declaration
-borderColor' t r b l =
-  [ borderTopColor' t
-  , borderRightColor' r
-  , borderBottomColor' b
-  , borderLeftColor' l
-  ]
+-- borderColor'
+--   :: V.BorderColorValue
+--   -> V.BorderColorValue
+--   -> V.BorderColorValue
+--   -> V.BorderColorValue
+--   -> Declaration
+-- borderColor' = Declaration BorderColor <<< V.borderColor
 
-borderColor
-  :: C.Color
-  -> C.Color
-  -> C.Color
-  -> C.Color
-  -> Array Declaration
-borderColor t r b l =
-  [ borderTopColor t
-  , borderRightColor r
-  , borderBottomColor b
-  , borderLeftColor l
-  ]
+-- borderColor
+--   :: C.Color
+--   -> C.Color
+--   -> C.Color
+--   -> C.Color
+--   -> Array Declaration
+-- borderColor t r b l =
+--   borderColor' (V.color_ t) (V.color_ r) (V.color_ b) (V.color_ l)
 
 
 borderTopColor' :: V.BorderColorValue -> Declaration
@@ -182,13 +188,8 @@ borderStyle
   -> V.BorderStyleValue
   -> V.BorderStyleValue
   -> V.BorderStyleValue
-  -> Array Declaration
-borderStyle t r b l =
-  [ borderTopStyle t
-  , borderRightStyle r
-  , borderBottomStyle b
-  , borderLeftStyle l
-  ]
+  -> Declaration
+borderStyle = trbl BorderStyle V.borderStyle
 
 borderTopStyle :: V.BorderStyleValue -> Declaration
 borderTopStyle = Declaration BorderTopStyle <<< expand
@@ -208,13 +209,8 @@ borderWidth
   -> V.BorderWidthValue
   -> V.BorderWidthValue
   -> V.BorderWidthValue
-  -> Array Declaration
-borderWidth t r b l =
-  [ borderTopWidth t
-  , borderRightWidth r
-  , borderBottomWidth b
-  , borderLeftWidth l
-  ]
+  -> Declaration
+borderWidth = trbl BorderWidth V.borderWidth
 
 borderTopWidth :: V.BorderWidthValue -> Declaration
 borderTopWidth = Declaration BorderTopWidth <<< expand
