@@ -137,22 +137,22 @@ borderLeft
 borderLeft w s = borderLeft' w s <<< V.color_
 
 
--- borderColor'
---   :: V.BorderColorValue
---   -> V.BorderColorValue
---   -> V.BorderColorValue
---   -> V.BorderColorValue
---   -> Declaration
--- borderColor' = Declaration BorderColor <<< V.borderColor
+borderColor'
+  :: V.BorderColorValue
+  -> V.BorderColorValue
+  -> V.BorderColorValue
+  -> V.BorderColorValue
+  -> Declaration
+borderColor' = trbl BorderColor V.borderColor
 
--- borderColor
---   :: C.Color
---   -> C.Color
---   -> C.Color
---   -> C.Color
---   -> Array Declaration
--- borderColor t r b l =
---   borderColor' (V.color_ t) (V.color_ r) (V.color_ b) (V.color_ l)
+borderColor
+  :: C.Color
+  -> C.Color
+  -> C.Color
+  -> C.Color
+  -> Declaration
+borderColor t r b l =
+  borderColor' (V.color_ t) (V.color_ r) (V.color_ b) (V.color_ l)
 
 
 borderTopColor' :: V.BorderColorValue -> Declaration

@@ -3,8 +3,8 @@ module Test.Main where
 import Prelude hiding (zero)
 
 import Color (black, rgb, white)
-import Color.Scheme.HTML (blue, green, red, silver)
-import Color.Scheme.X11 (gold)
+import Color.Scheme.HTML (blue, green, red, silver, yellow)
+import Color.Scheme.X11 (gold, orange)
 import Data.Array.NonEmpty (NonEmptyArray, fromArray)
 import Data.Maybe (Maybe, maybe)
 import Effect (Effect)
@@ -32,10 +32,10 @@ declarations = fromArray $
   , CSS.borderTop (2.0 # px) dashed silver
   , CSS.borderRight (3.0 # px) dotted red
   , CSS.borderBottom (4.0 # px) double green
-  , CSS.borderBottom (5.0 # px) groove blue
+  , CSS.borderLeft (5.0 # px) groove blue
   , CSS.borderWidth (6.0 # px) (2.0 # px) (3.0 # px) (4.0 # px)
   , CSS.borderStyle hidden inset none outset
-  -- , CSS.borderColor red orange yellow green
+  , CSS.borderColor red orange yellow green
   , CSS.borderTopWidth $ 7.0 # px
   , CSS.borderTopStyle ridge
   , CSS.borderTopColor white

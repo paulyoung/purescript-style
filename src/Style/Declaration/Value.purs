@@ -16,6 +16,7 @@ type Value =
    + Bold
    + Bolder
    + Border
+   + BorderColor
    + BorderStyle
    + BorderWidth
    + BoxShadow
@@ -82,6 +83,7 @@ render =
     >>> renderBold
     >>> renderBolder
     >>> renderBorder
+    >>> renderBorderColor
     >>> renderBorderStyle
     >>> renderBorderWidth
     >>> renderBoxShadow
@@ -362,7 +364,7 @@ renderBorder = on _border \b ->
   Array.intercalate " "
     [ renderBorderWidth' case_ $ b.width
     , renderBorderStyle' case_ $ b.style
-    , renderBorderColor case_ $ b.color
+    , renderBorderColor' case_ $ b.color
     ]
 
 
@@ -374,19 +376,39 @@ type BorderColorFields r =
 
 type BorderColorValue = Variant (BorderColorFields ())
 
--- type BorderColor v = (borderColor :: BorderColorFields () | v)
+type BorderColorRep =
+  { top :: BorderColorValue
+  , right :: BorderColorValue
+  , bottom :: BorderColorValue
+  , left :: BorderColorValue
+  }
 
--- _borderColor = SProxy :: SProxy "borderColor"
+type BorderColor v = (borderColor :: BorderColorRep | v)
 
--- borderColor :: forall v. _ -> Variant (BorderColorFields v)
--- borderColor = inj _borderColor
+_borderColor = SProxy :: SProxy "borderColor"
 
-renderBorderColor
+borderColor :: forall v. BorderColorRep -> Variant (BorderColor v)
+borderColor = inj _borderColor
+
+renderBorderColor'
   :: forall v
    . (Variant v -> String)
   -> Variant (BorderColorFields v)
   -> String
-renderBorderColor = renderColor >>> renderGlobal
+renderBorderColor' = renderColor >>> renderGlobal
+
+renderBorderColor
+  :: forall v
+   . (Variant v -> String)
+  -> Variant (BorderColor v)
+  -> String
+renderBorderColor = on _borderColor \s ->
+  Array.intercalate " "
+    [ renderBorderColor' case_ $ s.top
+    , renderBorderColor' case_ $ s.right
+    , renderBorderColor' case_ $ s.bottom
+    , renderBorderColor' case_ $ s.left
+    ]
 
 
 type BorderStyleFields r =
