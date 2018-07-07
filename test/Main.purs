@@ -27,6 +27,7 @@ selectors = fromArray
 declarations :: Maybe (NonEmptyArray Declaration)
 declarations = fromArray $
   [ CSS.backgroundColor $ rgb 127 127 127
+  , CSS.border (1.0 # px) solid gold
   , CSS.boxShadow
       [ boxShadow_ false (3.0 # px) (3.0 # px) zero zero red
       , boxShadow_' true (-1.0 # em) zero zero (0.4 # em) currentColor
@@ -38,7 +39,6 @@ declarations = fromArray $
   , CSS.textAlign center
   , CSS.width auto
   ]
-  <> CSS.border (1.0 # px) solid gold
   <> CSS.borderRadius (8.0 # px) (8.0 # px) (8.0 # px) (8.0 # px)
   <> CSS.margin auto (8.0 # px) (50.0 # pct) zero
   <> CSS.outline' (1.0 # px) solid invert

@@ -39,37 +39,26 @@ backgroundColor :: C.Color -> Declaration
 backgroundColor = backgroundColor' <<< V.color_
 
 
--- border'
---   :: BorderWidthValue
---   -> BorderStyleValue
---   -> BorderColorValue
---   -> Array Declaration
--- border' w s c =
---   borderWidth w w w w
---     <> borderStyle s s s s
---     <> borderColor' c c c c
-
 border'
-  :: BorderWidthValue
-  -> BorderStyleValue
-  -> BorderColorValue
-  -> Array Declaration
-border' =
-  Declaration Border <<< expand <<< { width: _, style: _, color: _ }
-  -- Declaration Border $ expand $ V.border { width: w, style: s, color: c }
+  :: V.BorderWidthValue
+  -> V.BorderStyleValue
+  -> V.BorderColorValue
+  -> Declaration
+border' w s c =
+  Declaration Border $ V.border { width: w, style: s, color: c }
 
--- border
---   :: BorderWidthValue
---   -> BorderStyleValue
---   -> C.Color
---   -> Array Declaration
--- border w s = border' w s <<< V.color_
+border
+  :: V.BorderWidthValue
+  -> V.BorderStyleValue
+  -> C.Color
+  -> Declaration
+border w s = border' w s <<< V.color_
 
 
 borderTop'
-  :: BorderWidthValue
-  -> BorderStyleValue
-  -> BorderColorValue
+  :: V.BorderWidthValue
+  -> V.BorderStyleValue
+  -> V.BorderColorValue
   -> Array Declaration
 borderTop' w s c =
   [ borderTopWidth w
@@ -78,17 +67,17 @@ borderTop' w s c =
   ]
 
 borderTop
-  :: BorderWidthValue
-  -> BorderStyleValue
+  :: V.BorderWidthValue
+  -> V.BorderStyleValue
   -> C.Color
   -> Array Declaration
 borderTop w s = borderTop' w s <<< V.color_
 
 
 borderRight'
-  :: BorderWidthValue
-  -> BorderStyleValue
-  -> BorderColorValue
+  :: V.BorderWidthValue
+  -> V.BorderStyleValue
+  -> V.BorderColorValue
   -> Array Declaration
 borderRight' w s c =
   [ borderRightWidth w
@@ -97,17 +86,17 @@ borderRight' w s c =
   ]
 
 borderRight
-  :: BorderWidthValue
-  -> BorderStyleValue
+  :: V.BorderWidthValue
+  -> V.BorderStyleValue
   -> C.Color
   -> Array Declaration
 borderRight w s = borderRight' w s <<< V.color_
 
 
 borderBottom'
-  :: BorderWidthValue
-  -> BorderStyleValue
-  -> BorderColorValue
+  :: V.BorderWidthValue
+  -> V.BorderStyleValue
+  -> V.BorderColorValue
   -> Array Declaration
 borderBottom' w s c =
   [ borderBottomWidth w
@@ -116,17 +105,17 @@ borderBottom' w s c =
   ]
 
 borderBottom
-  :: BorderWidthValue
-  -> BorderStyleValue
+  :: V.BorderWidthValue
+  -> V.BorderStyleValue
   -> C.Color
   -> Array Declaration
 borderBottom w s = borderBottom' w s <<< V.color_
 
 
 borderLeft'
-  :: BorderWidthValue
-  -> BorderStyleValue
-  -> BorderColorValue
+  :: V.BorderWidthValue
+  -> V.BorderStyleValue
+  -> V.BorderColorValue
   -> Array Declaration
 borderLeft' w s c =
   [ borderLeftWidth w
@@ -135,25 +124,18 @@ borderLeft' w s c =
   ]
 
 borderLeft
-  :: BorderWidthValue
-  -> BorderStyleValue
+  :: V.BorderWidthValue
+  -> V.BorderStyleValue
   -> C.Color
   -> Array Declaration
 borderLeft w s = borderLeft' w s <<< V.color_
 
 
-type BorderColorValue =
-  Variant
-    ( V.Color
-    + V.Global
-    + ()
-    )
-
 borderColor'
-  :: BorderColorValue
-  -> BorderColorValue
-  -> BorderColorValue
-  -> BorderColorValue
+  :: V.BorderColorValue
+  -> V.BorderColorValue
+  -> V.BorderColorValue
+  -> V.BorderColorValue
   -> Array Declaration
 borderColor' t r b l =
   [ borderTopColor' t
@@ -176,55 +158,39 @@ borderColor t r b l =
   ]
 
 
-borderTopColor' :: BorderColorValue -> Declaration
+borderTopColor' :: V.BorderColorValue -> Declaration
 borderTopColor' = Declaration BorderTopColor <<< expand
 
 borderTopColor :: C.Color -> Declaration
 borderTopColor = borderTopColor' <<< V.color_
 
 
-borderRightColor' :: BorderColorValue -> Declaration
+borderRightColor' :: V.BorderColorValue -> Declaration
 borderRightColor' = Declaration BorderRightColor <<< expand
 
 borderRightColor :: C.Color -> Declaration
 borderRightColor = borderRightColor' <<< V.color_
 
 
-borderBottomColor' :: BorderColorValue -> Declaration
+borderBottomColor' :: V.BorderColorValue -> Declaration
 borderBottomColor' = Declaration BorderBottomColor <<< expand
 
 borderBottomColor :: C.Color -> Declaration
 borderBottomColor = borderBottomColor' <<< V.color_
 
 
-borderLeftColor' :: BorderColorValue -> Declaration
+borderLeftColor' :: V.BorderColorValue -> Declaration
 borderLeftColor' = Declaration BorderLeftColor <<< expand
 
 borderLeftColor :: C.Color -> Declaration
 borderLeftColor = borderLeftColor' <<< V.color_
 
 
-type BorderStyleValue =
-  Variant
-    ( V.Dashed
-    + V.Dotted
-    + V.Double
-    + V.Global
-    + V.Groove
-    + V.Hidden
-    + V.Inset
-    + V.None
-    + V.Outset
-    + V.Ridge
-    + V.Solid
-    + ()
-    )
-
 borderStyle
-  :: BorderStyleValue
-  -> BorderStyleValue
-  -> BorderStyleValue
-  -> BorderStyleValue
+  :: V.BorderStyleValue
+  -> V.BorderStyleValue
+  -> V.BorderStyleValue
+  -> V.BorderStyleValue
   -> Array Declaration
 borderStyle t r b l =
   [ borderTopStyle t
@@ -233,33 +199,24 @@ borderStyle t r b l =
   , borderLeftStyle l
   ]
 
-borderTopStyle :: BorderStyleValue -> Declaration
+borderTopStyle :: V.BorderStyleValue -> Declaration
 borderTopStyle = Declaration BorderTopStyle <<< expand
 
-borderRightStyle :: BorderStyleValue -> Declaration
+borderRightStyle :: V.BorderStyleValue -> Declaration
 borderRightStyle = Declaration BorderRightStyle <<< expand
 
-borderBottomStyle :: BorderStyleValue -> Declaration
+borderBottomStyle :: V.BorderStyleValue -> Declaration
 borderBottomStyle = Declaration BorderBottomStyle <<< expand
 
-borderLeftStyle :: BorderStyleValue -> Declaration
+borderLeftStyle :: V.BorderStyleValue -> Declaration
 borderLeftStyle = Declaration BorderLeftStyle <<< expand
 
 
-type BorderWidthValue =
-  Variant
-    ( V.Global
-    + V.Length
-    + V.BorderWidthKeyword
-    + V.Zero
-    + ()
-    )
-
 borderWidth
-  :: BorderWidthValue
-  -> BorderWidthValue
-  -> BorderWidthValue
-  -> BorderWidthValue
+  :: V.BorderWidthValue
+  -> V.BorderWidthValue
+  -> V.BorderWidthValue
+  -> V.BorderWidthValue
   -> Array Declaration
 borderWidth t r b l =
   [ borderTopWidth t
@@ -268,16 +225,16 @@ borderWidth t r b l =
   , borderLeftWidth l
   ]
 
-borderTopWidth :: BorderWidthValue -> Declaration
+borderTopWidth :: V.BorderWidthValue -> Declaration
 borderTopWidth = Declaration BorderTopWidth <<< expand
 
-borderRightWidth :: BorderWidthValue -> Declaration
+borderRightWidth :: V.BorderWidthValue -> Declaration
 borderRightWidth = Declaration BorderRightWidth <<< expand
 
-borderBottomWidth :: BorderWidthValue -> Declaration
+borderBottomWidth :: V.BorderWidthValue -> Declaration
 borderBottomWidth = Declaration BorderBottomWidth <<< expand
 
-borderLeftWidth :: BorderWidthValue -> Declaration
+borderLeftWidth :: V.BorderWidthValue -> Declaration
 borderLeftWidth = Declaration BorderLeftWidth <<< expand
 
 

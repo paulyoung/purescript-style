@@ -411,7 +411,6 @@ renderBolder = on _bolder $ const "bolder"
 
 
 type Border_ =
-  -- FIXME: move from Declaration module
   { width :: BorderWidthValue
   , style :: BorderStyleValue
   , color :: BorderColorValue
@@ -431,8 +430,84 @@ renderBorder
   -> String
 renderBorder = on _border \b ->
   Array.intercalate " "
-    [ renderColor case_ $ b.color
+    [ renderBorderWidth case_ $ b.width
+    , renderBorderStyle case_ $ b.style
+    , renderBorderColor case_ $ b.color
     ]
+
+
+type BorderColor r =
+  ( Color
+  + Global
+  + r
+  )
+
+type BorderColorValue = Variant (BorderColor ())
+
+renderBorderColor
+  :: forall v
+   . (Variant v -> String)
+  -> Variant (BorderColor v)
+  -> String
+renderBorderColor = renderColor >>> renderGlobal
+
+
+type BorderStyle r =
+  ( Dashed
+  + Dotted
+  + Double
+  + Global
+  + Groove
+  + Hidden
+  + Inset
+  + None
+  + Outset
+  + Ridge
+  + Solid
+  + r
+  )
+
+type BorderStyleValue = Variant (BorderStyle ())
+
+renderBorderStyle
+  :: forall v
+   . (Variant v -> String)
+  -> Variant (BorderStyle v)
+  -> String
+renderBorderStyle =
+  renderDashed
+    >>> renderDotted
+    >>> renderDouble
+    >>> renderGlobal
+    >>> renderGroove
+    >>> renderHidden
+    >>> renderInset
+    >>> renderNone
+    >>> renderOutset
+    >>> renderRidge
+    >>> renderSolid
+
+
+type BorderWidth r =
+  ( Global
+  + Length
+  + BorderWidthKeyword
+  + Zero
+  + r
+  )
+
+type BorderWidthValue = Variant (BorderWidth ())
+
+renderBorderWidth
+  :: forall v
+   . (Variant v -> String)
+  -> Variant (BorderWidth v)
+  -> String
+renderBorderWidth =
+  renderBorderWidthKeyword
+    >>> renderGlobal
+    >>> renderLength
+    >>> renderZero
 
 
 type BoxShadow_ =
