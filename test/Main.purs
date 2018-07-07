@@ -49,9 +49,9 @@ declarations = fromArray $
   , CSS.height $ 100.0 # pct
   , CSS.outline' (1.0 # px) solid invert
   , CSS.outline (1.0 # px) solid gold
-  -- , CSS.outlineWidth $ 1.0 # px
-  -- , CSS.outlineStyle solid
-  -- , CSS.outlineColor gold
+  , CSS.outlineWidth $ 1.0 # px
+  , CSS.outlineStyle solid
+  , CSS.outlineColor gold
   , CSS.textAlign center
   , CSS.width auto
   ]
