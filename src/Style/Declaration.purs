@@ -371,68 +371,31 @@ marginTop = Declaration MarginTop <<< expand
 
 
 outline'
-  :: OutlineWidthValue
-  -> OutlineStyleValue
-  -> OutlineColorValue
-  -> Array Declaration
-outline' w s c =
-  [ outlineWidth w
-  , outlineStyle s
-  , outlineColor' c
-  ]
+  :: V.OutlineWidthValue
+  -> V.OutlineStyleValue
+  -> V.OutlineColorValue
+  -> Declaration
+outline' w s c = Declaration Outline $ V.outline { width: w, style: s, color: c }
+
 
 outline
-  :: OutlineWidthValue
-  -> OutlineStyleValue
+  :: V.OutlineWidthValue
+  -> V.OutlineStyleValue
   -> C.Color
-  -> Array Declaration
+  -> Declaration
 outline w s = outline' w s <<< V.color_
 
-type OutlineColorValue =
-  Variant
-    ( V.Color
-    + V.Global
-    + V.Invert
-    + ()
-    )
 
-outlineColor' :: OutlineColorValue -> Declaration
+outlineColor' :: V.OutlineColorValue -> Declaration
 outlineColor' = Declaration OutlineColor <<< expand
 
 outlineColor :: C.Color -> Declaration
 outlineColor = outlineColor' <<< V.color_
 
-
-type OutlineStyleValue =
-  Variant
-    ( V.Auto
-    + V.Dashed
-    + V.Dotted
-    + V.Double
-    + V.Global
-    + V.Groove
-    + V.Inset
-    + V.None
-    + V.Outset
-    + V.Ridge
-    + V.Solid
-    + ()
-    )
-
-outlineStyle :: OutlineStyleValue -> Declaration
+outlineStyle :: V.OutlineStyleValue -> Declaration
 outlineStyle = Declaration OutlineStyle <<< expand
 
-
-type OutlineWidthValue =
-  Variant
-    ( V.Global
-    + V.Length
-    + V.OutlineWidthKeyword
-    + V.Zero
-    + ()
-    )
-
-outlineWidth :: OutlineWidthValue -> Declaration
+outlineWidth :: V.OutlineWidthValue -> Declaration
 outlineWidth = Declaration OutlineWidth <<< expand
 
 

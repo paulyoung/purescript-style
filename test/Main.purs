@@ -29,7 +29,8 @@ declarations = fromArray $
   [ CSS.backgroundColor $ rgb 127 127 127
   , CSS.border (1.0 # px) solid gold
   , CSS.borderTop (2.0 # px) double silver
-  , CSS.borderTopWidth (3.0 # px)
+  , CSS.borderTopWidth $ 3.0 # px
+  , CSS.borderWidth $ 2.0 # px
   , CSS.boxShadow
       [ boxShadow_ false (3.0 # px) (3.0 # px) zero zero red
       , boxShadow_' true (-1.0 # em) zero zero (0.4 # em) currentColor
@@ -38,12 +39,16 @@ declarations = fromArray $
   , CSS.fontSize $ 16.0 # px
   , CSS.fontWeight $ number_ 300.0
   , CSS.height $ 100.0 # pct
+  , CSS.outline' (1.0 # px) solid invert
+  , CSS.outline (1.0 # px) solid gold
+  , CSS.outlineColor gold
+  , CSS.outlineStyle solid
+  , CSS.outlineWidth $ 1.0 # px
   , CSS.textAlign center
   , CSS.width auto
   ]
   <> CSS.borderRadius (8.0 # px) (8.0 # px) (8.0 # px) (8.0 # px)
   <> CSS.margin auto (8.0 # px) (50.0 # pct) zero
-  <> CSS.outline' (1.0 # px) solid invert
   <> CSS.padding (1.0 # em) (2.0 # in_) (3.0 # mm) (4.0 # rem)
 
 ruleset :: Maybe Ruleset

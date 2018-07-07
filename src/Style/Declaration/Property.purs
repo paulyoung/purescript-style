@@ -34,6 +34,7 @@ data Property
   | MarginLeft
   | MarginRight
   | MarginTop
+  | Outline
   | OutlineColor
   | OutlineStyle
   | OutlineWidth
@@ -80,6 +81,7 @@ instance showProperty :: Show Property where
     MarginLeft -> "MarginLeft"
     MarginRight -> "MarginRight"
     MarginTop -> "MarginTop"
+    Outline -> "Outline"
     OutlineColor -> "OutlineColor"
     OutlineStyle -> "OutlineStyle"
     OutlineWidth -> "OutlineWidth"
@@ -123,6 +125,7 @@ render = case _ of
   MarginLeft -> "margin-left"
   MarginRight -> "margin-right"
   MarginTop -> "margin-top"
+  Outline -> "outline"
   OutlineColor -> "outline-color"
   OutlineStyle -> "outline-style"
   OutlineWidth -> "outline-width"

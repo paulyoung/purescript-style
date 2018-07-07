@@ -183,24 +183,6 @@ renderAbsoluteSize =
     >>> renderXxLarge
 
 
-type BorderWidthKeyword r =
-  ( Medium
-  + Thick
-  + Thin
-  + r
-  )
-
-renderBorderWidthKeyword
-  :: forall v
-   . (Variant v -> String)
-  -> Variant (BorderWidthKeyword v)
-  -> String
-renderBorderWidthKeyword =
-  renderMedium
-    >>> renderThick
-    >>> renderThin
-
-
 type Color r =
   ( Color_
   + CurrentColor
@@ -283,56 +265,6 @@ renderGlobal =
   renderInherit
     >>> renderInitial
     >>> renderUnset
-
-
-type Length r =
-  ( AbsoluteLength
-  + FontRelativeLength
-  + ViewportPercentageLength
-  + r
-  )
-
-renderLength
-  :: forall v
-   . (Variant v -> String)
-  -> Variant (Length v)
-  -> String
-renderLength =
-  renderAbsoluteLength
-    >>> renderFontRelativeLength
-    >>> renderViewportPercentageLength
-
-
-type Length_ r =
-  ( Length
-  + Zero
-  + r
-  )
-
-renderLength_
-  :: forall v
-   . (Variant v -> String)
-  -> Variant (Length_ v)
-  -> String
-renderLength_ = renderLength >>> renderZero
-
-
-type OutlineWidthKeyword r =
-  ( Medium
-  + Thick
-  + Thin
-  + r
-  )
-
-renderOutlineWidthKeyword
-  :: forall v
-   . (Variant v -> String)
-  -> Variant (OutlineWidthKeyword v)
-  -> String
-renderOutlineWidthKeyword =
-  renderMedium
-    >>> renderThick
-    >>> renderThin
 
 
 type RelativeSize r =
@@ -500,6 +432,24 @@ renderBorderWidth =
     >>> renderGlobal
     >>> renderLength
     >>> renderZero
+
+
+type BorderWidthKeyword r =
+  ( Medium
+  + Thick
+  + Thin
+  + r
+  )
+
+renderBorderWidthKeyword
+  :: forall v
+   . (Variant v -> String)
+  -> Variant (BorderWidthKeyword v)
+  -> String
+renderBorderWidthKeyword =
+  renderMedium
+    >>> renderThick
+    >>> renderThin
 
 
 type BoxShadow_ =
@@ -817,6 +767,38 @@ renderLeft :: forall v. (Variant v -> String) -> Variant (Left v) -> String
 renderLeft = on _left $ const "left"
 
 
+type Length r =
+  ( AbsoluteLength
+  + FontRelativeLength
+  + ViewportPercentageLength
+  + r
+  )
+
+renderLength
+  :: forall v
+   . (Variant v -> String)
+  -> Variant (Length v)
+  -> String
+renderLength =
+  renderAbsoluteLength
+    >>> renderFontRelativeLength
+    >>> renderViewportPercentageLength
+
+
+type Length_ r =
+  ( Length
+  + Zero
+  + r
+  )
+
+renderLength_
+  :: forall v
+   . (Variant v -> String)
+  -> Variant (Length_ v)
+  -> String
+renderLength_ = renderLength >>> renderZero
+
+
 type Lighter v = (lighter :: Unit | v)
 
 _lighter = SProxy :: SProxy "lighter"
@@ -881,6 +863,128 @@ number_ = inj _number_
 
 renderNumber_ :: forall v. (Variant v -> String) -> Variant (Number_ v) -> String
 renderNumber_ = on _number_ Number.toString
+
+
+type Outline_ =
+  { width :: OutlineWidthValue
+  , style :: OutlineStyleValue
+  , color :: OutlineColorValue
+  }
+
+type Outline v = (outline :: Outline_ | v)
+
+_outline = SProxy :: SProxy "outline"
+
+outline :: forall v. Outline_ -> Variant (Outline v)
+outline = inj _outline
+
+renderOutline
+  :: forall v
+   . (Variant v -> String)
+  -> Variant (Outline v)
+  -> String
+renderOutline = on _outline \o ->
+  Array.intercalate " "
+    [ renderOutlineWidth case_ $ o.width
+    , renderOutlineStyle case_ $ o.style
+    , renderOutlineColor case_ $ o.color
+    ]
+
+
+type OutlineColor r =
+  ( Color
+  + Global
+  + Invert
+  + r
+  )
+
+type OutlineColorValue = Variant (OutlineColor ())
+
+renderOutlineColor
+  :: forall v
+   . (Variant v -> String)
+  -> Variant (OutlineColor v)
+  -> String
+renderOutlineColor =
+  renderColor
+    >>> renderGlobal
+    >>> renderInvert
+
+
+type OutlineStyle r =
+  ( Auto
+  + Dashed
+  + Dotted
+  + Double
+  + Global
+  + Groove
+  + Inset
+  + None
+  + Outset
+  + Ridge
+  + Solid
+  + r
+  )
+
+type OutlineStyleValue = Variant (OutlineStyle ())
+
+renderOutlineStyle
+  :: forall v
+   . (Variant v -> String)
+  -> Variant (OutlineStyle v)
+  -> String
+renderOutlineStyle =
+  renderAuto
+    >>> renderDashed
+    >>> renderDotted
+    >>> renderDouble
+    >>> renderGlobal
+    >>> renderGroove
+    >>> renderInset
+    >>> renderNone
+    >>> renderOutset
+    >>> renderRidge
+    >>> renderSolid
+
+
+type OutlineWidth r =
+  ( Global
+  + Length
+  + OutlineWidthKeyword
+  + Zero
+  + r
+  )
+
+type OutlineWidthValue = Variant (OutlineWidth ())
+
+renderOutlineWidth
+  :: forall v
+   . (Variant v -> String)
+  -> Variant (OutlineWidth v)
+  -> String
+renderOutlineWidth =
+  renderGlobal
+    >>> renderLength
+    >>> renderOutlineWidthKeyword
+    >>> renderZero
+
+
+type OutlineWidthKeyword r =
+  ( Medium
+  + Thick
+  + Thin
+  + r
+  )
+
+renderOutlineWidthKeyword
+  :: forall v
+   . (Variant v -> String)
+  -> Variant (OutlineWidthKeyword v)
+  -> String
+renderOutlineWidthKeyword =
+  renderMedium
+    >>> renderThick
+    >>> renderThin
 
 
 type Outset v = (outset :: Unit | v)
