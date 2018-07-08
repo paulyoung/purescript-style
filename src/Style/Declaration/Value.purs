@@ -19,6 +19,7 @@ type Value =
    + BorderColor
    + BorderStyle
    + BorderWidth
+   + BorderRadius
    + BoxShadow
    + Center
    + Ch
@@ -88,6 +89,7 @@ render =
     >>> renderBorderColor
     >>> renderBorderStyle
     >>> renderBorderWidth
+    >>> renderBorderRadius
     >>> renderBoxShadow
     >>> renderCenter
     >>> renderCh
@@ -425,6 +427,55 @@ renderBorderWidthKeywordFields =
   renderMedium
     >>> renderThick
     >>> renderThin
+
+
+type BorderRadiusFields r =
+  ( GlobalFields
+  + LengthFields
+  + Pct
+  + Zero
+  + r
+  )
+
+type BorderRadiusValue = Variant (BorderRadiusFields ())
+
+type BorderRadiusRep =
+  { topLeft :: BorderRadiusValue
+  , topRight :: BorderRadiusValue
+  , bottomRight :: BorderRadiusValue
+  , bottomLeft :: BorderRadiusValue
+  }
+
+type BorderRadius v = (borderRadius :: BorderRadiusRep | v)
+
+_borderRadius = SProxy :: SProxy "borderRadius"
+
+borderRadius :: forall v. BorderRadiusRep -> Variant (BorderRadius v)
+borderRadius = inj _borderRadius
+
+renderBorderRadiusFields
+  :: forall v
+   . (Variant v -> String)
+  -> Variant (BorderRadiusFields v)
+  -> String
+renderBorderRadiusFields =
+  renderGlobalFields
+    >>> renderLengthFields
+    >>> renderPct
+    >>> renderZero
+
+renderBorderRadius
+  :: forall v
+   . (Variant v -> String)
+  -> Variant (BorderRadius v)
+  -> String
+renderBorderRadius = on _borderRadius \r ->
+  Array.intercalate " "
+    [ renderBorderRadiusFields case_ $ r.topLeft
+    , renderBorderRadiusFields case_ $ r.topRight
+    , renderBorderRadiusFields case_ $ r.bottomRight
+    , renderBorderRadiusFields case_ $ r.bottomLeft
+    ]
 
 
 type BoxShadowRep =

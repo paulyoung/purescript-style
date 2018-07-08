@@ -36,6 +36,11 @@ declarations = fromArray $
   , CSS.borderWidth (6.0 # px) (2.0 # px) (3.0 # px) (4.0 # px)
   , CSS.borderStyle hidden inset none outset
   , CSS.borderColor red orange yellow green
+  , CSS.borderRadius (5.0 # px) (6.0 # px) (7.0 # px) (8.0 # px)
+  , CSS.borderTopLeftRadius $ 5.0 # px
+  , CSS.borderTopRightRadius $ 6.0 # px
+  , CSS.borderBottomRightRadius $ 7.0 # px
+  , CSS.borderBottomLeftRadius $ 8.0 # px
   , CSS.borderTopWidth $ 7.0 # px
   , CSS.borderTopStyle ridge
   , CSS.borderTopColor white
@@ -65,7 +70,6 @@ declarations = fromArray $
   , CSS.textAlign center
   , CSS.width auto
   ]
-  <> CSS.borderRadius (8.0 # px) (8.0 # px) (8.0 # px) (8.0 # px)
 
 ruleset :: Maybe Ruleset
 ruleset = Ruleset <$> selectors <*> declarations

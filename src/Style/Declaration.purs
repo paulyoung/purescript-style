@@ -225,38 +225,30 @@ borderLeftWidth :: V.BorderWidthValue -> Declaration
 borderLeftWidth = Declaration BorderLeftWidth <<< expand
 
 
-type BorderRadiusValue =
-  Variant
-    ( V.GlobalFields
-    + V.LengthFields
-    + V.Pct
-    + V.Zero
-    + ()
-    )
-
 borderRadius
-  :: BorderRadiusValue
-  -> BorderRadiusValue
-  -> BorderRadiusValue
-  -> BorderRadiusValue
-  -> Array Declaration
+  :: V.BorderRadiusValue
+  -> V.BorderRadiusValue
+  -> V.BorderRadiusValue
+  -> V.BorderRadiusValue
+  -> Declaration
 borderRadius tl tr br bl =
-  [ borderTopLeftRadius tl
-  , borderTopRightRadius tr
-  , borderBottomRightRadius br
-  , borderBottomLeftRadius bl
-  ]
+  Declaration BorderRadius $ V.borderRadius
+    { topLeft: tl
+    , topRight: tr
+    , bottomRight: br
+    , bottomLeft: bl
+    }
 
-borderBottomLeftRadius :: BorderRadiusValue -> Declaration
+borderBottomLeftRadius :: V.BorderRadiusValue -> Declaration
 borderBottomLeftRadius = Declaration BorderBottomLeftRadius <<< expand
 
-borderBottomRightRadius :: BorderRadiusValue -> Declaration
+borderBottomRightRadius :: V.BorderRadiusValue -> Declaration
 borderBottomRightRadius = Declaration BorderBottomRightRadius <<< expand
 
-borderTopLeftRadius :: BorderRadiusValue -> Declaration
+borderTopLeftRadius :: V.BorderRadiusValue -> Declaration
 borderTopLeftRadius = Declaration BorderTopLeftRadius <<< expand
 
-borderTopRightRadius :: BorderRadiusValue -> Declaration
+borderTopRightRadius :: V.BorderRadiusValue -> Declaration
 borderTopRightRadius = Declaration BorderTopRightRadius <<< expand
 
 

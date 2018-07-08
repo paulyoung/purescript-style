@@ -24,6 +24,7 @@ data Property
   | BorderLeftWidth
   | BorderRightWidth
   | BorderTopWidth
+  | BorderRadius
   | BorderBottomLeftRadius
   | BorderBottomRightRadius
   | BorderTopLeftRadius
@@ -76,6 +77,7 @@ instance showProperty :: Show Property where
     BorderLeftWidth -> "BorderLeftWidth"
     BorderRightWidth -> "BorderRightWidth"
     BorderTopWidth -> "BorderTopWidth"
+    BorderRadius -> "BorderRadius"
     BorderBottomLeftRadius -> "BorderBottomLeftRadius"
     BorderBottomRightRadius -> "BorderBottomRightRadius"
     BorderTopLeftRadius -> "BorderTopLeftRadius"
@@ -125,6 +127,7 @@ render = case _ of
   BorderLeftWidth -> "border-left-width"
   BorderRightWidth -> "border-right-width"
   BorderTopWidth -> "border-top-width"
+  BorderRadius -> "border-radius"
   BorderBottomLeftRadius -> "border-bottom-left-radius"
   BorderBottomRightRadius -> "border-bottom-right-radius"
   BorderTopLeftRadius -> "border-top-left-radius"
