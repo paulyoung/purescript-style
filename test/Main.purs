@@ -47,6 +47,11 @@ declarations = fromArray $
   , CSS.fontSize $ 16.0 # px
   , CSS.fontWeight $ number_ 300.0
   , CSS.height $ 100.0 # pct
+  , CSS.margin auto (8.0 # px) (50.0 # pct) zero
+  , CSS.marginTop auto
+  , CSS.marginRight $ 8.0 # px
+  , CSS.marginBottom $ 50.0 # pct
+  , CSS.marginLeft zero
   , CSS.outline' (1.0 # px) solid invert
   , CSS.outline (1.0 # px) solid gold
   , CSS.outlineWidth $ 1.0 # px
@@ -56,7 +61,6 @@ declarations = fromArray $
   , CSS.width auto
   ]
   <> CSS.borderRadius (8.0 # px) (8.0 # px) (8.0 # px) (8.0 # px)
-  <> CSS.margin auto (8.0 # px) (50.0 # pct) zero
   <> CSS.padding (1.0 # em) (2.0 # in_) (3.0 # mm) (4.0 # rem)
 
 ruleset :: Maybe Ruleset

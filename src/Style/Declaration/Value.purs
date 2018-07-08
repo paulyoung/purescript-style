@@ -43,6 +43,7 @@ type Value =
    + Larger
    + Left
    + Lighter
+   + Margin
    + Medium
    + Mm
    + None
@@ -110,6 +111,7 @@ render =
     >>> renderLarger
     >>> renderLeft
     >>> renderLighter
+    >>> renderMargin
     >>> renderMedium
     >>> renderMm
     >>> renderNone
@@ -863,6 +865,57 @@ lighter = inj _lighter unit
 
 renderLighter :: forall v. (Variant v -> String) -> Variant (Lighter v) -> String
 renderLighter = on _lighter $ const "lighter"
+
+
+type MarginFields r =
+  ( Auto
+  + GlobalFields
+  + LengthFields
+  + Pct
+  + Zero
+  + r
+  )
+
+type MarginValue = Variant (MarginFields ())
+
+type MarginRep =
+  { top :: MarginValue
+  , right :: MarginValue
+  , bottom :: MarginValue
+  , left :: MarginValue
+  }
+
+type Margin v = (margin :: MarginRep | v)
+
+_margin = SProxy :: SProxy "margin"
+
+margin :: forall v. MarginRep -> Variant (Margin v)
+margin = inj _margin
+
+renderMarginFields
+  :: forall v
+   . (Variant v -> String)
+  -> Variant (MarginFields v)
+  -> String
+renderMarginFields =
+  renderAuto
+    >>> renderGlobalFields
+    >>> renderLengthFields
+    >>> renderPct
+    >>> renderZero
+
+renderMargin
+  :: forall v
+   . (Variant v -> String)
+  -> Variant (Margin v)
+  -> String
+renderMargin = on _margin \m ->
+  Array.intercalate " "
+    [ renderMarginFields case_ $ m.top
+    , renderMarginFields case_ $ m.right
+    , renderMarginFields case_ $ m.bottom
+    , renderMarginFields case_ $ m.left
+    ]
 
 
 type Medium v = (medium :: Unit | v)

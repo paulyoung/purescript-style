@@ -330,39 +330,24 @@ height :: HeightValue -> Declaration
 height = Declaration Height <<< expand
 
 
-type MarginValue =
-  Variant
-    ( V.Auto
-    + V.GlobalFields
-    + V.LengthFields
-    + V.Pct
-    + V.Zero
-    + ()
-    )
-
 margin
-  :: MarginValue
-  -> MarginValue
-  -> MarginValue
-  -> MarginValue
-  -> Array Declaration
-margin t r b l =
-  [ marginTop t
-  , marginRight r
-  , marginBottom b
-  , marginLeft l
-  ]
+  :: V.MarginValue
+  -> V.MarginValue
+  -> V.MarginValue
+  -> V.MarginValue
+  -> Declaration
+margin = trbl Margin V.margin
 
-marginBottom :: MarginValue -> Declaration
+marginBottom :: V.MarginValue -> Declaration
 marginBottom = Declaration MarginBottom <<< expand
 
-marginLeft :: MarginValue -> Declaration
+marginLeft :: V.MarginValue -> Declaration
 marginLeft = Declaration MarginLeft <<< expand
 
-marginRight :: MarginValue -> Declaration
+marginRight :: V.MarginValue -> Declaration
 marginRight = Declaration MarginRight <<< expand
 
-marginTop :: MarginValue -> Declaration
+marginTop :: V.MarginValue -> Declaration
 marginTop = Declaration MarginTop <<< expand
 
 

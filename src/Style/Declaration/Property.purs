@@ -33,6 +33,7 @@ data Property
   | FontSize
   | FontWeight
   | Height
+  | Margin
   | MarginBottom
   | MarginLeft
   | MarginRight
@@ -83,6 +84,7 @@ instance showProperty :: Show Property where
     FontSize -> "FontSize"
     FontWeight -> "FontWeight"
     Height -> "Height"
+    Margin -> "Margin"
     MarginBottom -> "MarginBottom"
     MarginLeft -> "MarginLeft"
     MarginRight -> "MarginRight"
@@ -130,6 +132,7 @@ render = case _ of
   FontSize -> "font-size"
   FontWeight -> "font-weight"
   Height -> "height"
+  Margin -> "margin"
   MarginBottom -> "margin-bottom"
   MarginLeft -> "margin-left"
   MarginRight -> "margin-right"
