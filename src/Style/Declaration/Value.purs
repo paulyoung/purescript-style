@@ -51,6 +51,7 @@ type Value =
    + Number_
    + Outline
    + Outset
+   + Padding
    + Pc
    + Pct
    + Pt
@@ -119,6 +120,7 @@ render =
     >>> renderNumber_
     >>> renderOutline
     >>> renderOutset
+    >>> renderPadding
     >>> renderPc
     >>> renderPct
     >>> renderPt
@@ -1104,6 +1106,55 @@ outset = inj _outset unit
 
 renderOutset :: forall v. (Variant v -> String) -> Variant (Outset v) -> String
 renderOutset = on _outset $ const "outset"
+
+
+type PaddingFields r =
+  ( GlobalFields
+  + LengthFields
+  + Pct
+  + Zero
+  + r
+  )
+
+type PaddingValue = Variant (PaddingFields ())
+
+type PaddingRep =
+  { top :: PaddingValue
+  , right :: PaddingValue
+  , bottom :: PaddingValue
+  , left :: PaddingValue
+  }
+
+type Padding v = (padding :: PaddingRep | v)
+
+_padding = SProxy :: SProxy "padding"
+
+padding :: forall v. PaddingRep -> Variant (Padding v)
+padding = inj _padding
+
+renderPaddingFields
+  :: forall v
+   . (Variant v -> String)
+  -> Variant (PaddingFields v)
+  -> String
+renderPaddingFields =
+  renderGlobalFields
+    >>> renderLengthFields
+    >>> renderPct
+    >>> renderZero
+
+renderPadding
+  :: forall v
+   . (Variant v -> String)
+  -> Variant (Padding v)
+  -> String
+renderPadding = on _padding \p ->
+  Array.intercalate " "
+    [ renderPaddingFields case_ $ p.top
+    , renderPaddingFields case_ $ p.right
+    , renderPaddingFields case_ $ p.bottom
+    , renderPaddingFields case_ $ p.left
+    ]
 
 
 type Pc v = (pc :: Number | v)

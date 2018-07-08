@@ -42,6 +42,7 @@ data Property
   | OutlineColor
   | OutlineStyle
   | OutlineWidth
+  | Padding
   | PaddingBottom
   | PaddingLeft
   | PaddingRight
@@ -93,6 +94,7 @@ instance showProperty :: Show Property where
     OutlineColor -> "OutlineColor"
     OutlineStyle -> "OutlineStyle"
     OutlineWidth -> "OutlineWidth"
+    Padding -> "Padding"
     PaddingBottom -> "PaddingBottom"
     PaddingLeft -> "PaddingLeft"
     PaddingRight -> "PaddingRight"
@@ -141,6 +143,7 @@ render = case _ of
   OutlineColor -> "outline-color"
   OutlineStyle -> "outline-style"
   OutlineWidth -> "outline-width"
+  Padding -> "padding"
   PaddingBottom -> "padding-bottom"
   PaddingLeft -> "padding-left"
   PaddingRight -> "padding-right"

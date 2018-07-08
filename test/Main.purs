@@ -57,11 +57,15 @@ declarations = fromArray $
   , CSS.outlineWidth $ 1.0 # px
   , CSS.outlineStyle solid
   , CSS.outlineColor gold
+  , CSS.padding (1.0 # em) (2.0 # in_) (3.0 # mm) (4.0 # rem)
+  , CSS.paddingTop $ 1.0 # em
+  , CSS.paddingRight $ 2.0 # in_
+  , CSS.paddingBottom $ 3.0 # mm
+  , CSS.paddingLeft $ 4.0 # rem
   , CSS.textAlign center
   , CSS.width auto
   ]
   <> CSS.borderRadius (8.0 # px) (8.0 # px) (8.0 # px) (8.0 # px)
-  <> CSS.padding (1.0 # em) (2.0 # in_) (3.0 # mm) (4.0 # rem)
 
 ruleset :: Maybe Ruleset
 ruleset = Ruleset <$> selectors <*> declarations

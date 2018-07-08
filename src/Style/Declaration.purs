@@ -380,38 +380,24 @@ outlineWidth :: V.OutlineWidthValue -> Declaration
 outlineWidth = Declaration OutlineWidth <<< expand
 
 
-type PaddingValue =
-  Variant
-    ( V.GlobalFields
-    + V.LengthFields
-    + V.Pct
-    + V.Zero
-    + ()
-    )
-
 padding
-  :: PaddingValue
-  -> PaddingValue
-  -> PaddingValue
-  -> PaddingValue
-  -> Array Declaration
-padding t r b l =
-  [ paddingTop t
-  , paddingRight r
-  , paddingBottom b
-  , paddingLeft l
-  ]
+  :: V.PaddingValue
+  -> V.PaddingValue
+  -> V.PaddingValue
+  -> V.PaddingValue
+  -> Declaration
+padding = trbl Padding V.padding
 
-paddingBottom :: PaddingValue -> Declaration
+paddingBottom :: V.PaddingValue -> Declaration
 paddingBottom = Declaration PaddingBottom <<< expand
 
-paddingLeft :: PaddingValue -> Declaration
+paddingLeft :: V.PaddingValue -> Declaration
 paddingLeft = Declaration PaddingLeft <<< expand
 
-paddingRight :: PaddingValue -> Declaration
+paddingRight :: V.PaddingValue -> Declaration
 paddingRight = Declaration PaddingRight <<< expand
 
-paddingTop :: PaddingValue -> Declaration
+paddingTop :: V.PaddingValue -> Declaration
 paddingTop = Declaration PaddingTop <<< expand
 
 
