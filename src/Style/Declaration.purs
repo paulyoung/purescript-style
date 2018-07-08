@@ -50,8 +50,8 @@ trbl p v t r b l =
 
 type BackgroundColorValue =
   Variant
-    ( V.Color
-    + V.Global
+    ( V.ColorFields
+    + V.GlobalFields
     + ()
     )
 
@@ -227,8 +227,8 @@ borderLeftWidth = Declaration BorderLeftWidth <<< expand
 
 type BorderRadiusValue =
   Variant
-    ( V.Global
-    + V.Length
+    ( V.GlobalFields
+    + V.LengthFields
     + V.Pct
     + V.Zero
     + ()
@@ -263,11 +263,11 @@ borderTopRightRadius = Declaration BorderTopRightRadius <<< expand
 type BoxShadowValue =
   Variant
     ( V.BoxShadow
-    + V.Global
+    + V.GlobalFields
     + ()
     )
 
-boxShadow :: Array V.BoxShadow_ -> Declaration
+boxShadow :: Array V.BoxShadowRep -> Declaration
 boxShadow =
   Declaration BoxShadow
     <<< (expand :: BoxShadowValue -> Value)
@@ -276,8 +276,8 @@ boxShadow =
 
 type ColorValue =
   Variant
-    ( V.Color
-    + V.Global
+    ( V.ColorFields
+    + V.GlobalFields
     + ()
     )
 
@@ -290,11 +290,11 @@ color = color' <<< V.color_
 
 type FontSizeValue =
   Variant
-    ( V.AbsoluteSize
-    + V.Global
-    + V.Length
+    ( V.AbsoluteSizeFields
+    + V.GlobalFields
+    + V.LengthFields
     + V.Pct
-    + V.RelativeSize
+    + V.RelativeSizeFields
     + V.Zero
     + ()
     )
@@ -305,9 +305,9 @@ fontSize = Declaration FontSize <<< expand
 
 type FontWeightValue =
   Variant
-    ( V.FontWeightKeyword
-    + V.FontWeightKeywordRelative
-    + V.Global
+    ( V.FontWeightKeywordFields
+    + V.FontWeightKeywordRelativeFields
+    + V.GlobalFields
     + V.Number_
     + ()
     )
@@ -319,8 +319,8 @@ fontWeight = Declaration FontWeight <<< expand
 type HeightValue =
   Variant
     ( V.Auto
-    + V.Global
-    + V.Length
+    + V.GlobalFields
+    + V.LengthFields
     + V.Pct
     + V.Zero
     + ()
@@ -333,8 +333,8 @@ height = Declaration Height <<< expand
 type MarginValue =
   Variant
     ( V.Auto
-    + V.Global
-    + V.Length
+    + V.GlobalFields
+    + V.LengthFields
     + V.Pct
     + V.Zero
     + ()
@@ -397,8 +397,8 @@ outlineWidth = Declaration OutlineWidth <<< expand
 
 type PaddingValue =
   Variant
-    ( V.Global
-    + V.Length
+    ( V.GlobalFields
+    + V.LengthFields
     + V.Pct
     + V.Zero
     + ()
@@ -433,7 +433,7 @@ paddingTop = Declaration PaddingTop <<< expand
 type TextAlignValue =
   Variant
     ( V.Center
-    + V.Global
+    + V.GlobalFields
     + V.Justify
     + V.JustifyAll
     + V.Left
@@ -448,8 +448,8 @@ textAlign = Declaration TextAlign <<< expand
 type WidthValue =
   Variant
     ( V.Auto
-    + V.Global
-    + V.Length
+    + V.GlobalFields
+    + V.LengthFields
     + V.Pct
     + V.Zero
     + ()
