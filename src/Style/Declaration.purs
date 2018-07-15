@@ -3,12 +3,11 @@ module Style.Declaration where
 import Prelude
 
 import Color as C
-import Data.Variant (Variant, expand)
+import Data.Variant (expand)
 import Style.Declaration.Property (Property(..))
 import Style.Declaration.Property as Property
 import Style.Declaration.Value (Value)
 import Style.Declaration.Value as V
-import Type.Row (type (+))
 
 data Declaration = Declaration Property Value
 
@@ -48,14 +47,7 @@ trbl p v t r b l =
   Declaration p $ v { top: t, right: r, bottom: b, left: l }
 
 
-type BackgroundColorValue =
-  Variant
-    ( V.ColorFields
-    + V.GlobalFields
-    + ()
-    )
-
-backgroundColor' :: BackgroundColorValue -> Declaration
+backgroundColor' :: V.BackgroundColorValue -> Declaration
 backgroundColor' = Declaration BackgroundColor <<< expand
 
 backgroundColor :: C.Color -> Declaration
@@ -252,73 +244,29 @@ borderTopRightRadius :: V.BorderRadiusValue -> Declaration
 borderTopRightRadius = Declaration BorderTopRightRadius <<< expand
 
 
-type BoxShadowValue =
-  Variant
-    ( V.BoxShadow
-    + V.GlobalFields
-    + ()
-    )
-
 boxShadow :: Array V.BoxShadowRep -> Declaration
 boxShadow =
   Declaration BoxShadow
-    <<< (expand :: BoxShadowValue -> Value)
+    <<< (expand :: V.BoxShadowValue -> Value)
     <<< V.boxShadow
 
 
-type ColorValue =
-  Variant
-    ( V.ColorFields
-    + V.GlobalFields
-    + ()
-    )
-
-color' :: ColorValue -> Declaration
+color' :: V.ColorValue -> Declaration
 color' = Declaration Color <<< expand
 
 color :: C.Color -> Declaration
 color = color' <<< V.color_
 
 
-type FontSizeValue =
-  Variant
-    ( V.AbsoluteSizeFields
-    + V.GlobalFields
-    + V.LengthFields
-    + V.Pct
-    + V.RelativeSizeFields
-    + V.Zero
-    + ()
-    )
-
-fontSize :: FontSizeValue -> Declaration
+fontSize :: V.FontSizeValue -> Declaration
 fontSize = Declaration FontSize <<< expand
 
 
-type FontWeightValue =
-  Variant
-    ( V.FontWeightKeywordFields
-    + V.FontWeightKeywordRelativeFields
-    + V.GlobalFields
-    + V.Number_
-    + ()
-    )
-
-fontWeight :: FontWeightValue -> Declaration
+fontWeight :: V.FontWeightValue -> Declaration
 fontWeight = Declaration FontWeight <<< expand
 
 
-type HeightValue =
-  Variant
-    ( V.Auto
-    + V.GlobalFields
-    + V.LengthFields
-    + V.Pct
-    + V.Zero
-    + ()
-    )
-
-height :: HeightValue -> Declaration
+height :: V.HeightValue -> Declaration
 height = Declaration Height <<< expand
 
 
@@ -393,30 +341,9 @@ paddingTop :: V.PaddingValue -> Declaration
 paddingTop = Declaration PaddingTop <<< expand
 
 
-type TextAlignValue =
-  Variant
-    ( V.Center
-    + V.GlobalFields
-    + V.Justify
-    + V.JustifyAll
-    + V.Left
-    + V.Right
-    + ()
-    )
-
-textAlign :: TextAlignValue -> Declaration
+textAlign :: V.TextAlignValue -> Declaration
 textAlign = Declaration TextAlign <<< expand
 
 
-type WidthValue =
-  Variant
-    ( V.Auto
-    + V.GlobalFields
-    + V.LengthFields
-    + V.Pct
-    + V.Zero
-    + ()
-    )
-
-width :: WidthValue -> Declaration
+width :: V.WidthValue -> Declaration
 width = Declaration Width <<< expand
