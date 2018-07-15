@@ -15,6 +15,11 @@ type Value =
    ( Auto
    + Bold
    + Bolder
+   + Border
+   + BorderColor
+   + BorderStyle
+   + BorderWidth
+   + BorderRadius
    + BoxShadow
    + Center
    + Ch
@@ -39,12 +44,15 @@ type Value =
    + Larger
    + Left
    + Lighter
+   + Margin
    + Medium
    + Mm
    + None
    + Normal
    + Number_
+   + Outline
    + Outset
+   + Padding
    + Pc
    + Pct
    + Pt
@@ -77,6 +85,11 @@ render =
     # renderAuto
     >>> renderBold
     >>> renderBolder
+    >>> renderBorder
+    >>> renderBorderColor
+    >>> renderBorderStyle
+    >>> renderBorderWidth
+    >>> renderBorderRadius
     >>> renderBoxShadow
     >>> renderCenter
     >>> renderCh
@@ -101,12 +114,15 @@ render =
     >>> renderLarger
     >>> renderLeft
     >>> renderLighter
+    >>> renderMargin
     >>> renderMedium
     >>> renderMm
     >>> renderNone
     >>> renderNormal
     >>> renderNumber_
+    >>> renderOutline
     >>> renderOutset
+    >>> renderPadding
     >>> renderPc
     >>> renderPct
     >>> renderPt
@@ -131,241 +147,8 @@ render =
     >>> renderXxSmall
     >>> renderZero
 
-type AbsoluteLength r =
-  ( Cm
-  + In
-  + Mm
-  + Pc
-  + Pt
-  + Px
-  + r
-  )
 
-renderAbsoluteLength
-  :: forall v
-   . (Variant v -> String)
-  -> Variant (AbsoluteLength v)
-  -> String
-renderAbsoluteLength =
-  renderCm
-    >>> renderIn
-    >>> renderMm
-    >>> renderPc
-    >>> renderPt
-    >>> renderPx
-
-
-type AbsoluteSize r =
-  ( XxSmall
-  + XSmall
-  + Small
-  + Medium
-  + Large
-  + XLarge
-  + XxLarge
-  + r
-  )
-
-renderAbsoluteSize
-  :: forall v
-   . (Variant v -> String)
-  -> Variant (AbsoluteSize v)
-  -> String
-renderAbsoluteSize =
-  renderXxSmall
-    >>> renderXSmall
-    >>> renderSmall
-    >>> renderMedium
-    >>> renderLarge
-    >>> renderXLarge
-    >>> renderXxLarge
-
-
-type BorderWidthKeyword r =
-  ( Medium
-  + Thick
-  + Thin
-  + r
-  )
-
-renderBorderWidthKeyword
-  :: forall v
-   . (Variant v -> String)
-  -> Variant (BorderWidthKeyword v)
-  -> String
-renderBorderWidthKeyword =
-  renderMedium
-    >>> renderThick
-    >>> renderThin
-
-
-type Color r =
-  ( Color_
-  + CurrentColor
-  + Transparent
-  + r
-  )
-
-renderColor
-  :: forall v
-   . (Variant v -> String)
-  -> Variant (Color v)
-  -> String
-renderColor =
-  renderColor_
-    >>> renderCurrentColor
-    >>> renderTransparent
-
-
-type FontRelativeLength r =
-  ( Ch
-  + Em
-  + Ex
-  + Rem
-  + r
-  )
-
-renderFontRelativeLength
-  :: forall v
-   . (Variant v -> String)
-  -> Variant (FontRelativeLength v)
-  -> String
-renderFontRelativeLength =
-  renderCh
-    >>> renderEm
-    >>> renderEx
-    >>> renderRem
-
-
-type FontWeightKeyword r =
-  ( Bold
-  + Normal
-  + r
-  )
-
-renderFontWeightKeyword
-  :: forall v
-   . (Variant v -> String)
-  -> Variant (FontWeightKeyword v)
-  -> String
-renderFontWeightKeyword = renderBold >>> renderNormal
-
-
-type FontWeightKeywordRelative r =
-  ( Bolder
-  + Lighter
-  + r
-  )
-
-renderFontWeightKeywordRelative
-  :: forall v
-   . (Variant v -> String)
-  -> Variant (FontWeightKeywordRelative v)
-  -> String
-renderFontWeightKeywordRelative = renderBolder >>> renderLighter
-
-
-type Global r =
-  ( Inherit
-  + Initial
-  + Unset
-  + r
-  )
-
-renderGlobal
-  :: forall v
-   . (Variant v -> String)
-  -> Variant (Global v)
-  -> String
-renderGlobal =
-  renderInherit
-    >>> renderInitial
-    >>> renderUnset
-
-
-type Length r =
-  ( AbsoluteLength
-  + FontRelativeLength
-  + ViewportPercentageLength
-  + r
-  )
-
-renderLength
-  :: forall v
-   . (Variant v -> String)
-  -> Variant (Length v)
-  -> String
-renderLength =
-  renderAbsoluteLength
-    >>> renderFontRelativeLength
-    >>> renderViewportPercentageLength
-
-
-type Length_ r =
-  ( Length
-  + Zero
-  + r
-  )
-
-renderLength_
-  :: forall v
-   . (Variant v -> String)
-  -> Variant (Length_ v)
-  -> String
-renderLength_ = renderLength >>> renderZero
-
-
-type OutlineWidthKeyword r =
-  ( Medium
-  + Thick
-  + Thin
-  + r
-  )
-
-renderOutlineWidthKeyword
-  :: forall v
-   . (Variant v -> String)
-  -> Variant (OutlineWidthKeyword v)
-  -> String
-renderOutlineWidthKeyword =
-  renderMedium
-    >>> renderThick
-    >>> renderThin
-
-
-type RelativeSize r =
-  ( Smaller
-  + Larger
-  + r
-  )
-
-renderRelativeSize
-  :: forall v
-   . (Variant v -> String)
-  -> Variant (RelativeSize v)
-  -> String
-renderRelativeSize = renderLarger >>> renderSmaller
-
-
-type ViewportPercentageLength r =
-  ( Vh
-  + Vmax
-  + Vmin
-  + Vw
-  + r
-  )
-
-renderViewportPercentageLength
-  :: forall v
-   . (Variant v -> String)
-  -> Variant (ViewportPercentageLength v)
-  -> String
-renderViewportPercentageLength =
-  renderVh
-    >>> renderVmax
-    >>> renderVmin
-    >>> renderVw
-
+-- Standalone values
 
 type Auto v = (auto :: Unit | v)
 
@@ -400,79 +183,6 @@ renderBolder :: forall v. (Variant v -> String) -> Variant (Bolder v) -> String
 renderBolder = on _bolder $ const "bolder"
 
 
-type BoxShadow_ =
-  { inset :: Boolean
-  , offsetX :: Variant (Length_ ())
-  , offsetY :: Variant (Length_ ())
-  , blurRadius :: Variant (Length_ ())
-  , spreadRadius :: Variant (Length_ ())
-  , color :: Variant (Color ())
-  }
-
-boxShadow_'
-  :: Boolean
-  -> Variant (Length_ ())
-  -> Variant (Length_ ())
-  -> Variant (Length_ ())
-  -> Variant (Length_ ())
-  -> Variant (Color ())
-  -> BoxShadow_
-boxShadow_' =
-  { inset: _
-  , offsetX: _
-  , offsetY: _
-  , blurRadius: _
-  , spreadRadius: _
-  , color: _
-  }
-
-boxShadow_
-  :: Boolean
-  -> Variant (Length_ ())
-  -> Variant (Length_ ())
-  -> Variant (Length_ ())
-  -> Variant (Length_ ())
-  -> C.Color
-  -> BoxShadow_
-boxShadow_ i x y b s = boxShadow_' i x y b s <<< color_
-
-
-type BoxShadow v = (boxShadow :: Array BoxShadow_ | v)
-
-_boxShadow = SProxy :: SProxy "boxShadow"
-
-boxShadow :: forall v. Array BoxShadow_ -> Variant (BoxShadow v)
-boxShadow = inj _boxShadow
-
-renderBoxShadow
-  :: forall v
-   . (Variant v -> String)
-  -> Variant (BoxShadow v)
-  -> String
-renderBoxShadow = on _boxShadow renderShadows
-  where
-
-  renderShadows :: Array BoxShadow_ -> String
-  renderShadows = Array.intercalate ", " <<< map renderShadow
-
-  renderShadow :: BoxShadow_ -> String
-  renderShadow shadow =
-    shadowInset <> Array.intercalate " "
-      [ renderLength_ case_ $ shadow.offsetX
-      , renderLength_ case_ $ shadow.offsetY
-      , renderLength_ case_ $ shadow.blurRadius
-      , renderLength_ case_ $ shadow.spreadRadius
-      , renderColor case_ $ shadow.color
-      ]
-
-    where
-
-    shadowInset :: String
-    shadowInset
-      | shadow.inset = "inset "
-      | otherwise = ""
-
-
 type Center v = (center :: Unit | v)
 
 _center = SProxy :: SProxy "center"
@@ -482,17 +192,6 @@ center = inj _center unit
 
 renderCenter :: forall v. (Variant v -> String) -> Variant (Center v) -> String
 renderCenter = on _center $ const "center"
-
-
-type Color_ v = (color_ :: C.Color | v)
-
-_color_ = SProxy :: SProxy "color_"
-
-color_ :: forall v. C.Color -> Variant (Color v)
-color_ = inj _color_
-
-renderColor_ :: forall v. (Variant v -> String) -> Variant (Color_ v) -> String
-renderColor_ = on _color_ cssStringRGBA
 
 
 type CurrentColor v = (currentColor :: Unit | v)
@@ -770,17 +469,6 @@ renderNormal :: forall v. (Variant v -> String) -> Variant (Normal v) -> String
 renderNormal = on _normal $ const "normal"
 
 
-type Number_ v = (number_ :: Number | v)
-
-_number_ = SProxy :: SProxy "number_"
-
-number_ :: forall v. Number -> Variant (Number_ v)
-number_ = inj _number_
-
-renderNumber_ :: forall v. (Variant v -> String) -> Variant (Number_ v) -> String
-renderNumber_ = on _number_ Number.toString
-
-
 type Outset v = (outset :: Unit | v)
 
 _outset = SProxy :: SProxy "outset"
@@ -1034,6 +722,131 @@ renderXxSmall :: forall v. (Variant v -> String) -> Variant (XxSmall v) -> Strin
 renderXxSmall = on _xxSmall $ const "xx-small"
 
 
+-- Property values
+
+type BackgroundColorValue = Variant (BackgroundColorFields ())
+
+type BackgroundColorFields r =
+  ( ColorFields
+  + GlobalFields
+  + r
+  )
+
+
+type BorderRadiusValue = Variant (BorderRadiusFields ())
+
+type BorderRadiusFields r =
+  ( GlobalFields
+  + LengthFields
+  + Pct
+  + Zero
+  + r
+  )
+
+
+type BoxShadowValue = Variant (BoxShadowFields ())
+
+type BoxShadowFields r =
+  ( BoxShadow
+  + GlobalFields
+  + r
+  )
+
+
+type ColorValue = Variant (ColorValueFields ())
+
+type ColorValueFields r =
+  ( ColorFields
+  + GlobalFields
+  + r
+  )
+
+
+type FontSizeValue = Variant (FontSizeValueFields ())
+
+type FontSizeValueFields r =
+  ( AbsoluteSizeFields
+  + GlobalFields
+  + LengthFields
+  + Pct
+  + RelativeSizeFields
+  + Zero
+  + r
+  )
+
+
+type FontWeightValue = Variant (FontWeightValueFields ())
+
+type FontWeightValueFields r =
+  ( FontWeightKeywordFields
+  + FontWeightKeywordRelativeFields
+  + GlobalFields
+  + Number_
+  + r
+  )
+
+
+type HeightValue = Variant (HeightValueFields ())
+
+type HeightValueFields r =
+  ( Auto
+  + GlobalFields
+  + LengthFields
+  + Pct
+  + Zero
+  + r
+  )
+
+
+type TextAlignValue = Variant (TextAlignValueFields ())
+
+type TextAlignValueFields r =
+  ( Center
+  + GlobalFields
+  + Justify
+  + JustifyAll
+  + Left
+  + Right
+  + r
+  )
+
+
+type WidthValue = Variant (WidthValueFields ())
+
+type WidthValueFields r =
+  ( Auto
+  + GlobalFields
+  + LengthFields
+  + Pct
+  + Zero
+  + r
+  )
+
+
+-- Helpers
+
+type Color_ v = (color_ :: C.Color | v)
+
+_color_ = SProxy :: SProxy "color_"
+
+color_ :: forall v. C.Color -> Variant (ColorFields v)
+color_ = inj _color_
+
+renderColor_ :: forall v. (Variant v -> String) -> Variant (Color_ v) -> String
+renderColor_ = on _color_ cssStringRGBA
+
+
+type Number_ v = (number_ :: Number | v)
+
+_number_ = SProxy :: SProxy "number_"
+
+number_ :: forall v. Number -> Variant (Number_ v)
+number_ = inj _number_
+
+renderNumber_ :: forall v. (Variant v -> String) -> Variant (Number_ v) -> String
+renderNumber_ = on _number_ Number.toString
+
+
 type Zero v = (zero :: Unit | v)
 
 _zero = SProxy :: SProxy "zero"
@@ -1043,3 +856,739 @@ zero = inj _zero unit
 
 renderZero :: forall v. (Variant v -> String) -> Variant (Zero v) -> String
 renderZero = on _zero $ const "0"
+
+
+-- Shorthand property values
+
+type Border v = (border :: BorderRep | v)
+
+type BorderRep =
+  { width :: BorderWidthValue
+  , style :: BorderStyleValue
+  , color :: BorderColorValue
+  }
+
+_border = SProxy :: SProxy "border"
+
+border :: forall v. BorderRep -> Variant (Border v)
+border = inj _border
+
+renderBorder
+  :: forall v
+   . (Variant v -> String)
+  -> Variant (Border v)
+  -> String
+renderBorder = on _border \b ->
+  Array.intercalate " "
+    [ renderBorderWidthFields case_ $ b.width
+    , renderBorderStyleFields case_ $ b.style
+    , renderBorderColorFields case_ $ b.color
+    ]
+
+
+type BorderColor v = (borderColor :: BorderColorRep | v)
+
+type BorderColorRep =
+  { top :: BorderColorValue
+  , right :: BorderColorValue
+  , bottom :: BorderColorValue
+  , left :: BorderColorValue
+  }
+
+type BorderColorValue = Variant (BorderColorFields ())
+
+type BorderColorFields r =
+  ( ColorFields
+  + GlobalFields
+  + r
+  )
+
+_borderColor = SProxy :: SProxy "borderColor"
+
+borderColor :: forall v. BorderColorRep -> Variant (BorderColor v)
+borderColor = inj _borderColor
+
+renderBorderColorFields
+  :: forall v
+   . (Variant v -> String)
+  -> Variant (BorderColorFields v)
+  -> String
+renderBorderColorFields = renderColorFields >>> renderGlobalFields
+
+renderBorderColor
+  :: forall v
+   . (Variant v -> String)
+  -> Variant (BorderColor v)
+  -> String
+renderBorderColor = on _borderColor \s ->
+  Array.intercalate " "
+    [ renderBorderColorFields case_ $ s.top
+    , renderBorderColorFields case_ $ s.right
+    , renderBorderColorFields case_ $ s.bottom
+    , renderBorderColorFields case_ $ s.left
+    ]
+
+
+type BorderStyle v = (borderStyle :: BorderStyleRep | v)
+
+type BorderStyleRep =
+  { top :: BorderStyleValue
+  , right :: BorderStyleValue
+  , bottom :: BorderStyleValue
+  , left :: BorderStyleValue
+  }
+
+type BorderStyleValue = Variant (BorderStyleFields ())
+
+type BorderStyleFields r =
+  ( Dashed
+  + Dotted
+  + Double
+  + GlobalFields
+  + Groove
+  + Hidden
+  + Inset
+  + None
+  + Outset
+  + Ridge
+  + Solid
+  + r
+  )
+
+_borderStyle = SProxy :: SProxy "borderStyle"
+
+borderStyle :: forall v. BorderStyleRep -> Variant (BorderStyle v)
+borderStyle = inj _borderStyle
+
+renderBorderStyleFields
+  :: forall v
+   . (Variant v -> String)
+  -> Variant (BorderStyleFields v)
+  -> String
+renderBorderStyleFields =
+  renderDashed
+    >>> renderDotted
+    >>> renderDouble
+    >>> renderGlobalFields
+    >>> renderGroove
+    >>> renderHidden
+    >>> renderInset
+    >>> renderNone
+    >>> renderOutset
+    >>> renderRidge
+    >>> renderSolid
+
+renderBorderStyle
+  :: forall v
+   . (Variant v -> String)
+  -> Variant (BorderStyle v)
+  -> String
+renderBorderStyle = on _borderStyle \s ->
+  Array.intercalate " "
+    [ renderBorderStyleFields case_ $ s.top
+    , renderBorderStyleFields case_ $ s.right
+    , renderBorderStyleFields case_ $ s.bottom
+    , renderBorderStyleFields case_ $ s.left
+    ]
+
+
+type BorderWidth v = (borderWidth :: BorderWidthRep | v)
+
+type BorderWidthRep =
+  { top :: BorderWidthValue
+  , right :: BorderWidthValue
+  , bottom :: BorderWidthValue
+  , left :: BorderWidthValue
+  }
+
+type BorderWidthValue = Variant (BorderWidthFields ())
+
+type BorderWidthFields r =
+  ( GlobalFields
+  + LengthFields
+  + BorderWidthKeywordFields
+  + Zero
+  + r
+  )
+
+_borderWidth = SProxy :: SProxy "borderWidth"
+
+borderWidth :: forall v. BorderWidthRep -> Variant (BorderWidth v)
+borderWidth = inj _borderWidth
+
+renderBorderWidthFields
+  :: forall v
+   . (Variant v -> String)
+  -> Variant (BorderWidthFields v)
+  -> String
+renderBorderWidthFields =
+  renderBorderWidthKeywordFields
+    >>> renderGlobalFields
+    >>> renderLengthFields
+    >>> renderZero
+
+renderBorderWidth
+  :: forall v
+   . (Variant v -> String)
+  -> Variant (BorderWidth v)
+  -> String
+renderBorderWidth = on _borderWidth \s ->
+  Array.intercalate " "
+    [ renderBorderWidthFields case_ $ s.top
+    , renderBorderWidthFields case_ $ s.right
+    , renderBorderWidthFields case_ $ s.bottom
+    , renderBorderWidthFields case_ $ s.left
+    ]
+
+
+type BorderRadius v = (borderRadius :: BorderRadiusRep | v)
+
+type BorderRadiusRep =
+  { topLeft :: BorderRadiusValue
+  , topRight :: BorderRadiusValue
+  , bottomRight :: BorderRadiusValue
+  , bottomLeft :: BorderRadiusValue
+  }
+
+_borderRadius = SProxy :: SProxy "borderRadius"
+
+borderRadius :: forall v. BorderRadiusRep -> Variant (BorderRadius v)
+borderRadius = inj _borderRadius
+
+renderBorderRadiusFields
+  :: forall v
+   . (Variant v -> String)
+  -> Variant (BorderRadiusFields v)
+  -> String
+renderBorderRadiusFields =
+  renderGlobalFields
+    >>> renderLengthFields
+    >>> renderPct
+    >>> renderZero
+
+renderBorderRadius
+  :: forall v
+   . (Variant v -> String)
+  -> Variant (BorderRadius v)
+  -> String
+renderBorderRadius = on _borderRadius \r ->
+  Array.intercalate " "
+    [ renderBorderRadiusFields case_ $ r.topLeft
+    , renderBorderRadiusFields case_ $ r.topRight
+    , renderBorderRadiusFields case_ $ r.bottomRight
+    , renderBorderRadiusFields case_ $ r.bottomLeft
+    ]
+
+
+type BoxShadow v = (boxShadow :: Array BoxShadowRep | v)
+
+type BoxShadowRep =
+  { inset :: Boolean
+  , offsetX :: Variant (LengthFields_ ())
+  , offsetY :: Variant (LengthFields_ ())
+  , blurRadius :: Variant (LengthFields_ ())
+  , spreadRadius :: Variant (LengthFields_ ())
+  , color :: Variant (ColorFields ())
+  }
+
+boxShadow_'
+  :: Boolean
+  -> Variant (LengthFields_ ())
+  -> Variant (LengthFields_ ())
+  -> Variant (LengthFields_ ())
+  -> Variant (LengthFields_ ())
+  -> Variant (ColorFields ())
+  -> BoxShadowRep
+boxShadow_' =
+  { inset: _
+  , offsetX: _
+  , offsetY: _
+  , blurRadius: _
+  , spreadRadius: _
+  , color: _
+  }
+
+boxShadow_
+  :: Boolean
+  -> Variant (LengthFields_ ())
+  -> Variant (LengthFields_ ())
+  -> Variant (LengthFields_ ())
+  -> Variant (LengthFields_ ())
+  -> C.Color
+  -> BoxShadowRep
+boxShadow_ i x y b s = boxShadow_' i x y b s <<< color_
+
+_boxShadow = SProxy :: SProxy "boxShadow"
+
+boxShadow :: forall v. Array BoxShadowRep -> Variant (BoxShadow v)
+boxShadow = inj _boxShadow
+
+renderBoxShadow
+  :: forall v
+   . (Variant v -> String)
+  -> Variant (BoxShadow v)
+  -> String
+renderBoxShadow = on _boxShadow renderShadows
+  where
+
+  renderShadows :: Array BoxShadowRep -> String
+  renderShadows = Array.intercalate ", " <<< map renderShadow
+
+  renderShadow :: BoxShadowRep -> String
+  renderShadow shadow =
+    shadowInset <> Array.intercalate " "
+      [ renderLengthFields_ case_ $ shadow.offsetX
+      , renderLengthFields_ case_ $ shadow.offsetY
+      , renderLengthFields_ case_ $ shadow.blurRadius
+      , renderLengthFields_ case_ $ shadow.spreadRadius
+      , renderColorFields case_ $ shadow.color
+      ]
+
+    where
+
+    shadowInset :: String
+    shadowInset
+      | shadow.inset = "inset "
+      | otherwise = ""
+
+
+type Margin v = (margin :: MarginRep | v)
+
+type MarginRep =
+  { top :: MarginValue
+  , right :: MarginValue
+  , bottom :: MarginValue
+  , left :: MarginValue
+  }
+
+type MarginValue = Variant (MarginFields ())
+
+type MarginFields r =
+  ( Auto
+  + GlobalFields
+  + LengthFields
+  + Pct
+  + Zero
+  + r
+  )
+
+_margin = SProxy :: SProxy "margin"
+
+margin :: forall v. MarginRep -> Variant (Margin v)
+margin = inj _margin
+
+renderMarginFields
+  :: forall v
+   . (Variant v -> String)
+  -> Variant (MarginFields v)
+  -> String
+renderMarginFields =
+  renderAuto
+    >>> renderGlobalFields
+    >>> renderLengthFields
+    >>> renderPct
+    >>> renderZero
+
+renderMargin
+  :: forall v
+   . (Variant v -> String)
+  -> Variant (Margin v)
+  -> String
+renderMargin = on _margin \m ->
+  Array.intercalate " "
+    [ renderMarginFields case_ $ m.top
+    , renderMarginFields case_ $ m.right
+    , renderMarginFields case_ $ m.bottom
+    , renderMarginFields case_ $ m.left
+    ]
+
+
+type Outline v = (outline :: OutlineRep | v)
+
+type OutlineRep =
+  { width :: OutlineWidthValue
+  , style :: OutlineStyleValue
+  , color :: OutlineColorValue
+  }
+
+_outline = SProxy :: SProxy "outline"
+
+outline :: forall v. OutlineRep -> Variant (Outline v)
+outline = inj _outline
+
+renderOutline
+  :: forall v
+   . (Variant v -> String)
+  -> Variant (Outline v)
+  -> String
+renderOutline = on _outline \o ->
+  Array.intercalate " "
+    [ renderOutlineWidthFields case_ $ o.width
+    , renderOutlineStyleFields case_ $ o.style
+    , renderOutlineColorFields case_ $ o.color
+    ]
+
+
+type OutlineColorValue = Variant (OutlineColorFields ())
+
+type OutlineColorFields r =
+  ( ColorFields
+  + GlobalFields
+  + Invert
+  + r
+  )
+
+renderOutlineColorFields
+  :: forall v
+   . (Variant v -> String)
+  -> Variant (OutlineColorFields v)
+  -> String
+renderOutlineColorFields =
+  renderColorFields
+    >>> renderGlobalFields
+    >>> renderInvert
+
+
+type OutlineStyleValue = Variant (OutlineStyleFields ())
+
+type OutlineStyleFields r =
+  ( Auto
+  + Dashed
+  + Dotted
+  + Double
+  + GlobalFields
+  + Groove
+  + Inset
+  + None
+  + Outset
+  + Ridge
+  + Solid
+  + r
+  )
+
+renderOutlineStyleFields
+  :: forall v
+   . (Variant v -> String)
+  -> Variant (OutlineStyleFields v)
+  -> String
+renderOutlineStyleFields =
+  renderAuto
+    >>> renderDashed
+    >>> renderDotted
+    >>> renderDouble
+    >>> renderGlobalFields
+    >>> renderGroove
+    >>> renderInset
+    >>> renderNone
+    >>> renderOutset
+    >>> renderRidge
+    >>> renderSolid
+
+
+type OutlineWidthValue = Variant (OutlineWidthFields ())
+
+type OutlineWidthFields r =
+  ( GlobalFields
+  + LengthFields
+  + OutlineWidthKeywordFields
+  + Zero
+  + r
+  )
+
+renderOutlineWidthFields
+  :: forall v
+   . (Variant v -> String)
+  -> Variant (OutlineWidthFields v)
+  -> String
+renderOutlineWidthFields =
+  renderGlobalFields
+    >>> renderLengthFields
+    >>> renderOutlineWidthKeyword
+    >>> renderZero
+
+
+type Padding v = (padding :: PaddingRep | v)
+
+type PaddingRep =
+  { top :: PaddingValue
+  , right :: PaddingValue
+  , bottom :: PaddingValue
+  , left :: PaddingValue
+  }
+
+type PaddingValue = Variant (PaddingFields ())
+
+type PaddingFields r =
+  ( GlobalFields
+  + LengthFields
+  + Pct
+  + Zero
+  + r
+  )
+
+_padding = SProxy :: SProxy "padding"
+
+padding :: forall v. PaddingRep -> Variant (Padding v)
+padding = inj _padding
+
+renderPaddingFields
+  :: forall v
+   . (Variant v -> String)
+  -> Variant (PaddingFields v)
+  -> String
+renderPaddingFields =
+  renderGlobalFields
+    >>> renderLengthFields
+    >>> renderPct
+    >>> renderZero
+
+renderPadding
+  :: forall v
+   . (Variant v -> String)
+  -> Variant (Padding v)
+  -> String
+renderPadding = on _padding \p ->
+  Array.intercalate " "
+    [ renderPaddingFields case_ $ p.top
+    , renderPaddingFields case_ $ p.right
+    , renderPaddingFields case_ $ p.bottom
+    , renderPaddingFields case_ $ p.left
+    ]
+
+
+-- CSS data type values
+
+type AbsoluteLengthFields r =
+  ( Cm
+  + In
+  + Mm
+  + Pc
+  + Pt
+  + Px
+  + r
+  )
+
+renderAbsoluteLengthFields
+  :: forall v
+   . (Variant v -> String)
+  -> Variant (AbsoluteLengthFields v)
+  -> String
+renderAbsoluteLengthFields =
+  renderCm
+    >>> renderIn
+    >>> renderMm
+    >>> renderPc
+    >>> renderPt
+    >>> renderPx
+
+
+type AbsoluteSizeFields r =
+  ( XxSmall
+  + XSmall
+  + Small
+  + Medium
+  + Large
+  + XLarge
+  + XxLarge
+  + r
+  )
+
+renderAbsoluteSizeFields
+  :: forall v
+   . (Variant v -> String)
+  -> Variant (AbsoluteSizeFields v)
+  -> String
+renderAbsoluteSizeFields =
+  renderXxSmall
+    >>> renderXSmall
+    >>> renderSmall
+    >>> renderMedium
+    >>> renderLarge
+    >>> renderXLarge
+    >>> renderXxLarge
+
+
+type BorderWidthKeywordFields r =
+  ( Medium
+  + Thick
+  + Thin
+  + r
+  )
+
+renderBorderWidthKeywordFields
+  :: forall v
+   . (Variant v -> String)
+  -> Variant (BorderWidthKeywordFields v)
+  -> String
+renderBorderWidthKeywordFields =
+  renderMedium
+    >>> renderThick
+    >>> renderThin
+
+
+type ColorFields r =
+  ( Color_
+  + CurrentColor
+  + Transparent
+  + r
+  )
+
+renderColorFields
+  :: forall v
+   . (Variant v -> String)
+  -> Variant (ColorFields v)
+  -> String
+renderColorFields =
+  renderColor_
+    >>> renderCurrentColor
+    >>> renderTransparent
+
+
+type FontRelativeLengthFields r =
+  ( Ch
+  + Em
+  + Ex
+  + Rem
+  + r
+  )
+
+renderFontRelativeLengthFields
+  :: forall v
+   . (Variant v -> String)
+  -> Variant (FontRelativeLengthFields v)
+  -> String
+renderFontRelativeLengthFields =
+  renderCh
+    >>> renderEm
+    >>> renderEx
+    >>> renderRem
+
+
+type FontWeightKeywordFields r =
+  ( Bold
+  + Normal
+  + r
+  )
+
+renderFontWeightKeywordFields
+  :: forall v
+   . (Variant v -> String)
+  -> Variant (FontWeightKeywordFields v)
+  -> String
+renderFontWeightKeywordFields = renderBold >>> renderNormal
+
+
+type FontWeightKeywordRelativeFields r =
+  ( Bolder
+  + Lighter
+  + r
+  )
+
+renderFontWeightKeywordRelativeFields
+  :: forall v
+   . (Variant v -> String)
+  -> Variant (FontWeightKeywordRelativeFields v)
+  -> String
+renderFontWeightKeywordRelativeFields = renderBolder >>> renderLighter
+
+
+type GlobalFields r =
+  ( Inherit
+  + Initial
+  + Unset
+  + r
+  )
+
+renderGlobalFields
+  :: forall v
+   . (Variant v -> String)
+  -> Variant (GlobalFields v)
+  -> String
+renderGlobalFields =
+  renderInherit
+    >>> renderInitial
+    >>> renderUnset
+
+
+type LengthFields r =
+  ( AbsoluteLengthFields
+  + FontRelativeLengthFields
+  + ViewportPercentageLengthFields
+  + r
+  )
+
+renderLengthFields
+  :: forall v
+   . (Variant v -> String)
+  -> Variant (LengthFields v)
+  -> String
+renderLengthFields =
+  renderAbsoluteLengthFields
+    >>> renderFontRelativeLengthFields
+    >>> renderViewportPercentageLengthFields
+
+
+type LengthFields_ r =
+  ( LengthFields
+  + Zero
+  + r
+  )
+
+renderLengthFields_
+  :: forall v
+   . (Variant v -> String)
+  -> Variant (LengthFields_ v)
+  -> String
+renderLengthFields_ = renderLengthFields >>> renderZero
+
+
+type OutlineWidthKeywordFields r =
+  ( Medium
+  + Thick
+  + Thin
+  + r
+  )
+
+renderOutlineWidthKeyword
+  :: forall v
+   . (Variant v -> String)
+  -> Variant (OutlineWidthKeywordFields v)
+  -> String
+renderOutlineWidthKeyword =
+  renderMedium
+    >>> renderThick
+    >>> renderThin
+
+
+type RelativeSizeFields r =
+  ( Smaller
+  + Larger
+  + r
+  )
+
+renderRelativeSizeFields
+  :: forall v
+   . (Variant v -> String)
+  -> Variant (RelativeSizeFields v)
+  -> String
+renderRelativeSizeFields = renderLarger >>> renderSmaller
+
+
+type ViewportPercentageLengthFields r =
+  ( Vh
+  + Vmax
+  + Vmin
+  + Vw
+  + r
+  )
+
+renderViewportPercentageLengthFields
+  :: forall v
+   . (Variant v -> String)
+  -> Variant (ViewportPercentageLengthFields v)
+  -> String
+renderViewportPercentageLengthFields =
+  renderVh
+    >>> renderVmax
+    >>> renderVmin
+    >>> renderVw

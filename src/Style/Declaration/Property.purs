@@ -4,6 +4,14 @@ import Prelude
 
 data Property
   = BackgroundColor
+  | Border
+  | BorderColor
+  | BorderStyle
+  | BorderWidth
+  | BorderTop
+  | BorderRight
+  | BorderBottom
+  | BorderLeft
   | BorderBottomColor
   | BorderLeftColor
   | BorderRightColor
@@ -16,6 +24,7 @@ data Property
   | BorderLeftWidth
   | BorderRightWidth
   | BorderTopWidth
+  | BorderRadius
   | BorderBottomLeftRadius
   | BorderBottomRightRadius
   | BorderTopLeftRadius
@@ -25,13 +34,16 @@ data Property
   | FontSize
   | FontWeight
   | Height
+  | Margin
   | MarginBottom
   | MarginLeft
   | MarginRight
   | MarginTop
+  | Outline
   | OutlineColor
   | OutlineStyle
   | OutlineWidth
+  | Padding
   | PaddingBottom
   | PaddingLeft
   | PaddingRight
@@ -45,6 +57,14 @@ derive instance ordProperty :: Ord Property
 instance showProperty :: Show Property where
   show = case _ of
     BackgroundColor -> "BackgroundColor"
+    Border -> "Border"
+    BorderColor -> "BorderColor"
+    BorderStyle -> "BorderStyle"
+    BorderWidth -> "BorderWidth"
+    BorderTop -> "BorderTop"
+    BorderRight -> "BorderRight"
+    BorderBottom -> "BorderBottom"
+    BorderLeft -> "BorderLeft"
     BorderBottomColor -> "BorderBottomColor"
     BorderLeftColor -> "BorderLeftColor"
     BorderRightColor -> "BorderRightColor"
@@ -57,6 +77,7 @@ instance showProperty :: Show Property where
     BorderLeftWidth -> "BorderLeftWidth"
     BorderRightWidth -> "BorderRightWidth"
     BorderTopWidth -> "BorderTopWidth"
+    BorderRadius -> "BorderRadius"
     BorderBottomLeftRadius -> "BorderBottomLeftRadius"
     BorderBottomRightRadius -> "BorderBottomRightRadius"
     BorderTopLeftRadius -> "BorderTopLeftRadius"
@@ -66,13 +87,16 @@ instance showProperty :: Show Property where
     FontSize -> "FontSize"
     FontWeight -> "FontWeight"
     Height -> "Height"
+    Margin -> "Margin"
     MarginBottom -> "MarginBottom"
     MarginLeft -> "MarginLeft"
     MarginRight -> "MarginRight"
     MarginTop -> "MarginTop"
+    Outline -> "Outline"
     OutlineColor -> "OutlineColor"
     OutlineStyle -> "OutlineStyle"
     OutlineWidth -> "OutlineWidth"
+    Padding -> "Padding"
     PaddingBottom -> "PaddingBottom"
     PaddingLeft -> "PaddingLeft"
     PaddingRight -> "PaddingRight"
@@ -83,6 +107,14 @@ instance showProperty :: Show Property where
 render :: Property -> String
 render = case _ of
   BackgroundColor -> "background-color"
+  Border -> "border"
+  BorderColor -> "border-color"
+  BorderStyle -> "border-style"
+  BorderWidth -> "border-width"
+  BorderTop -> "border-top"
+  BorderRight -> "border-right"
+  BorderBottom -> "border-bottom"
+  BorderLeft -> "border-left"
   BorderBottomColor -> "border-bottom-color"
   BorderLeftColor -> "border-left-color"
   BorderRightColor -> "border-right-color"
@@ -95,6 +127,7 @@ render = case _ of
   BorderLeftWidth -> "border-left-width"
   BorderRightWidth -> "border-right-width"
   BorderTopWidth -> "border-top-width"
+  BorderRadius -> "border-radius"
   BorderBottomLeftRadius -> "border-bottom-left-radius"
   BorderBottomRightRadius -> "border-bottom-right-radius"
   BorderTopLeftRadius -> "border-top-left-radius"
@@ -104,13 +137,16 @@ render = case _ of
   FontSize -> "font-size"
   FontWeight -> "font-weight"
   Height -> "height"
+  Margin -> "margin"
   MarginBottom -> "margin-bottom"
   MarginLeft -> "margin-left"
   MarginRight -> "margin-right"
   MarginTop -> "margin-top"
+  Outline -> "outline"
   OutlineColor -> "outline-color"
   OutlineStyle -> "outline-style"
   OutlineWidth -> "outline-width"
+  Padding -> "padding"
   PaddingBottom -> "padding-bottom"
   PaddingLeft -> "padding-left"
   PaddingRight -> "padding-right"
