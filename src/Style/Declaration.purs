@@ -24,20 +24,34 @@ render :: Declaration -> String
 render (Declaration p v) = Property.render p <> ": " <> V.render v <> ";"
 
 
+type WSC w s c =
+  { width :: w
+  , style :: s
+  , color :: c
+  }
+
 wsc
   :: forall w s c
    . Property
-  -> ({ width :: w, style :: s, color :: c } -> Value)
+  -> (WSC w s c -> Value)
   -> w
   -> s
   -> c
   -> Declaration
 wsc p v w s c = Declaration p $ v { width: w, style: s, color: c }
 
+
+type TRBL a =
+  { top :: a
+  , right :: a
+  , bottom :: a
+  , left :: a
+  }
+
 trbl
   :: forall a
    . Property
-  -> ({ top :: a, right :: a, bottom :: a, left :: a } -> Value)
+  -> (TRBL a -> Value)
   -> a
   -> a
   -> a
