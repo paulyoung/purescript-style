@@ -21,9 +21,6 @@ to generate this file without the comments in this block.
   , "newtype"
   , "numbers"
   , "prelude"
-  , "psci-support"
-  , "record"
-  , "typelevel-prelude"
   , "variant"
   ]
 , packages = ./packages.dhall
