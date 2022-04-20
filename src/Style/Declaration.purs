@@ -23,7 +23,6 @@ instance showDeclaration :: Show Declaration where
 render :: Declaration -> String
 render (Declaration p v) = Property.render p <> ": " <> V.render v <> ";"
 
-
 type WSC w s c =
   { width :: w
   , style :: s
@@ -39,7 +38,6 @@ wsc
   -> c
   -> Declaration
 wsc p v w s c = Declaration p $ v { width: w, style: s, color: c }
-
 
 type TRBL a =
   { top :: a
@@ -60,13 +58,11 @@ trbl
 trbl p v t r b l =
   Declaration p $ v { top: t, right: r, bottom: b, left: l }
 
-
 backgroundColor' :: V.BackgroundColorValue -> Declaration
 backgroundColor' = Declaration BackgroundColor <<< expand
 
 backgroundColor :: C.Color -> Declaration
 backgroundColor = backgroundColor' <<< V.color_
-
 
 border'
   :: V.BorderWidthValue
@@ -82,7 +78,6 @@ border
   -> Declaration
 border w s = border' w s <<< V.color_
 
-
 borderTop'
   :: V.BorderWidthValue
   -> V.BorderStyleValue
@@ -96,7 +91,6 @@ borderTop
   -> C.Color
   -> Declaration
 borderTop w s = borderTop' w s <<< V.color_
-
 
 borderRight'
   :: V.BorderWidthValue
@@ -112,7 +106,6 @@ borderRight
   -> Declaration
 borderRight w s = borderRight' w s <<< V.color_
 
-
 borderBottom'
   :: V.BorderWidthValue
   -> V.BorderStyleValue
@@ -127,7 +120,6 @@ borderBottom
   -> Declaration
 borderBottom w s = borderBottom' w s <<< V.color_
 
-
 borderLeft'
   :: V.BorderWidthValue
   -> V.BorderStyleValue
@@ -141,7 +133,6 @@ borderLeft
   -> C.Color
   -> Declaration
 borderLeft w s = borderLeft' w s <<< V.color_
-
 
 borderColor'
   :: V.BorderColorValue
@@ -160,13 +151,11 @@ borderColor
 borderColor t r b l =
   borderColor' (V.color_ t) (V.color_ r) (V.color_ b) (V.color_ l)
 
-
 borderTopColor' :: V.BorderColorValue -> Declaration
 borderTopColor' = Declaration BorderTopColor <<< expand
 
 borderTopColor :: C.Color -> Declaration
 borderTopColor = borderTopColor' <<< V.color_
-
 
 borderRightColor' :: V.BorderColorValue -> Declaration
 borderRightColor' = Declaration BorderRightColor <<< expand
@@ -174,20 +163,17 @@ borderRightColor' = Declaration BorderRightColor <<< expand
 borderRightColor :: C.Color -> Declaration
 borderRightColor = borderRightColor' <<< V.color_
 
-
 borderBottomColor' :: V.BorderColorValue -> Declaration
 borderBottomColor' = Declaration BorderBottomColor <<< expand
 
 borderBottomColor :: C.Color -> Declaration
 borderBottomColor = borderBottomColor' <<< V.color_
 
-
 borderLeftColor' :: V.BorderColorValue -> Declaration
 borderLeftColor' = Declaration BorderLeftColor <<< expand
 
 borderLeftColor :: C.Color -> Declaration
 borderLeftColor = borderLeftColor' <<< V.color_
-
 
 borderStyle
   :: V.BorderStyleValue
@@ -209,7 +195,6 @@ borderBottomStyle = Declaration BorderBottomStyle <<< expand
 borderLeftStyle :: V.BorderStyleValue -> Declaration
 borderLeftStyle = Declaration BorderLeftStyle <<< expand
 
-
 borderWidth
   :: V.BorderWidthValue
   -> V.BorderWidthValue
@@ -229,7 +214,6 @@ borderBottomWidth = Declaration BorderBottomWidth <<< expand
 
 borderLeftWidth :: V.BorderWidthValue -> Declaration
 borderLeftWidth = Declaration BorderLeftWidth <<< expand
-
 
 borderRadius
   :: V.BorderRadiusValue
@@ -257,13 +241,11 @@ borderTopLeftRadius = Declaration BorderTopLeftRadius <<< expand
 borderTopRightRadius :: V.BorderRadiusValue -> Declaration
 borderTopRightRadius = Declaration BorderTopRightRadius <<< expand
 
-
 boxShadow :: Array V.BoxShadowRep -> Declaration
 boxShadow =
   Declaration BoxShadow
     <<< (expand :: V.BoxShadowValue -> Value)
     <<< V.boxShadow
-
 
 color' :: V.ColorValue -> Declaration
 color' = Declaration Color <<< expand
@@ -271,18 +253,14 @@ color' = Declaration Color <<< expand
 color :: C.Color -> Declaration
 color = color' <<< V.color_
 
-
 fontSize :: V.FontSizeValue -> Declaration
 fontSize = Declaration FontSize <<< expand
-
 
 fontWeight :: V.FontWeightValue -> Declaration
 fontWeight = Declaration FontWeight <<< expand
 
-
 height :: V.HeightValue -> Declaration
 height = Declaration Height <<< expand
-
 
 margin
   :: V.MarginValue
@@ -304,7 +282,6 @@ marginRight = Declaration MarginRight <<< expand
 marginTop :: V.MarginValue -> Declaration
 marginTop = Declaration MarginTop <<< expand
 
-
 outline'
   :: V.OutlineWidthValue
   -> V.OutlineStyleValue
@@ -312,14 +289,12 @@ outline'
   -> Declaration
 outline' w s c = Declaration Outline $ V.outline { width: w, style: s, color: c }
 
-
 outline
   :: V.OutlineWidthValue
   -> V.OutlineStyleValue
   -> C.Color
   -> Declaration
 outline w s = outline' w s <<< V.color_
-
 
 outlineColor' :: V.OutlineColorValue -> Declaration
 outlineColor' = Declaration OutlineColor <<< expand
@@ -332,7 +307,6 @@ outlineStyle = Declaration OutlineStyle <<< expand
 
 outlineWidth :: V.OutlineWidthValue -> Declaration
 outlineWidth = Declaration OutlineWidth <<< expand
-
 
 padding
   :: V.PaddingValue
@@ -354,10 +328,8 @@ paddingRight = Declaration PaddingRight <<< expand
 paddingTop :: V.PaddingValue -> Declaration
 paddingTop = Declaration PaddingTop <<< expand
 
-
 textAlign :: V.TextAlignValue -> Declaration
 textAlign = Declaration TextAlign <<< expand
-
 
 width :: V.WidthValue -> Declaration
 width = Declaration Width <<< expand

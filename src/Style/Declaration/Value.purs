@@ -12,141 +12,140 @@ import Type.Row (type (+))
 
 type Value =
   Variant
-   ( Auto
-   + Bold
-   + Bolder
-   + Border
-   + BorderColor
-   + BorderStyle
-   + BorderWidth
-   + BorderRadius
-   + BoxShadow
-   + Center
-   + Ch
-   + Cm
-   + Color_
-   + CurrentColor
-   + Dashed
-   + Dotted
-   + Double
-   + Em
-   + Ex
-   + Groove
-   + Hidden
-   + In
-   + Inherit
-   + Initial
-   + Inset
-   + Invert
-   + Justify
-   + JustifyAll
-   + Large
-   + Larger
-   + Left
-   + Lighter
-   + Margin
-   + Medium
-   + Mm
-   + None
-   + Normal
-   + Number_
-   + Outline
-   + Outset
-   + Padding
-   + Pc
-   + Pct
-   + Pt
-   + Px
-   + Rem
-   + Ridge
-   + Right
-   + Small
-   + Smaller
-   + Solid
-   + Thick
-   + Thin
-   + Transparent
-   + Unset
-   + Vh
-   + Vmax
-   + Vmin
-   + Vw
-   + XLarge
-   + XSmall
-   + XxLarge
-   + XxSmall
-   + Zero
-   + ()
-   )
+    ( Auto
+        + Bold
+        + Bolder
+        + Border
+        + BorderColor
+        + BorderStyle
+        + BorderWidth
+        + BorderRadius
+        + BoxShadow
+        + Center
+        + Ch
+        + Cm
+        + Color_
+        + CurrentColor
+        + Dashed
+        + Dotted
+        + Double
+        + Em
+        + Ex
+        + Groove
+        + Hidden
+        + In
+        + Inherit
+        + Initial
+        + Inset
+        + Invert
+        + Justify
+        + JustifyAll
+        + Large
+        + Larger
+        + Left
+        + Lighter
+        + Margin
+        + Medium
+        + Mm
+        + None
+        + Normal
+        + Number_
+        + Outline
+        + Outset
+        + Padding
+        + Pc
+        + Pct
+        + Pt
+        + Px
+        + Rem
+        + Ridge
+        + Right
+        + Small
+        + Smaller
+        + Solid
+        + Thick
+        + Thin
+        + Transparent
+        + Unset
+        + Vh
+        + Vmax
+        + Vmin
+        + Vw
+        + XLarge
+        + XSmall
+        + XxLarge
+        + XxSmall
+        + Zero
+        + ()
+    )
 
 render :: Value -> String
 render =
   case_
     # renderAuto
-    >>> renderBold
-    >>> renderBolder
-    >>> renderBorder
-    >>> renderBorderColor
-    >>> renderBorderStyle
-    >>> renderBorderWidth
-    >>> renderBorderRadius
-    >>> renderBoxShadow
-    >>> renderCenter
-    >>> renderCh
-    >>> renderCm
-    >>> renderColor_
-    >>> renderCurrentColor
-    >>> renderDashed
-    >>> renderDotted
-    >>> renderDouble
-    >>> renderEm
-    >>> renderEx
-    >>> renderGroove
-    >>> renderHidden
-    >>> renderIn
-    >>> renderInherit
-    >>> renderInitial
-    >>> renderInset
-    >>> renderJustify
-    >>> renderJustifyAll
-    >>> renderInvert
-    >>> renderLarge
-    >>> renderLarger
-    >>> renderLeft
-    >>> renderLighter
-    >>> renderMargin
-    >>> renderMedium
-    >>> renderMm
-    >>> renderNone
-    >>> renderNormal
-    >>> renderNumber_
-    >>> renderOutline
-    >>> renderOutset
-    >>> renderPadding
-    >>> renderPc
-    >>> renderPct
-    >>> renderPt
-    >>> renderPx
-    >>> renderRem
-    >>> renderRidge
-    >>> renderRight
-    >>> renderSmall
-    >>> renderSmaller
-    >>> renderSolid
-    >>> renderThick
-    >>> renderThin
-    >>> renderTransparent
-    >>> renderUnset
-    >>> renderVh
-    >>> renderVmax
-    >>> renderVmin
-    >>> renderVw
-    >>> renderXLarge
-    >>> renderXSmall
-    >>> renderXxLarge
-    >>> renderXxSmall
-    >>> renderZero
-
+        >>> renderBold
+        >>> renderBolder
+        >>> renderBorder
+        >>> renderBorderColor
+        >>> renderBorderStyle
+        >>> renderBorderWidth
+        >>> renderBorderRadius
+        >>> renderBoxShadow
+        >>> renderCenter
+        >>> renderCh
+        >>> renderCm
+        >>> renderColor_
+        >>> renderCurrentColor
+        >>> renderDashed
+        >>> renderDotted
+        >>> renderDouble
+        >>> renderEm
+        >>> renderEx
+        >>> renderGroove
+        >>> renderHidden
+        >>> renderIn
+        >>> renderInherit
+        >>> renderInitial
+        >>> renderInset
+        >>> renderJustify
+        >>> renderJustifyAll
+        >>> renderInvert
+        >>> renderLarge
+        >>> renderLarger
+        >>> renderLeft
+        >>> renderLighter
+        >>> renderMargin
+        >>> renderMedium
+        >>> renderMm
+        >>> renderNone
+        >>> renderNormal
+        >>> renderNumber_
+        >>> renderOutline
+        >>> renderOutset
+        >>> renderPadding
+        >>> renderPc
+        >>> renderPct
+        >>> renderPt
+        >>> renderPx
+        >>> renderRem
+        >>> renderRidge
+        >>> renderRight
+        >>> renderSmall
+        >>> renderSmaller
+        >>> renderSolid
+        >>> renderThick
+        >>> renderThin
+        >>> renderTransparent
+        >>> renderUnset
+        >>> renderVh
+        >>> renderVmax
+        >>> renderVmin
+        >>> renderVw
+        >>> renderXLarge
+        >>> renderXSmall
+        >>> renderXxLarge
+        >>> renderXxSmall
+        >>> renderZero
 
 -- Standalone values
 
@@ -160,7 +159,6 @@ auto = inj _auto unit
 renderAuto :: forall v. (Variant v -> String) -> Variant (Auto v) -> String
 renderAuto = on _auto $ const "auto"
 
-
 type Bold v = (bold :: Unit | v)
 
 _bold = Proxy :: Proxy "bold"
@@ -170,7 +168,6 @@ bold = inj _bold unit
 
 renderBold :: forall v. (Variant v -> String) -> Variant (Bold v) -> String
 renderBold = on _bold $ const "bold"
-
 
 type Bolder v = (bolder :: Unit | v)
 
@@ -182,7 +179,6 @@ bolder = inj _bolder unit
 renderBolder :: forall v. (Variant v -> String) -> Variant (Bolder v) -> String
 renderBolder = on _bolder $ const "bolder"
 
-
 type Center v = (center :: Unit | v)
 
 _center = Proxy :: Proxy "center"
@@ -192,7 +188,6 @@ center = inj _center unit
 
 renderCenter :: forall v. (Variant v -> String) -> Variant (Center v) -> String
 renderCenter = on _center $ const "center"
-
 
 type CurrentColor v = (currentColor :: Unit | v)
 
@@ -204,7 +199,6 @@ currentColor = inj _currentColor unit
 renderCurrentColor :: forall v. (Variant v -> String) -> Variant (CurrentColor v) -> String
 renderCurrentColor = on _currentColor $ const "currentColor"
 
-
 type Ch v = (ch :: Number | v)
 
 _ch = Proxy :: Proxy "ch"
@@ -214,7 +208,6 @@ ch = inj _ch
 
 renderCh :: forall v. (Variant v -> String) -> Variant (Ch v) -> String
 renderCh = on _ch \n -> Number.toString n <> "ch"
-
 
 type Cm v = (cm :: Number | v)
 
@@ -226,7 +219,6 @@ cm = inj _cm
 renderCm :: forall v. (Variant v -> String) -> Variant (Cm v) -> String
 renderCm = on _cm \n -> Number.toString n <> "cm"
 
-
 type Dashed v = (dashed :: Unit | v)
 
 _dashed = Proxy :: Proxy "dashed"
@@ -236,7 +228,6 @@ dashed = inj _dashed unit
 
 renderDashed :: forall v. (Variant v -> String) -> Variant (Dashed v) -> String
 renderDashed = on _dashed $ const "dashed"
-
 
 type Dotted v = (dotted :: Unit | v)
 
@@ -248,7 +239,6 @@ dotted = inj _dotted unit
 renderDotted :: forall v. (Variant v -> String) -> Variant (Dotted v) -> String
 renderDotted = on _dotted $ const "dotted"
 
-
 type Double v = (double :: Unit | v)
 
 _double = Proxy :: Proxy "double"
@@ -258,7 +248,6 @@ double = inj _double unit
 
 renderDouble :: forall v. (Variant v -> String) -> Variant (Double v) -> String
 renderDouble = on _double $ const "double"
-
 
 type Em v = (em :: Number | v)
 
@@ -270,7 +259,6 @@ em = inj _em
 renderEm :: forall v. (Variant v -> String) -> Variant (Em v) -> String
 renderEm = on _em \n -> Number.toString n <> "em"
 
-
 type Ex v = (ex :: Number | v)
 
 _ex = Proxy :: Proxy "ex"
@@ -280,7 +268,6 @@ ex = inj _ex
 
 renderEx :: forall v. (Variant v -> String) -> Variant (Ex v) -> String
 renderEx = on _ex \n -> Number.toString n <> "ex"
-
 
 type In v = (in :: Number | v)
 
@@ -292,7 +279,6 @@ in_ = inj _in
 renderIn :: forall v. (Variant v -> String) -> Variant (In v) -> String
 renderIn = on _in \n -> Number.toString n <> "in"
 
-
 type Inherit v = (inherit :: Unit | v)
 
 _inherit = Proxy :: Proxy "inherit"
@@ -302,7 +288,6 @@ inherit = inj _inherit unit
 
 renderInherit :: forall v. (Variant v -> String) -> Variant (Inherit v) -> String
 renderInherit = on _inherit $ const "inherit"
-
 
 type Initial v = (initial :: Unit | v)
 
@@ -314,7 +299,6 @@ initial = inj _initial unit
 renderInitial :: forall v. (Variant v -> String) -> Variant (Initial v) -> String
 renderInitial = on _initial $ const "initial"
 
-
 type Invert v = (invert :: Unit | v)
 
 _invert = Proxy :: Proxy "invert"
@@ -324,7 +308,6 @@ invert = inj _invert unit
 
 renderInvert :: forall v. (Variant v -> String) -> Variant (Invert v) -> String
 renderInvert = on _invert $ const "invert"
-
 
 type Justify v = (justify :: Unit | v)
 
@@ -336,7 +319,6 @@ justify = inj _justify unit
 renderJustify :: forall v. (Variant v -> String) -> Variant (Justify v) -> String
 renderJustify = on _justify $ const "justify"
 
-
 type JustifyAll v = (justifyAll :: Unit | v)
 
 _justifyAll = Proxy :: Proxy "justifyAll"
@@ -346,7 +328,6 @@ justifyAll = inj _justifyAll unit
 
 renderJustifyAll :: forall v. (Variant v -> String) -> Variant (JustifyAll v) -> String
 renderJustifyAll = on _justifyAll $ const "justify-all"
-
 
 type Groove v = (groove :: Unit | v)
 
@@ -358,7 +339,6 @@ groove = inj _groove unit
 renderGroove :: forall v. (Variant v -> String) -> Variant (Groove v) -> String
 renderGroove = on _groove $ const "groove"
 
-
 type Hidden v = (hidden :: Unit | v)
 
 _hidden = Proxy :: Proxy "hidden"
@@ -368,7 +348,6 @@ hidden = inj _hidden unit
 
 renderHidden :: forall v. (Variant v -> String) -> Variant (Hidden v) -> String
 renderHidden = on _hidden $ const "hidden"
-
 
 type Inset v = (inset :: Unit | v)
 
@@ -380,7 +359,6 @@ inset = inj _inset unit
 renderInset :: forall v. (Variant v -> String) -> Variant (Inset v) -> String
 renderInset = on _inset $ const "inset"
 
-
 type Large v = (large :: Unit | v)
 
 _large = Proxy :: Proxy "large"
@@ -390,7 +368,6 @@ large = inj _large unit
 
 renderLarge :: forall v. (Variant v -> String) -> Variant (Large v) -> String
 renderLarge = on _large $ const "large"
-
 
 type Larger v = (larger :: Unit | v)
 
@@ -402,7 +379,6 @@ larger = inj _larger unit
 renderLarger :: forall v. (Variant v -> String) -> Variant (Larger v) -> String
 renderLarger = on _larger $ const "larger"
 
-
 type Left v = (left :: Unit | v)
 
 _left = Proxy :: Proxy "left"
@@ -412,7 +388,6 @@ left = inj _left unit
 
 renderLeft :: forall v. (Variant v -> String) -> Variant (Left v) -> String
 renderLeft = on _left $ const "left"
-
 
 type Lighter v = (lighter :: Unit | v)
 
@@ -424,7 +399,6 @@ lighter = inj _lighter unit
 renderLighter :: forall v. (Variant v -> String) -> Variant (Lighter v) -> String
 renderLighter = on _lighter $ const "lighter"
 
-
 type Medium v = (medium :: Unit | v)
 
 _medium = Proxy :: Proxy "medium"
@@ -434,7 +408,6 @@ medium = inj _medium unit
 
 renderMedium :: forall v. (Variant v -> String) -> Variant (Medium v) -> String
 renderMedium = on _medium $ const "medium"
-
 
 type Mm v = (mm :: Number | v)
 
@@ -446,7 +419,6 @@ mm = inj _mm
 renderMm :: forall v. (Variant v -> String) -> Variant (Mm v) -> String
 renderMm = on _mm \n -> Number.toString n <> "mm"
 
-
 type None v = (none :: Unit | v)
 
 _none = Proxy :: Proxy "none"
@@ -456,7 +428,6 @@ none = inj _none unit
 
 renderNone :: forall v. (Variant v -> String) -> Variant (None v) -> String
 renderNone = on _none $ const "none"
-
 
 type Normal v = (normal :: Unit | v)
 
@@ -468,7 +439,6 @@ normal = inj _normal unit
 renderNormal :: forall v. (Variant v -> String) -> Variant (Normal v) -> String
 renderNormal = on _normal $ const "normal"
 
-
 type Outset v = (outset :: Unit | v)
 
 _outset = Proxy :: Proxy "outset"
@@ -478,7 +448,6 @@ outset = inj _outset unit
 
 renderOutset :: forall v. (Variant v -> String) -> Variant (Outset v) -> String
 renderOutset = on _outset $ const "outset"
-
 
 type Pc v = (pc :: Number | v)
 
@@ -490,7 +459,6 @@ pc = inj _pc
 renderPc :: forall v. (Variant v -> String) -> Variant (Pc v) -> String
 renderPc = on _pc \n -> Number.toString n <> "pc"
 
-
 type Pct v = (pct :: Number | v)
 
 _pct = Proxy :: Proxy "pct"
@@ -500,7 +468,6 @@ pct = inj _pct
 
 renderPct :: forall v. (Variant v -> String) -> Variant (Pct v) -> String
 renderPct = on _pct \n -> Number.toString n <> "pct"
-
 
 type Pt v = (pt :: Number | v)
 
@@ -512,7 +479,6 @@ pt = inj _pt
 renderPt :: forall v. (Variant v -> String) -> Variant (Pt v) -> String
 renderPt = on _pt \n -> Number.toString n <> "pt"
 
-
 type Px v = (px :: Number | v)
 
 _px = Proxy :: Proxy "px"
@@ -522,7 +488,6 @@ px = inj _px
 
 renderPx :: forall v. (Variant v -> String) -> Variant (Px v) -> String
 renderPx = on _px \n -> Number.toString n <> "px"
-
 
 type Rem v = (rem :: Number | v)
 
@@ -534,7 +499,6 @@ rem = inj _rem
 renderRem :: forall v. (Variant v -> String) -> Variant (Rem v) -> String
 renderRem = on _rem \n -> Number.toString n <> "rem"
 
-
 type Ridge v = (ridge :: Unit | v)
 
 _ridge = Proxy :: Proxy "ridge"
@@ -544,7 +508,6 @@ ridge = inj _ridge unit
 
 renderRidge :: forall v. (Variant v -> String) -> Variant (Ridge v) -> String
 renderRidge = on _ridge $ const "ridge"
-
 
 type Right v = (right :: Unit | v)
 
@@ -556,7 +519,6 @@ right = inj _right unit
 renderRight :: forall v. (Variant v -> String) -> Variant (Right v) -> String
 renderRight = on _right $ const "right"
 
-
 type Small v = (small :: Unit | v)
 
 _small = Proxy :: Proxy "small"
@@ -566,7 +528,6 @@ small = inj _small unit
 
 renderSmall :: forall v. (Variant v -> String) -> Variant (Small v) -> String
 renderSmall = on _small $ const "small"
-
 
 type Smaller v = (smaller :: Unit | v)
 
@@ -578,7 +539,6 @@ smaller = inj _smaller unit
 renderSmaller :: forall v. (Variant v -> String) -> Variant (Smaller v) -> String
 renderSmaller = on _smaller $ const "smaller"
 
-
 type Solid v = (solid :: Unit | v)
 
 _solid = Proxy :: Proxy "solid"
@@ -588,7 +548,6 @@ solid = inj _solid unit
 
 renderSolid :: forall v. (Variant v -> String) -> Variant (Solid v) -> String
 renderSolid = on _solid $ const "solid"
-
 
 type Thick v = (thick :: Unit | v)
 
@@ -600,7 +559,6 @@ thick = inj _thick unit
 renderThick :: forall v. (Variant v -> String) -> Variant (Thick v) -> String
 renderThick = on _thick $ const "thick"
 
-
 type Thin v = (thin :: Unit | v)
 
 _thin = Proxy :: Proxy "thin"
@@ -610,7 +568,6 @@ thin = inj _thin unit
 
 renderThin :: forall v. (Variant v -> String) -> Variant (Thin v) -> String
 renderThin = on _thin $ const "thin"
-
 
 type Transparent v = (transparent :: Unit | v)
 
@@ -622,7 +579,6 @@ transparent = inj _transparent unit
 renderTransparent :: forall v. (Variant v -> String) -> Variant (Transparent v) -> String
 renderTransparent = on _transparent $ const "transparent"
 
-
 type Unset v = (unset :: Unit | v)
 
 _unset = Proxy :: Proxy "unset"
@@ -632,7 +588,6 @@ unset = inj _unset unit
 
 renderUnset :: forall v. (Variant v -> String) -> Variant (Unset v) -> String
 renderUnset = on _unset $ const "unset"
-
 
 type Vh v = (vh :: Number | v)
 
@@ -644,7 +599,6 @@ vh = inj _vh
 renderVh :: forall v. (Variant v -> String) -> Variant (Vh v) -> String
 renderVh = on _vh \n -> Number.toString n <> "vh"
 
-
 type Vmax v = (vmax :: Number | v)
 
 _vmax = Proxy :: Proxy "vmax"
@@ -654,7 +608,6 @@ vmax = inj _vmax
 
 renderVmax :: forall v. (Variant v -> String) -> Variant (Vmax v) -> String
 renderVmax = on _vmax \n -> Number.toString n <> "vmax"
-
 
 type Vmin v = (vmin :: Number | v)
 
@@ -666,7 +619,6 @@ vmin = inj _vmin
 renderVmin :: forall v. (Variant v -> String) -> Variant (Vmin v) -> String
 renderVmin = on _vmin \n -> Number.toString n <> "vmin"
 
-
 type Vw v = (vw :: Number | v)
 
 _vw = Proxy :: Proxy "vw"
@@ -676,7 +628,6 @@ vw = inj _vw
 
 renderVw :: forall v. (Variant v -> String) -> Variant (Vw v) -> String
 renderVw = on _vw \n -> Number.toString n <> "vw"
-
 
 type XLarge v = (xLarge :: Unit | v)
 
@@ -688,7 +639,6 @@ xLarge = inj _xLarge unit
 renderXLarge :: forall v. (Variant v -> String) -> Variant (XLarge v) -> String
 renderXLarge = on _xLarge $ const "x-large"
 
-
 type XSmall v = (xSmall :: Unit | v)
 
 _xSmall = Proxy :: Proxy "xSmall"
@@ -698,7 +648,6 @@ xSmall = inj _xSmall unit
 
 renderXSmall :: forall v. (Variant v -> String) -> Variant (XSmall v) -> String
 renderXSmall = on _xSmall $ const "x-small"
-
 
 type XxLarge v = (xxLarge :: Unit | v)
 
@@ -710,7 +659,6 @@ xxLarge = inj _xxLarge unit
 renderXxLarge :: forall v. (Variant v -> String) -> Variant (XxLarge v) -> String
 renderXxLarge = on _xxLarge $ const "xx-large"
 
-
 type XxSmall v = (xxSmall :: Unit | v)
 
 _xxSmall = Proxy :: Proxy "xxSmall"
@@ -721,107 +669,97 @@ xxSmall = inj _xxSmall unit
 renderXxSmall :: forall v. (Variant v -> String) -> Variant (XxSmall v) -> String
 renderXxSmall = on _xxSmall $ const "xx-small"
 
-
 -- Property values
 
 type BackgroundColorValue = Variant (BackgroundColorFields ())
 
 type BackgroundColorFields r =
   ( ColorFields
-  + GlobalFields
-  + r
+      + GlobalFields
+      + r
   )
-
 
 type BorderRadiusValue = Variant (BorderRadiusFields ())
 
 type BorderRadiusFields r =
   ( GlobalFields
-  + LengthFields
-  + Pct
-  + Zero
-  + r
+      + LengthFields
+      + Pct
+      + Zero
+      + r
   )
-
 
 type BoxShadowValue = Variant (BoxShadowFields ())
 
 type BoxShadowFields r =
   ( BoxShadow
-  + GlobalFields
-  + r
+      + GlobalFields
+      + r
   )
-
 
 type ColorValue = Variant (ColorValueFields ())
 
 type ColorValueFields r =
   ( ColorFields
-  + GlobalFields
-  + r
+      + GlobalFields
+      + r
   )
-
 
 type FontSizeValue = Variant (FontSizeValueFields ())
 
 type FontSizeValueFields r =
   ( AbsoluteSizeFields
-  + GlobalFields
-  + LengthFields
-  + Pct
-  + RelativeSizeFields
-  + Zero
-  + r
+      + GlobalFields
+      + LengthFields
+      + Pct
+      + RelativeSizeFields
+      + Zero
+      + r
   )
-
 
 type FontWeightValue = Variant (FontWeightValueFields ())
 
 type FontWeightValueFields r =
   ( FontWeightKeywordFields
-  + FontWeightKeywordRelativeFields
-  + GlobalFields
-  + Number_
-  + r
+      + FontWeightKeywordRelativeFields
+      + GlobalFields
+      + Number_
+      + r
   )
-
 
 type HeightValue = Variant (HeightValueFields ())
 
 type HeightValueFields r =
   ( Auto
-  + GlobalFields
-  + LengthFields
-  + Pct
-  + Zero
-  + r
+      + GlobalFields
+      + LengthFields
+      + Pct
+      + Zero
+      + r
   )
-
 
 type TextAlignValue = Variant (TextAlignValueFields ())
 
 type TextAlignValueFields r =
   ( Center
-  + GlobalFields
-  + Justify
-  + JustifyAll
-  + Left
-  + Right
-  + r
+      + GlobalFields
+      + Justify
+      + JustifyAll
+      + Left
+      + Right
+      + r
   )
-
 
 type WidthValue = Variant (WidthValueFields ())
 
 type WidthValueFields r =
   ( Auto
-  + GlobalFields
-  + LengthFields
-  + Pct
-  + Zero
-  + r
+      + GlobalFields
+      + LengthFields
+      + Pct
+      + Zero
+      + r
   )
-
 
 -- Helpers
 
@@ -835,7 +773,6 @@ color_ = inj _color_
 renderColor_ :: forall v. (Variant v -> String) -> Variant (Color_ v) -> String
 renderColor_ = on _color_ cssStringRGBA
 
-
 type Number_ v = (number_ :: Number | v)
 
 _number_ = Proxy :: Proxy "number_"
@@ -846,7 +783,6 @@ number_ = inj _number_
 renderNumber_ :: forall v. (Variant v -> String) -> Variant (Number_ v) -> String
 renderNumber_ = on _number_ Number.toString
 
-
 type Zero v = (zero :: Unit | v)
 
 _zero = Proxy :: Proxy "zero"
@@ -856,7 +792,6 @@ zero = inj _zero unit
 
 renderZero :: forall v. (Variant v -> String) -> Variant (Zero v) -> String
 renderZero = on _zero $ const "0"
-
 
 -- Shorthand property values
 
@@ -885,7 +820,6 @@ renderBorder = on _border \b ->
     , renderBorderColorFields case_ $ b.color
     ]
 
-
 type BorderColor v = (borderColor :: BorderColorRep | v)
 
 type BorderColorRep =
@@ -899,8 +833,8 @@ type BorderColorValue = Variant (BorderColorFields ())
 
 type BorderColorFields r =
   ( ColorFields
-  + GlobalFields
-  + r
+      + GlobalFields
+      + r
   )
 
 _borderColor = Proxy :: Proxy "borderColor"
@@ -928,7 +862,6 @@ renderBorderColor = on _borderColor \s ->
     , renderBorderColorFields case_ $ s.left
     ]
 
-
 type BorderStyle v = (borderStyle :: BorderStyleRep | v)
 
 type BorderStyleRep =
@@ -942,17 +875,17 @@ type BorderStyleValue = Variant (BorderStyleFields ())
 
 type BorderStyleFields r =
   ( Dashed
-  + Dotted
-  + Double
-  + GlobalFields
-  + Groove
-  + Hidden
-  + Inset
-  + None
-  + Outset
-  + Ridge
-  + Solid
-  + r
+      + Dotted
+      + Double
+      + GlobalFields
+      + Groove
+      + Hidden
+      + Inset
+      + None
+      + Outset
+      + Ridge
+      + Solid
+      + r
   )
 
 _borderStyle = Proxy :: Proxy "borderStyle"
@@ -991,7 +924,6 @@ renderBorderStyle = on _borderStyle \s ->
     , renderBorderStyleFields case_ $ s.left
     ]
 
-
 type BorderWidth v = (borderWidth :: BorderWidthRep | v)
 
 type BorderWidthRep =
@@ -1005,10 +937,10 @@ type BorderWidthValue = Variant (BorderWidthFields ())
 
 type BorderWidthFields r =
   ( GlobalFields
-  + LengthFields
-  + BorderWidthKeywordFields
-  + Zero
-  + r
+      + LengthFields
+      + BorderWidthKeywordFields
+      + Zero
+      + r
   )
 
 _borderWidth = Proxy :: Proxy "borderWidth"
@@ -1039,7 +971,6 @@ renderBorderWidth = on _borderWidth \s ->
     , renderBorderWidthFields case_ $ s.bottom
     , renderBorderWidthFields case_ $ s.left
     ]
-
 
 type BorderRadius v = (borderRadius :: BorderRadiusRep | v)
 
@@ -1078,7 +1009,6 @@ renderBorderRadius = on _borderRadius \r ->
     , renderBorderRadiusFields case_ $ r.bottomRight
     , renderBorderRadiusFields case_ $ r.bottomLeft
     ]
-
 
 type BoxShadow v = (boxShadow :: Array BoxShadowRep | v)
 
@@ -1151,7 +1081,6 @@ renderBoxShadow = on _boxShadow renderShadows
       | shadow.inset = "inset "
       | otherwise = ""
 
-
 type Margin v = (margin :: MarginRep | v)
 
 type MarginRep =
@@ -1165,11 +1094,11 @@ type MarginValue = Variant (MarginFields ())
 
 type MarginFields r =
   ( Auto
-  + GlobalFields
-  + LengthFields
-  + Pct
-  + Zero
-  + r
+      + GlobalFields
+      + LengthFields
+      + Pct
+      + Zero
+      + r
   )
 
 _margin = Proxy :: Proxy "margin"
@@ -1202,7 +1131,6 @@ renderMargin = on _margin \m ->
     , renderMarginFields case_ $ m.left
     ]
 
-
 type Outline v = (outline :: OutlineRep | v)
 
 type OutlineRep =
@@ -1228,14 +1156,13 @@ renderOutline = on _outline \o ->
     , renderOutlineColorFields case_ $ o.color
     ]
 
-
 type OutlineColorValue = Variant (OutlineColorFields ())
 
 type OutlineColorFields r =
   ( ColorFields
-  + GlobalFields
-  + Invert
-  + r
+      + GlobalFields
+      + Invert
+      + r
   )
 
 renderOutlineColorFields
@@ -1248,22 +1175,21 @@ renderOutlineColorFields =
     >>> renderGlobalFields
     >>> renderInvert
 
-
 type OutlineStyleValue = Variant (OutlineStyleFields ())
 
 type OutlineStyleFields r =
   ( Auto
-  + Dashed
-  + Dotted
-  + Double
-  + GlobalFields
-  + Groove
-  + Inset
-  + None
-  + Outset
-  + Ridge
-  + Solid
-  + r
+      + Dashed
+      + Dotted
+      + Double
+      + GlobalFields
+      + Groove
+      + Inset
+      + None
+      + Outset
+      + Ridge
+      + Solid
+      + r
   )
 
 renderOutlineStyleFields
@@ -1284,15 +1210,14 @@ renderOutlineStyleFields =
     >>> renderRidge
     >>> renderSolid
 
-
 type OutlineWidthValue = Variant (OutlineWidthFields ())
 
 type OutlineWidthFields r =
   ( GlobalFields
-  + LengthFields
-  + OutlineWidthKeywordFields
-  + Zero
-  + r
+      + LengthFields
+      + OutlineWidthKeywordFields
+      + Zero
+      + r
   )
 
 renderOutlineWidthFields
@@ -1305,7 +1230,6 @@ renderOutlineWidthFields =
     >>> renderLengthFields
     >>> renderOutlineWidthKeyword
     >>> renderZero
-
 
 type Padding v = (padding :: PaddingRep | v)
 
@@ -1320,10 +1244,10 @@ type PaddingValue = Variant (PaddingFields ())
 
 type PaddingFields r =
   ( GlobalFields
-  + LengthFields
-  + Pct
-  + Zero
-  + r
+      + LengthFields
+      + Pct
+      + Zero
+      + r
   )
 
 _padding = Proxy :: Proxy "padding"
@@ -1355,17 +1279,16 @@ renderPadding = on _padding \p ->
     , renderPaddingFields case_ $ p.left
     ]
 
-
 -- CSS data type values
 
 type AbsoluteLengthFields r =
   ( Cm
-  + In
-  + Mm
-  + Pc
-  + Pt
-  + Px
-  + r
+      + In
+      + Mm
+      + Pc
+      + Pt
+      + Px
+      + r
   )
 
 renderAbsoluteLengthFields
@@ -1381,16 +1304,15 @@ renderAbsoluteLengthFields =
     >>> renderPt
     >>> renderPx
 
-
 type AbsoluteSizeFields r =
   ( XxSmall
-  + XSmall
-  + Small
-  + Medium
-  + Large
-  + XLarge
-  + XxLarge
-  + r
+      + XSmall
+      + Small
+      + Medium
+      + Large
+      + XLarge
+      + XxLarge
+      + r
   )
 
 renderAbsoluteSizeFields
@@ -1407,12 +1329,11 @@ renderAbsoluteSizeFields =
     >>> renderXLarge
     >>> renderXxLarge
 
-
 type BorderWidthKeywordFields r =
   ( Medium
-  + Thick
-  + Thin
-  + r
+      + Thick
+      + Thin
+      + r
   )
 
 renderBorderWidthKeywordFields
@@ -1425,12 +1346,11 @@ renderBorderWidthKeywordFields =
     >>> renderThick
     >>> renderThin
 
-
 type ColorFields r =
   ( Color_
-  + CurrentColor
-  + Transparent
-  + r
+      + CurrentColor
+      + Transparent
+      + r
   )
 
 renderColorFields
@@ -1443,13 +1363,12 @@ renderColorFields =
     >>> renderCurrentColor
     >>> renderTransparent
 
-
 type FontRelativeLengthFields r =
   ( Ch
-  + Em
-  + Ex
-  + Rem
-  + r
+      + Em
+      + Ex
+      + Rem
+      + r
   )
 
 renderFontRelativeLengthFields
@@ -1463,11 +1382,10 @@ renderFontRelativeLengthFields =
     >>> renderEx
     >>> renderRem
 
-
 type FontWeightKeywordFields r =
   ( Bold
-  + Normal
-  + r
+      + Normal
+      + r
   )
 
 renderFontWeightKeywordFields
@@ -1477,11 +1395,10 @@ renderFontWeightKeywordFields
   -> String
 renderFontWeightKeywordFields = renderBold >>> renderNormal
 
-
 type FontWeightKeywordRelativeFields r =
   ( Bolder
-  + Lighter
-  + r
+      + Lighter
+      + r
   )
 
 renderFontWeightKeywordRelativeFields
@@ -1491,12 +1408,11 @@ renderFontWeightKeywordRelativeFields
   -> String
 renderFontWeightKeywordRelativeFields = renderBolder >>> renderLighter
 
-
 type GlobalFields r =
   ( Inherit
-  + Initial
-  + Unset
-  + r
+      + Initial
+      + Unset
+      + r
   )
 
 renderGlobalFields
@@ -1509,12 +1425,11 @@ renderGlobalFields =
     >>> renderInitial
     >>> renderUnset
 
-
 type LengthFields r =
   ( AbsoluteLengthFields
-  + FontRelativeLengthFields
-  + ViewportPercentageLengthFields
-  + r
+      + FontRelativeLengthFields
+      + ViewportPercentageLengthFields
+      + r
   )
 
 renderLengthFields
@@ -1527,11 +1442,10 @@ renderLengthFields =
     >>> renderFontRelativeLengthFields
     >>> renderViewportPercentageLengthFields
 
-
 type LengthFields_ r =
   ( LengthFields
-  + Zero
-  + r
+      + Zero
+      + r
   )
 
 renderLengthFields_
@@ -1541,12 +1455,11 @@ renderLengthFields_
   -> String
 renderLengthFields_ = renderLengthFields >>> renderZero
 
-
 type OutlineWidthKeywordFields r =
   ( Medium
-  + Thick
-  + Thin
-  + r
+      + Thick
+      + Thin
+      + r
   )
 
 renderOutlineWidthKeyword
@@ -1559,11 +1472,10 @@ renderOutlineWidthKeyword =
     >>> renderThick
     >>> renderThin
 
-
 type RelativeSizeFields r =
   ( Smaller
-  + Larger
-  + r
+      + Larger
+      + r
   )
 
 renderRelativeSizeFields
@@ -1573,13 +1485,12 @@ renderRelativeSizeFields
   -> String
 renderRelativeSizeFields = renderLarger >>> renderSmaller
 
-
 type ViewportPercentageLengthFields r =
   ( Vh
-  + Vmax
-  + Vmin
-  + Vw
-  + r
+      + Vmax
+      + Vmin
+      + Vw
+      + r
   )
 
 renderViewportPercentageLengthFields
