@@ -31,15 +31,14 @@ render = case _ of
   PseudoClassSelector s pc -> render s <> renderPseudoClass pc
   PseudoElementSelector s pe -> render s <> renderPseudoElement pe
 
-
 data Attribute
- = Equal AttributeName AttributeValue
- | TildeEqual AttributeName AttributeValue
- | PipeEqual AttributeName AttributeValue
- | CaretEqual AttributeName AttributeValue
- | DollarEqual AttributeName AttributeValue
- | AsteriskEqual AttributeName AttributeValue
- | CaseInsensitive Attribute
+  = Equal AttributeName AttributeValue
+  | TildeEqual AttributeName AttributeValue
+  | PipeEqual AttributeName AttributeValue
+  | CaretEqual AttributeName AttributeValue
+  | DollarEqual AttributeName AttributeValue
+  | AsteriskEqual AttributeName AttributeValue
+  | CaseInsensitive Attribute
 
 derive instance eqAttribute :: Eq Attribute
 derive instance ordAttribute :: Ord Attribute
@@ -60,7 +59,6 @@ renderAttribute = case _ of
   renderAttribute' op n v =
     "[" <> renderAttributeName n <> op <> renderAttributeValue v <> "]"
 
-
 newtype AttributeName = AttributeName String
 
 derive instance newtypeAttributeName :: Newtype AttributeName _
@@ -70,7 +68,6 @@ derive newtype instance ordAttributeName :: Ord AttributeName
 renderAttributeName :: AttributeName -> String
 renderAttributeName = unwrap
 
-
 newtype AttributeValue = AttributeValue String
 
 derive instance newtypeAttributeValue :: Newtype AttributeValue _
@@ -79,7 +76,6 @@ derive newtype instance ordAttributeValue :: Ord AttributeValue
 
 renderAttributeValue :: AttributeValue -> String
 renderAttributeValue = unwrap
-
 
 data Combinator
   = AdjacentSibling
@@ -97,7 +93,6 @@ renderCombinator = case _ of
   Child -> " > "
   Descendant -> " "
 
-
 data Directionality
   = LeftToRight
   | RightToLeft
@@ -110,7 +105,6 @@ renderDirectionality = case _ of
   LeftToRight -> "ltr"
   RightToLeft -> "rtl"
 
-
 newtype LanguageCode = LanguageCode String
 
 derive instance newtypeLanguageCode :: Newtype LanguageCode _
@@ -119,7 +113,6 @@ derive newtype instance ordLanguageCode :: Ord LanguageCode
 
 renderLanguageCode :: LanguageCode -> String
 renderLanguageCode = unwrap
-
 
 data Position
   = AnPlusB Int (Maybe Int)
@@ -140,7 +133,6 @@ renderPosition = case _ of
 
   intToString :: Int -> String
   intToString = Int.toStringAs Int.decimal
-
 
 data PseudoClass
   = Active
@@ -239,7 +231,6 @@ renderPseudoClass pc = ":" <> case pc of
   Target -> "target"
   Valid -> "valid"
   Visited -> "visited"
-
 
 data PseudoElement
   = After

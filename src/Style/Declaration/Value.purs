@@ -6,153 +6,156 @@ import Color (cssStringRGBA)
 import Color as C
 import Data.Array as Array
 import Data.Number.Format as Number
-import Data.Symbol (SProxy(..))
 import Data.Variant (Variant, case_, inj, on)
-import Type.Row (type (+))
+import Type.Proxy (Proxy(..))
+
+-- https://github.com/purescript/purescript/issues/4105#issuecomment-1103324211
+type RowApply (f :: Row Type -> Row Type) (a :: Row Type) = f a
+
+infixr 0 type RowApply as +
 
 type Value =
   Variant
-   ( Auto
-   + Bold
-   + Bolder
-   + Border
-   + BorderColor
-   + BorderStyle
-   + BorderWidth
-   + BorderRadius
-   + BoxShadow
-   + Center
-   + Ch
-   + Cm
-   + Color_
-   + CurrentColor
-   + Dashed
-   + Dotted
-   + Double
-   + Em
-   + Ex
-   + Groove
-   + Hidden
-   + In
-   + Inherit
-   + Initial
-   + Inset
-   + Invert
-   + Justify
-   + JustifyAll
-   + Large
-   + Larger
-   + Left
-   + Lighter
-   + Margin
-   + Medium
-   + Mm
-   + None
-   + Normal
-   + Number_
-   + Outline
-   + Outset
-   + Padding
-   + Pc
-   + Pct
-   + Pt
-   + Px
-   + Rem
-   + Ridge
-   + Right
-   + Small
-   + Smaller
-   + Solid
-   + Thick
-   + Thin
-   + Transparent
-   + Unset
-   + Vh
-   + Vmax
-   + Vmin
-   + Vw
-   + XLarge
-   + XSmall
-   + XxLarge
-   + XxSmall
-   + Zero
-   + ()
-   )
+    ( Auto
+        + Bold
+        + Bolder
+        + Border
+        + BorderColor
+        + BorderStyle
+        + BorderWidth
+        + BorderRadius
+        + BoxShadow
+        + Center
+        + Ch
+        + Cm
+        + Color_
+        + CurrentColor
+        + Dashed
+        + Dotted
+        + Double
+        + Em
+        + Ex
+        + Groove
+        + Hidden
+        + In
+        + Inherit
+        + Initial
+        + Inset
+        + Invert
+        + Justify
+        + JustifyAll
+        + Large
+        + Larger
+        + Left
+        + Lighter
+        + Margin
+        + Medium
+        + Mm
+        + None
+        + Normal
+        + Number_
+        + Outline
+        + Outset
+        + Padding
+        + Pc
+        + Pct
+        + Pt
+        + Px
+        + Rem
+        + Ridge
+        + Right
+        + Small
+        + Smaller
+        + Solid
+        + Thick
+        + Thin
+        + Transparent
+        + Unset
+        + Vh
+        + Vmax
+        + Vmin
+        + Vw
+        + XLarge
+        + XSmall
+        + XxLarge
+        + XxSmall
+        + Zero
+        + ()
+    )
 
 render :: Value -> String
 render =
   case_
     # renderAuto
-    >>> renderBold
-    >>> renderBolder
-    >>> renderBorder
-    >>> renderBorderColor
-    >>> renderBorderStyle
-    >>> renderBorderWidth
-    >>> renderBorderRadius
-    >>> renderBoxShadow
-    >>> renderCenter
-    >>> renderCh
-    >>> renderCm
-    >>> renderColor_
-    >>> renderCurrentColor
-    >>> renderDashed
-    >>> renderDotted
-    >>> renderDouble
-    >>> renderEm
-    >>> renderEx
-    >>> renderGroove
-    >>> renderHidden
-    >>> renderIn
-    >>> renderInherit
-    >>> renderInitial
-    >>> renderInset
-    >>> renderJustify
-    >>> renderJustifyAll
-    >>> renderInvert
-    >>> renderLarge
-    >>> renderLarger
-    >>> renderLeft
-    >>> renderLighter
-    >>> renderMargin
-    >>> renderMedium
-    >>> renderMm
-    >>> renderNone
-    >>> renderNormal
-    >>> renderNumber_
-    >>> renderOutline
-    >>> renderOutset
-    >>> renderPadding
-    >>> renderPc
-    >>> renderPct
-    >>> renderPt
-    >>> renderPx
-    >>> renderRem
-    >>> renderRidge
-    >>> renderRight
-    >>> renderSmall
-    >>> renderSmaller
-    >>> renderSolid
-    >>> renderThick
-    >>> renderThin
-    >>> renderTransparent
-    >>> renderUnset
-    >>> renderVh
-    >>> renderVmax
-    >>> renderVmin
-    >>> renderVw
-    >>> renderXLarge
-    >>> renderXSmall
-    >>> renderXxLarge
-    >>> renderXxSmall
-    >>> renderZero
-
+        >>> renderBold
+        >>> renderBolder
+        >>> renderBorder
+        >>> renderBorderColor
+        >>> renderBorderStyle
+        >>> renderBorderWidth
+        >>> renderBorderRadius
+        >>> renderBoxShadow
+        >>> renderCenter
+        >>> renderCh
+        >>> renderCm
+        >>> renderColor_
+        >>> renderCurrentColor
+        >>> renderDashed
+        >>> renderDotted
+        >>> renderDouble
+        >>> renderEm
+        >>> renderEx
+        >>> renderGroove
+        >>> renderHidden
+        >>> renderIn
+        >>> renderInherit
+        >>> renderInitial
+        >>> renderInset
+        >>> renderJustify
+        >>> renderJustifyAll
+        >>> renderInvert
+        >>> renderLarge
+        >>> renderLarger
+        >>> renderLeft
+        >>> renderLighter
+        >>> renderMargin
+        >>> renderMedium
+        >>> renderMm
+        >>> renderNone
+        >>> renderNormal
+        >>> renderNumber_
+        >>> renderOutline
+        >>> renderOutset
+        >>> renderPadding
+        >>> renderPc
+        >>> renderPct
+        >>> renderPt
+        >>> renderPx
+        >>> renderRem
+        >>> renderRidge
+        >>> renderRight
+        >>> renderSmall
+        >>> renderSmaller
+        >>> renderSolid
+        >>> renderThick
+        >>> renderThin
+        >>> renderTransparent
+        >>> renderUnset
+        >>> renderVh
+        >>> renderVmax
+        >>> renderVmin
+        >>> renderVw
+        >>> renderXLarge
+        >>> renderXSmall
+        >>> renderXxLarge
+        >>> renderXxSmall
+        >>> renderZero
 
 -- Standalone values
 
 type Auto v = (auto :: Unit | v)
 
-_auto = SProxy :: SProxy "auto"
+_auto = Proxy :: Proxy "auto"
 
 auto :: forall v. Variant (Auto v)
 auto = inj _auto unit
@@ -160,10 +163,9 @@ auto = inj _auto unit
 renderAuto :: forall v. (Variant v -> String) -> Variant (Auto v) -> String
 renderAuto = on _auto $ const "auto"
 
-
 type Bold v = (bold :: Unit | v)
 
-_bold = SProxy :: SProxy "bold"
+_bold = Proxy :: Proxy "bold"
 
 bold :: forall v. Variant (Bold v)
 bold = inj _bold unit
@@ -171,10 +173,9 @@ bold = inj _bold unit
 renderBold :: forall v. (Variant v -> String) -> Variant (Bold v) -> String
 renderBold = on _bold $ const "bold"
 
-
 type Bolder v = (bolder :: Unit | v)
 
-_bolder = SProxy :: SProxy "bolder"
+_bolder = Proxy :: Proxy "bolder"
 
 bolder :: forall v. Variant (Bolder v)
 bolder = inj _bolder unit
@@ -182,10 +183,9 @@ bolder = inj _bolder unit
 renderBolder :: forall v. (Variant v -> String) -> Variant (Bolder v) -> String
 renderBolder = on _bolder $ const "bolder"
 
-
 type Center v = (center :: Unit | v)
 
-_center = SProxy :: SProxy "center"
+_center = Proxy :: Proxy "center"
 
 center :: forall v. Variant (Center v)
 center = inj _center unit
@@ -193,10 +193,9 @@ center = inj _center unit
 renderCenter :: forall v. (Variant v -> String) -> Variant (Center v) -> String
 renderCenter = on _center $ const "center"
 
-
 type CurrentColor v = (currentColor :: Unit | v)
 
-_currentColor = SProxy :: SProxy "currentColor"
+_currentColor = Proxy :: Proxy "currentColor"
 
 currentColor :: forall v. Variant (CurrentColor v)
 currentColor = inj _currentColor unit
@@ -204,10 +203,9 @@ currentColor = inj _currentColor unit
 renderCurrentColor :: forall v. (Variant v -> String) -> Variant (CurrentColor v) -> String
 renderCurrentColor = on _currentColor $ const "currentColor"
 
-
 type Ch v = (ch :: Number | v)
 
-_ch = SProxy :: SProxy "ch"
+_ch = Proxy :: Proxy "ch"
 
 ch :: forall v. Number -> Variant (Ch v)
 ch = inj _ch
@@ -215,10 +213,9 @@ ch = inj _ch
 renderCh :: forall v. (Variant v -> String) -> Variant (Ch v) -> String
 renderCh = on _ch \n -> Number.toString n <> "ch"
 
-
 type Cm v = (cm :: Number | v)
 
-_cm = SProxy :: SProxy "cm"
+_cm = Proxy :: Proxy "cm"
 
 cm :: forall v. Number -> Variant (Cm v)
 cm = inj _cm
@@ -226,10 +223,9 @@ cm = inj _cm
 renderCm :: forall v. (Variant v -> String) -> Variant (Cm v) -> String
 renderCm = on _cm \n -> Number.toString n <> "cm"
 
-
 type Dashed v = (dashed :: Unit | v)
 
-_dashed = SProxy :: SProxy "dashed"
+_dashed = Proxy :: Proxy "dashed"
 
 dashed :: forall v. Variant (Dashed v)
 dashed = inj _dashed unit
@@ -237,10 +233,9 @@ dashed = inj _dashed unit
 renderDashed :: forall v. (Variant v -> String) -> Variant (Dashed v) -> String
 renderDashed = on _dashed $ const "dashed"
 
-
 type Dotted v = (dotted :: Unit | v)
 
-_dotted = SProxy :: SProxy "dotted"
+_dotted = Proxy :: Proxy "dotted"
 
 dotted :: forall v. Variant (Dotted v)
 dotted = inj _dotted unit
@@ -248,10 +243,9 @@ dotted = inj _dotted unit
 renderDotted :: forall v. (Variant v -> String) -> Variant (Dotted v) -> String
 renderDotted = on _dotted $ const "dotted"
 
-
 type Double v = (double :: Unit | v)
 
-_double = SProxy :: SProxy "double"
+_double = Proxy :: Proxy "double"
 
 double :: forall v. Variant (Double v)
 double = inj _double unit
@@ -259,10 +253,9 @@ double = inj _double unit
 renderDouble :: forall v. (Variant v -> String) -> Variant (Double v) -> String
 renderDouble = on _double $ const "double"
 
-
 type Em v = (em :: Number | v)
 
-_em = SProxy :: SProxy "em"
+_em = Proxy :: Proxy "em"
 
 em :: forall v. Number -> Variant (Em v)
 em = inj _em
@@ -270,10 +263,9 @@ em = inj _em
 renderEm :: forall v. (Variant v -> String) -> Variant (Em v) -> String
 renderEm = on _em \n -> Number.toString n <> "em"
 
-
 type Ex v = (ex :: Number | v)
 
-_ex = SProxy :: SProxy "ex"
+_ex = Proxy :: Proxy "ex"
 
 ex :: forall v. Number -> Variant (Ex v)
 ex = inj _ex
@@ -281,10 +273,9 @@ ex = inj _ex
 renderEx :: forall v. (Variant v -> String) -> Variant (Ex v) -> String
 renderEx = on _ex \n -> Number.toString n <> "ex"
 
-
 type In v = (in :: Number | v)
 
-_in = SProxy :: SProxy "in"
+_in = Proxy :: Proxy "in"
 
 in_ :: forall v. Number -> Variant (In v)
 in_ = inj _in
@@ -292,10 +283,9 @@ in_ = inj _in
 renderIn :: forall v. (Variant v -> String) -> Variant (In v) -> String
 renderIn = on _in \n -> Number.toString n <> "in"
 
-
 type Inherit v = (inherit :: Unit | v)
 
-_inherit = SProxy :: SProxy "inherit"
+_inherit = Proxy :: Proxy "inherit"
 
 inherit :: forall v. Variant (Inherit v)
 inherit = inj _inherit unit
@@ -303,10 +293,9 @@ inherit = inj _inherit unit
 renderInherit :: forall v. (Variant v -> String) -> Variant (Inherit v) -> String
 renderInherit = on _inherit $ const "inherit"
 
-
 type Initial v = (initial :: Unit | v)
 
-_initial = SProxy :: SProxy "initial"
+_initial = Proxy :: Proxy "initial"
 
 initial :: forall v. Variant (Initial v)
 initial = inj _initial unit
@@ -314,10 +303,9 @@ initial = inj _initial unit
 renderInitial :: forall v. (Variant v -> String) -> Variant (Initial v) -> String
 renderInitial = on _initial $ const "initial"
 
-
 type Invert v = (invert :: Unit | v)
 
-_invert = SProxy :: SProxy "invert"
+_invert = Proxy :: Proxy "invert"
 
 invert :: forall v. Variant (Invert v)
 invert = inj _invert unit
@@ -325,10 +313,9 @@ invert = inj _invert unit
 renderInvert :: forall v. (Variant v -> String) -> Variant (Invert v) -> String
 renderInvert = on _invert $ const "invert"
 
-
 type Justify v = (justify :: Unit | v)
 
-_justify = SProxy :: SProxy "justify"
+_justify = Proxy :: Proxy "justify"
 
 justify :: forall v. Variant (Justify v)
 justify = inj _justify unit
@@ -336,10 +323,9 @@ justify = inj _justify unit
 renderJustify :: forall v. (Variant v -> String) -> Variant (Justify v) -> String
 renderJustify = on _justify $ const "justify"
 
-
 type JustifyAll v = (justifyAll :: Unit | v)
 
-_justifyAll = SProxy :: SProxy "justifyAll"
+_justifyAll = Proxy :: Proxy "justifyAll"
 
 justifyAll :: forall v. Variant (JustifyAll v)
 justifyAll = inj _justifyAll unit
@@ -347,10 +333,9 @@ justifyAll = inj _justifyAll unit
 renderJustifyAll :: forall v. (Variant v -> String) -> Variant (JustifyAll v) -> String
 renderJustifyAll = on _justifyAll $ const "justify-all"
 
-
 type Groove v = (groove :: Unit | v)
 
-_groove = SProxy :: SProxy "groove"
+_groove = Proxy :: Proxy "groove"
 
 groove :: forall v. Variant (Groove v)
 groove = inj _groove unit
@@ -358,10 +343,9 @@ groove = inj _groove unit
 renderGroove :: forall v. (Variant v -> String) -> Variant (Groove v) -> String
 renderGroove = on _groove $ const "groove"
 
-
 type Hidden v = (hidden :: Unit | v)
 
-_hidden = SProxy :: SProxy "hidden"
+_hidden = Proxy :: Proxy "hidden"
 
 hidden :: forall v. Variant (Hidden v)
 hidden = inj _hidden unit
@@ -369,10 +353,9 @@ hidden = inj _hidden unit
 renderHidden :: forall v. (Variant v -> String) -> Variant (Hidden v) -> String
 renderHidden = on _hidden $ const "hidden"
 
-
 type Inset v = (inset :: Unit | v)
 
-_inset = SProxy :: SProxy "inset"
+_inset = Proxy :: Proxy "inset"
 
 inset :: forall v. Variant (Inset v)
 inset = inj _inset unit
@@ -380,10 +363,9 @@ inset = inj _inset unit
 renderInset :: forall v. (Variant v -> String) -> Variant (Inset v) -> String
 renderInset = on _inset $ const "inset"
 
-
 type Large v = (large :: Unit | v)
 
-_large = SProxy :: SProxy "large"
+_large = Proxy :: Proxy "large"
 
 large :: forall v. Variant (Large v)
 large = inj _large unit
@@ -391,10 +373,9 @@ large = inj _large unit
 renderLarge :: forall v. (Variant v -> String) -> Variant (Large v) -> String
 renderLarge = on _large $ const "large"
 
-
 type Larger v = (larger :: Unit | v)
 
-_larger = SProxy :: SProxy "larger"
+_larger = Proxy :: Proxy "larger"
 
 larger :: forall v. Variant (Larger v)
 larger = inj _larger unit
@@ -402,10 +383,9 @@ larger = inj _larger unit
 renderLarger :: forall v. (Variant v -> String) -> Variant (Larger v) -> String
 renderLarger = on _larger $ const "larger"
 
-
 type Left v = (left :: Unit | v)
 
-_left = SProxy :: SProxy "left"
+_left = Proxy :: Proxy "left"
 
 left :: forall v. Variant (Left v)
 left = inj _left unit
@@ -413,10 +393,9 @@ left = inj _left unit
 renderLeft :: forall v. (Variant v -> String) -> Variant (Left v) -> String
 renderLeft = on _left $ const "left"
 
-
 type Lighter v = (lighter :: Unit | v)
 
-_lighter = SProxy :: SProxy "lighter"
+_lighter = Proxy :: Proxy "lighter"
 
 lighter :: forall v. Variant (Lighter v)
 lighter = inj _lighter unit
@@ -424,10 +403,9 @@ lighter = inj _lighter unit
 renderLighter :: forall v. (Variant v -> String) -> Variant (Lighter v) -> String
 renderLighter = on _lighter $ const "lighter"
 
-
 type Medium v = (medium :: Unit | v)
 
-_medium = SProxy :: SProxy "medium"
+_medium = Proxy :: Proxy "medium"
 
 medium :: forall v. Variant (Medium v)
 medium = inj _medium unit
@@ -435,10 +413,9 @@ medium = inj _medium unit
 renderMedium :: forall v. (Variant v -> String) -> Variant (Medium v) -> String
 renderMedium = on _medium $ const "medium"
 
-
 type Mm v = (mm :: Number | v)
 
-_mm = SProxy :: SProxy "mm"
+_mm = Proxy :: Proxy "mm"
 
 mm :: forall v. Number -> Variant (Mm v)
 mm = inj _mm
@@ -446,10 +423,9 @@ mm = inj _mm
 renderMm :: forall v. (Variant v -> String) -> Variant (Mm v) -> String
 renderMm = on _mm \n -> Number.toString n <> "mm"
 
-
 type None v = (none :: Unit | v)
 
-_none = SProxy :: SProxy "none"
+_none = Proxy :: Proxy "none"
 
 none :: forall v. Variant (None v)
 none = inj _none unit
@@ -457,10 +433,9 @@ none = inj _none unit
 renderNone :: forall v. (Variant v -> String) -> Variant (None v) -> String
 renderNone = on _none $ const "none"
 
-
 type Normal v = (normal :: Unit | v)
 
-_normal = SProxy :: SProxy "normal"
+_normal = Proxy :: Proxy "normal"
 
 normal :: forall v. Variant (Normal v)
 normal = inj _normal unit
@@ -468,10 +443,9 @@ normal = inj _normal unit
 renderNormal :: forall v. (Variant v -> String) -> Variant (Normal v) -> String
 renderNormal = on _normal $ const "normal"
 
-
 type Outset v = (outset :: Unit | v)
 
-_outset = SProxy :: SProxy "outset"
+_outset = Proxy :: Proxy "outset"
 
 outset :: forall v. Variant (Outset v)
 outset = inj _outset unit
@@ -479,10 +453,9 @@ outset = inj _outset unit
 renderOutset :: forall v. (Variant v -> String) -> Variant (Outset v) -> String
 renderOutset = on _outset $ const "outset"
 
-
 type Pc v = (pc :: Number | v)
 
-_pc = SProxy :: SProxy "pc"
+_pc = Proxy :: Proxy "pc"
 
 pc :: forall v. Number -> Variant (Pc v)
 pc = inj _pc
@@ -490,10 +463,9 @@ pc = inj _pc
 renderPc :: forall v. (Variant v -> String) -> Variant (Pc v) -> String
 renderPc = on _pc \n -> Number.toString n <> "pc"
 
-
 type Pct v = (pct :: Number | v)
 
-_pct = SProxy :: SProxy "pct"
+_pct = Proxy :: Proxy "pct"
 
 pct :: forall v. Number -> Variant (Pct v)
 pct = inj _pct
@@ -501,10 +473,9 @@ pct = inj _pct
 renderPct :: forall v. (Variant v -> String) -> Variant (Pct v) -> String
 renderPct = on _pct \n -> Number.toString n <> "pct"
 
-
 type Pt v = (pt :: Number | v)
 
-_pt = SProxy :: SProxy "pt"
+_pt = Proxy :: Proxy "pt"
 
 pt :: forall v. Number -> Variant (Pt v)
 pt = inj _pt
@@ -512,10 +483,9 @@ pt = inj _pt
 renderPt :: forall v. (Variant v -> String) -> Variant (Pt v) -> String
 renderPt = on _pt \n -> Number.toString n <> "pt"
 
-
 type Px v = (px :: Number | v)
 
-_px = SProxy :: SProxy "px"
+_px = Proxy :: Proxy "px"
 
 px :: forall v. Number -> Variant (Px v)
 px = inj _px
@@ -523,10 +493,9 @@ px = inj _px
 renderPx :: forall v. (Variant v -> String) -> Variant (Px v) -> String
 renderPx = on _px \n -> Number.toString n <> "px"
 
-
 type Rem v = (rem :: Number | v)
 
-_rem = SProxy :: SProxy "rem"
+_rem = Proxy :: Proxy "rem"
 
 rem :: forall v. Number -> Variant (Rem v)
 rem = inj _rem
@@ -534,10 +503,9 @@ rem = inj _rem
 renderRem :: forall v. (Variant v -> String) -> Variant (Rem v) -> String
 renderRem = on _rem \n -> Number.toString n <> "rem"
 
-
 type Ridge v = (ridge :: Unit | v)
 
-_ridge = SProxy :: SProxy "ridge"
+_ridge = Proxy :: Proxy "ridge"
 
 ridge :: forall v. Variant (Ridge v)
 ridge = inj _ridge unit
@@ -545,10 +513,9 @@ ridge = inj _ridge unit
 renderRidge :: forall v. (Variant v -> String) -> Variant (Ridge v) -> String
 renderRidge = on _ridge $ const "ridge"
 
-
 type Right v = (right :: Unit | v)
 
-_right = SProxy :: SProxy "right"
+_right = Proxy :: Proxy "right"
 
 right :: forall v. Variant (Right v)
 right = inj _right unit
@@ -556,10 +523,9 @@ right = inj _right unit
 renderRight :: forall v. (Variant v -> String) -> Variant (Right v) -> String
 renderRight = on _right $ const "right"
 
-
 type Small v = (small :: Unit | v)
 
-_small = SProxy :: SProxy "small"
+_small = Proxy :: Proxy "small"
 
 small :: forall v. Variant (Small v)
 small = inj _small unit
@@ -567,10 +533,9 @@ small = inj _small unit
 renderSmall :: forall v. (Variant v -> String) -> Variant (Small v) -> String
 renderSmall = on _small $ const "small"
 
-
 type Smaller v = (smaller :: Unit | v)
 
-_smaller = SProxy :: SProxy "smaller"
+_smaller = Proxy :: Proxy "smaller"
 
 smaller :: forall v. Variant (Smaller v)
 smaller = inj _smaller unit
@@ -578,10 +543,9 @@ smaller = inj _smaller unit
 renderSmaller :: forall v. (Variant v -> String) -> Variant (Smaller v) -> String
 renderSmaller = on _smaller $ const "smaller"
 
-
 type Solid v = (solid :: Unit | v)
 
-_solid = SProxy :: SProxy "solid"
+_solid = Proxy :: Proxy "solid"
 
 solid :: forall v. Variant (Solid v)
 solid = inj _solid unit
@@ -589,10 +553,9 @@ solid = inj _solid unit
 renderSolid :: forall v. (Variant v -> String) -> Variant (Solid v) -> String
 renderSolid = on _solid $ const "solid"
 
-
 type Thick v = (thick :: Unit | v)
 
-_thick = SProxy :: SProxy "thick"
+_thick = Proxy :: Proxy "thick"
 
 thick :: forall v. Variant (Thick v)
 thick = inj _thick unit
@@ -600,10 +563,9 @@ thick = inj _thick unit
 renderThick :: forall v. (Variant v -> String) -> Variant (Thick v) -> String
 renderThick = on _thick $ const "thick"
 
-
 type Thin v = (thin :: Unit | v)
 
-_thin = SProxy :: SProxy "thin"
+_thin = Proxy :: Proxy "thin"
 
 thin :: forall v. Variant (Thin v)
 thin = inj _thin unit
@@ -611,10 +573,9 @@ thin = inj _thin unit
 renderThin :: forall v. (Variant v -> String) -> Variant (Thin v) -> String
 renderThin = on _thin $ const "thin"
 
-
 type Transparent v = (transparent :: Unit | v)
 
-_transparent = SProxy :: SProxy "transparent"
+_transparent = Proxy :: Proxy "transparent"
 
 transparent :: forall v. Variant (Transparent v)
 transparent = inj _transparent unit
@@ -622,10 +583,9 @@ transparent = inj _transparent unit
 renderTransparent :: forall v. (Variant v -> String) -> Variant (Transparent v) -> String
 renderTransparent = on _transparent $ const "transparent"
 
-
 type Unset v = (unset :: Unit | v)
 
-_unset = SProxy :: SProxy "unset"
+_unset = Proxy :: Proxy "unset"
 
 unset :: forall v. Variant (Unset v)
 unset = inj _unset unit
@@ -633,10 +593,9 @@ unset = inj _unset unit
 renderUnset :: forall v. (Variant v -> String) -> Variant (Unset v) -> String
 renderUnset = on _unset $ const "unset"
 
-
 type Vh v = (vh :: Number | v)
 
-_vh = SProxy :: SProxy "vh"
+_vh = Proxy :: Proxy "vh"
 
 vh :: forall v. Number -> Variant (Vh v)
 vh = inj _vh
@@ -644,10 +603,9 @@ vh = inj _vh
 renderVh :: forall v. (Variant v -> String) -> Variant (Vh v) -> String
 renderVh = on _vh \n -> Number.toString n <> "vh"
 
-
 type Vmax v = (vmax :: Number | v)
 
-_vmax = SProxy :: SProxy "vmax"
+_vmax = Proxy :: Proxy "vmax"
 
 vmax :: forall v. Number -> Variant (Vmax v)
 vmax = inj _vmax
@@ -655,10 +613,9 @@ vmax = inj _vmax
 renderVmax :: forall v. (Variant v -> String) -> Variant (Vmax v) -> String
 renderVmax = on _vmax \n -> Number.toString n <> "vmax"
 
-
 type Vmin v = (vmin :: Number | v)
 
-_vmin = SProxy :: SProxy "vmin"
+_vmin = Proxy :: Proxy "vmin"
 
 vmin :: forall v. Number -> Variant (Vmin v)
 vmin = inj _vmin
@@ -666,10 +623,9 @@ vmin = inj _vmin
 renderVmin :: forall v. (Variant v -> String) -> Variant (Vmin v) -> String
 renderVmin = on _vmin \n -> Number.toString n <> "vmin"
 
-
 type Vw v = (vw :: Number | v)
 
-_vw = SProxy :: SProxy "vw"
+_vw = Proxy :: Proxy "vw"
 
 vw :: forall v. Number -> Variant (Vw v)
 vw = inj _vw
@@ -677,10 +633,9 @@ vw = inj _vw
 renderVw :: forall v. (Variant v -> String) -> Variant (Vw v) -> String
 renderVw = on _vw \n -> Number.toString n <> "vw"
 
-
 type XLarge v = (xLarge :: Unit | v)
 
-_xLarge = SProxy :: SProxy "xLarge"
+_xLarge = Proxy :: Proxy "xLarge"
 
 xLarge :: forall v. Variant (XLarge v)
 xLarge = inj _xLarge unit
@@ -688,10 +643,9 @@ xLarge = inj _xLarge unit
 renderXLarge :: forall v. (Variant v -> String) -> Variant (XLarge v) -> String
 renderXLarge = on _xLarge $ const "x-large"
 
-
 type XSmall v = (xSmall :: Unit | v)
 
-_xSmall = SProxy :: SProxy "xSmall"
+_xSmall = Proxy :: Proxy "xSmall"
 
 xSmall :: forall v. Variant (XSmall v)
 xSmall = inj _xSmall unit
@@ -699,10 +653,9 @@ xSmall = inj _xSmall unit
 renderXSmall :: forall v. (Variant v -> String) -> Variant (XSmall v) -> String
 renderXSmall = on _xSmall $ const "x-small"
 
-
 type XxLarge v = (xxLarge :: Unit | v)
 
-_xxLarge = SProxy :: SProxy "xxLarge"
+_xxLarge = Proxy :: Proxy "xxLarge"
 
 xxLarge :: forall v. Variant (XxLarge v)
 xxLarge = inj _xxLarge unit
@@ -710,10 +663,9 @@ xxLarge = inj _xxLarge unit
 renderXxLarge :: forall v. (Variant v -> String) -> Variant (XxLarge v) -> String
 renderXxLarge = on _xxLarge $ const "xx-large"
 
-
 type XxSmall v = (xxSmall :: Unit | v)
 
-_xxSmall = SProxy :: SProxy "xxSmall"
+_xxSmall = Proxy :: Proxy "xxSmall"
 
 xxSmall :: forall v. Variant (XxSmall v)
 xxSmall = inj _xxSmall unit
@@ -721,113 +673,103 @@ xxSmall = inj _xxSmall unit
 renderXxSmall :: forall v. (Variant v -> String) -> Variant (XxSmall v) -> String
 renderXxSmall = on _xxSmall $ const "xx-small"
 
-
 -- Property values
 
 type BackgroundColorValue = Variant (BackgroundColorFields ())
 
 type BackgroundColorFields r =
   ( ColorFields
-  + GlobalFields
-  + r
+      + GlobalFields
+      + r
   )
-
 
 type BorderRadiusValue = Variant (BorderRadiusFields ())
 
 type BorderRadiusFields r =
   ( GlobalFields
-  + LengthFields
-  + Pct
-  + Zero
-  + r
+      + LengthFields
+      + Pct
+      + Zero
+      + r
   )
-
 
 type BoxShadowValue = Variant (BoxShadowFields ())
 
 type BoxShadowFields r =
   ( BoxShadow
-  + GlobalFields
-  + r
+      + GlobalFields
+      + r
   )
-
 
 type ColorValue = Variant (ColorValueFields ())
 
 type ColorValueFields r =
   ( ColorFields
-  + GlobalFields
-  + r
+      + GlobalFields
+      + r
   )
-
 
 type FontSizeValue = Variant (FontSizeValueFields ())
 
 type FontSizeValueFields r =
   ( AbsoluteSizeFields
-  + GlobalFields
-  + LengthFields
-  + Pct
-  + RelativeSizeFields
-  + Zero
-  + r
+      + GlobalFields
+      + LengthFields
+      + Pct
+      + RelativeSizeFields
+      + Zero
+      + r
   )
-
 
 type FontWeightValue = Variant (FontWeightValueFields ())
 
 type FontWeightValueFields r =
   ( FontWeightKeywordFields
-  + FontWeightKeywordRelativeFields
-  + GlobalFields
-  + Number_
-  + r
+      + FontWeightKeywordRelativeFields
+      + GlobalFields
+      + Number_
+      + r
   )
-
 
 type HeightValue = Variant (HeightValueFields ())
 
 type HeightValueFields r =
   ( Auto
-  + GlobalFields
-  + LengthFields
-  + Pct
-  + Zero
-  + r
+      + GlobalFields
+      + LengthFields
+      + Pct
+      + Zero
+      + r
   )
-
 
 type TextAlignValue = Variant (TextAlignValueFields ())
 
 type TextAlignValueFields r =
   ( Center
-  + GlobalFields
-  + Justify
-  + JustifyAll
-  + Left
-  + Right
-  + r
+      + GlobalFields
+      + Justify
+      + JustifyAll
+      + Left
+      + Right
+      + r
   )
-
 
 type WidthValue = Variant (WidthValueFields ())
 
 type WidthValueFields r =
   ( Auto
-  + GlobalFields
-  + LengthFields
-  + Pct
-  + Zero
-  + r
+      + GlobalFields
+      + LengthFields
+      + Pct
+      + Zero
+      + r
   )
-
 
 -- Helpers
 
 type Color_ v = (color_ :: C.Color | v)
 
-_color_ = SProxy :: SProxy "color_"
+_color_ = Proxy :: Proxy "color_"
 
 color_ :: forall v. C.Color -> Variant (ColorFields v)
 color_ = inj _color_
@@ -835,10 +777,9 @@ color_ = inj _color_
 renderColor_ :: forall v. (Variant v -> String) -> Variant (Color_ v) -> String
 renderColor_ = on _color_ cssStringRGBA
 
-
 type Number_ v = (number_ :: Number | v)
 
-_number_ = SProxy :: SProxy "number_"
+_number_ = Proxy :: Proxy "number_"
 
 number_ :: forall v. Number -> Variant (Number_ v)
 number_ = inj _number_
@@ -846,17 +787,15 @@ number_ = inj _number_
 renderNumber_ :: forall v. (Variant v -> String) -> Variant (Number_ v) -> String
 renderNumber_ = on _number_ Number.toString
 
-
 type Zero v = (zero :: Unit | v)
 
-_zero = SProxy :: SProxy "zero"
+_zero = Proxy :: Proxy "zero"
 
 zero :: forall v. Variant (Zero v)
 zero = inj _zero unit
 
 renderZero :: forall v. (Variant v -> String) -> Variant (Zero v) -> String
 renderZero = on _zero $ const "0"
-
 
 -- Shorthand property values
 
@@ -868,7 +807,7 @@ type BorderRep =
   , color :: BorderColorValue
   }
 
-_border = SProxy :: SProxy "border"
+_border = Proxy :: Proxy "border"
 
 border :: forall v. BorderRep -> Variant (Border v)
 border = inj _border
@@ -885,7 +824,6 @@ renderBorder = on _border \b ->
     , renderBorderColorFields case_ $ b.color
     ]
 
-
 type BorderColor v = (borderColor :: BorderColorRep | v)
 
 type BorderColorRep =
@@ -899,11 +837,11 @@ type BorderColorValue = Variant (BorderColorFields ())
 
 type BorderColorFields r =
   ( ColorFields
-  + GlobalFields
-  + r
+      + GlobalFields
+      + r
   )
 
-_borderColor = SProxy :: SProxy "borderColor"
+_borderColor = Proxy :: Proxy "borderColor"
 
 borderColor :: forall v. BorderColorRep -> Variant (BorderColor v)
 borderColor = inj _borderColor
@@ -928,7 +866,6 @@ renderBorderColor = on _borderColor \s ->
     , renderBorderColorFields case_ $ s.left
     ]
 
-
 type BorderStyle v = (borderStyle :: BorderStyleRep | v)
 
 type BorderStyleRep =
@@ -942,20 +879,20 @@ type BorderStyleValue = Variant (BorderStyleFields ())
 
 type BorderStyleFields r =
   ( Dashed
-  + Dotted
-  + Double
-  + GlobalFields
-  + Groove
-  + Hidden
-  + Inset
-  + None
-  + Outset
-  + Ridge
-  + Solid
-  + r
+      + Dotted
+      + Double
+      + GlobalFields
+      + Groove
+      + Hidden
+      + Inset
+      + None
+      + Outset
+      + Ridge
+      + Solid
+      + r
   )
 
-_borderStyle = SProxy :: SProxy "borderStyle"
+_borderStyle = Proxy :: Proxy "borderStyle"
 
 borderStyle :: forall v. BorderStyleRep -> Variant (BorderStyle v)
 borderStyle = inj _borderStyle
@@ -991,7 +928,6 @@ renderBorderStyle = on _borderStyle \s ->
     , renderBorderStyleFields case_ $ s.left
     ]
 
-
 type BorderWidth v = (borderWidth :: BorderWidthRep | v)
 
 type BorderWidthRep =
@@ -1005,13 +941,13 @@ type BorderWidthValue = Variant (BorderWidthFields ())
 
 type BorderWidthFields r =
   ( GlobalFields
-  + LengthFields
-  + BorderWidthKeywordFields
-  + Zero
-  + r
+      + LengthFields
+      + BorderWidthKeywordFields
+      + Zero
+      + r
   )
 
-_borderWidth = SProxy :: SProxy "borderWidth"
+_borderWidth = Proxy :: Proxy "borderWidth"
 
 borderWidth :: forall v. BorderWidthRep -> Variant (BorderWidth v)
 borderWidth = inj _borderWidth
@@ -1040,7 +976,6 @@ renderBorderWidth = on _borderWidth \s ->
     , renderBorderWidthFields case_ $ s.left
     ]
 
-
 type BorderRadius v = (borderRadius :: BorderRadiusRep | v)
 
 type BorderRadiusRep =
@@ -1050,7 +985,7 @@ type BorderRadiusRep =
   , bottomLeft :: BorderRadiusValue
   }
 
-_borderRadius = SProxy :: SProxy "borderRadius"
+_borderRadius = Proxy :: Proxy "borderRadius"
 
 borderRadius :: forall v. BorderRadiusRep -> Variant (BorderRadius v)
 borderRadius = inj _borderRadius
@@ -1078,7 +1013,6 @@ renderBorderRadius = on _borderRadius \r ->
     , renderBorderRadiusFields case_ $ r.bottomRight
     , renderBorderRadiusFields case_ $ r.bottomLeft
     ]
-
 
 type BoxShadow v = (boxShadow :: Array BoxShadowRep | v)
 
@@ -1118,7 +1052,7 @@ boxShadow_
   -> BoxShadowRep
 boxShadow_ i x y b s = boxShadow_' i x y b s <<< color_
 
-_boxShadow = SProxy :: SProxy "boxShadow"
+_boxShadow = Proxy :: Proxy "boxShadow"
 
 boxShadow :: forall v. Array BoxShadowRep -> Variant (BoxShadow v)
 boxShadow = inj _boxShadow
@@ -1151,7 +1085,6 @@ renderBoxShadow = on _boxShadow renderShadows
       | shadow.inset = "inset "
       | otherwise = ""
 
-
 type Margin v = (margin :: MarginRep | v)
 
 type MarginRep =
@@ -1165,14 +1098,14 @@ type MarginValue = Variant (MarginFields ())
 
 type MarginFields r =
   ( Auto
-  + GlobalFields
-  + LengthFields
-  + Pct
-  + Zero
-  + r
+      + GlobalFields
+      + LengthFields
+      + Pct
+      + Zero
+      + r
   )
 
-_margin = SProxy :: SProxy "margin"
+_margin = Proxy :: Proxy "margin"
 
 margin :: forall v. MarginRep -> Variant (Margin v)
 margin = inj _margin
@@ -1202,7 +1135,6 @@ renderMargin = on _margin \m ->
     , renderMarginFields case_ $ m.left
     ]
 
-
 type Outline v = (outline :: OutlineRep | v)
 
 type OutlineRep =
@@ -1211,7 +1143,7 @@ type OutlineRep =
   , color :: OutlineColorValue
   }
 
-_outline = SProxy :: SProxy "outline"
+_outline = Proxy :: Proxy "outline"
 
 outline :: forall v. OutlineRep -> Variant (Outline v)
 outline = inj _outline
@@ -1228,14 +1160,13 @@ renderOutline = on _outline \o ->
     , renderOutlineColorFields case_ $ o.color
     ]
 
-
 type OutlineColorValue = Variant (OutlineColorFields ())
 
 type OutlineColorFields r =
   ( ColorFields
-  + GlobalFields
-  + Invert
-  + r
+      + GlobalFields
+      + Invert
+      + r
   )
 
 renderOutlineColorFields
@@ -1248,22 +1179,21 @@ renderOutlineColorFields =
     >>> renderGlobalFields
     >>> renderInvert
 
-
 type OutlineStyleValue = Variant (OutlineStyleFields ())
 
 type OutlineStyleFields r =
   ( Auto
-  + Dashed
-  + Dotted
-  + Double
-  + GlobalFields
-  + Groove
-  + Inset
-  + None
-  + Outset
-  + Ridge
-  + Solid
-  + r
+      + Dashed
+      + Dotted
+      + Double
+      + GlobalFields
+      + Groove
+      + Inset
+      + None
+      + Outset
+      + Ridge
+      + Solid
+      + r
   )
 
 renderOutlineStyleFields
@@ -1284,15 +1214,14 @@ renderOutlineStyleFields =
     >>> renderRidge
     >>> renderSolid
 
-
 type OutlineWidthValue = Variant (OutlineWidthFields ())
 
 type OutlineWidthFields r =
   ( GlobalFields
-  + LengthFields
-  + OutlineWidthKeywordFields
-  + Zero
-  + r
+      + LengthFields
+      + OutlineWidthKeywordFields
+      + Zero
+      + r
   )
 
 renderOutlineWidthFields
@@ -1305,7 +1234,6 @@ renderOutlineWidthFields =
     >>> renderLengthFields
     >>> renderOutlineWidthKeyword
     >>> renderZero
-
 
 type Padding v = (padding :: PaddingRep | v)
 
@@ -1320,13 +1248,13 @@ type PaddingValue = Variant (PaddingFields ())
 
 type PaddingFields r =
   ( GlobalFields
-  + LengthFields
-  + Pct
-  + Zero
-  + r
+      + LengthFields
+      + Pct
+      + Zero
+      + r
   )
 
-_padding = SProxy :: SProxy "padding"
+_padding = Proxy :: Proxy "padding"
 
 padding :: forall v. PaddingRep -> Variant (Padding v)
 padding = inj _padding
@@ -1355,17 +1283,16 @@ renderPadding = on _padding \p ->
     , renderPaddingFields case_ $ p.left
     ]
 
-
 -- CSS data type values
 
 type AbsoluteLengthFields r =
   ( Cm
-  + In
-  + Mm
-  + Pc
-  + Pt
-  + Px
-  + r
+      + In
+      + Mm
+      + Pc
+      + Pt
+      + Px
+      + r
   )
 
 renderAbsoluteLengthFields
@@ -1381,16 +1308,15 @@ renderAbsoluteLengthFields =
     >>> renderPt
     >>> renderPx
 
-
 type AbsoluteSizeFields r =
   ( XxSmall
-  + XSmall
-  + Small
-  + Medium
-  + Large
-  + XLarge
-  + XxLarge
-  + r
+      + XSmall
+      + Small
+      + Medium
+      + Large
+      + XLarge
+      + XxLarge
+      + r
   )
 
 renderAbsoluteSizeFields
@@ -1407,12 +1333,11 @@ renderAbsoluteSizeFields =
     >>> renderXLarge
     >>> renderXxLarge
 
-
 type BorderWidthKeywordFields r =
   ( Medium
-  + Thick
-  + Thin
-  + r
+      + Thick
+      + Thin
+      + r
   )
 
 renderBorderWidthKeywordFields
@@ -1425,12 +1350,11 @@ renderBorderWidthKeywordFields =
     >>> renderThick
     >>> renderThin
 
-
 type ColorFields r =
   ( Color_
-  + CurrentColor
-  + Transparent
-  + r
+      + CurrentColor
+      + Transparent
+      + r
   )
 
 renderColorFields
@@ -1443,13 +1367,12 @@ renderColorFields =
     >>> renderCurrentColor
     >>> renderTransparent
 
-
 type FontRelativeLengthFields r =
   ( Ch
-  + Em
-  + Ex
-  + Rem
-  + r
+      + Em
+      + Ex
+      + Rem
+      + r
   )
 
 renderFontRelativeLengthFields
@@ -1463,11 +1386,10 @@ renderFontRelativeLengthFields =
     >>> renderEx
     >>> renderRem
 
-
 type FontWeightKeywordFields r =
   ( Bold
-  + Normal
-  + r
+      + Normal
+      + r
   )
 
 renderFontWeightKeywordFields
@@ -1477,11 +1399,10 @@ renderFontWeightKeywordFields
   -> String
 renderFontWeightKeywordFields = renderBold >>> renderNormal
 
-
 type FontWeightKeywordRelativeFields r =
   ( Bolder
-  + Lighter
-  + r
+      + Lighter
+      + r
   )
 
 renderFontWeightKeywordRelativeFields
@@ -1491,12 +1412,11 @@ renderFontWeightKeywordRelativeFields
   -> String
 renderFontWeightKeywordRelativeFields = renderBolder >>> renderLighter
 
-
 type GlobalFields r =
   ( Inherit
-  + Initial
-  + Unset
-  + r
+      + Initial
+      + Unset
+      + r
   )
 
 renderGlobalFields
@@ -1509,12 +1429,11 @@ renderGlobalFields =
     >>> renderInitial
     >>> renderUnset
 
-
 type LengthFields r =
   ( AbsoluteLengthFields
-  + FontRelativeLengthFields
-  + ViewportPercentageLengthFields
-  + r
+      + FontRelativeLengthFields
+      + ViewportPercentageLengthFields
+      + r
   )
 
 renderLengthFields
@@ -1527,11 +1446,10 @@ renderLengthFields =
     >>> renderFontRelativeLengthFields
     >>> renderViewportPercentageLengthFields
 
-
 type LengthFields_ r =
   ( LengthFields
-  + Zero
-  + r
+      + Zero
+      + r
   )
 
 renderLengthFields_
@@ -1541,12 +1459,11 @@ renderLengthFields_
   -> String
 renderLengthFields_ = renderLengthFields >>> renderZero
 
-
 type OutlineWidthKeywordFields r =
   ( Medium
-  + Thick
-  + Thin
-  + r
+      + Thick
+      + Thin
+      + r
   )
 
 renderOutlineWidthKeyword
@@ -1559,11 +1476,10 @@ renderOutlineWidthKeyword =
     >>> renderThick
     >>> renderThin
 
-
 type RelativeSizeFields r =
   ( Smaller
-  + Larger
-  + r
+      + Larger
+      + r
   )
 
 renderRelativeSizeFields
@@ -1573,13 +1489,12 @@ renderRelativeSizeFields
   -> String
 renderRelativeSizeFields = renderLarger >>> renderSmaller
 
-
 type ViewportPercentageLengthFields r =
   ( Vh
-  + Vmax
-  + Vmin
-  + Vw
-  + r
+      + Vmax
+      + Vmin
+      + Vw
+      + r
   )
 
 renderViewportPercentageLengthFields

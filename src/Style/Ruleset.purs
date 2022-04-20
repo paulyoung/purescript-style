@@ -4,6 +4,7 @@ import Prelude
 
 import Data.Array as Array
 import Data.Array.NonEmpty (NonEmptyArray)
+import Data.Array.NonEmpty as NonEmptyArray
 import Style.Declaration (Declaration)
 import Style.Declaration as Declaration
 import Style.Selector (Selector)
@@ -20,7 +21,7 @@ render (Ruleset ss ds) = selectors <> "{" <> declarations <> "}"
   where
 
   selectors :: String
-  selectors = Array.intercalate ",\n" (Selector.render <$> ss) <> " "
+  selectors = Array.intercalate ",\n" (Selector.render <$> NonEmptyArray.toArray ss) <> " "
 
   declarations :: String
-  declarations = "\n  " <> Array.intercalate "\n  " (Declaration.render <$> ds) <> "\n"
+  declarations = "\n  " <> Array.intercalate "\n  " (Declaration.render <$> NonEmptyArray.toArray ds) <> "\n"
