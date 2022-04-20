@@ -8,7 +8,11 @@ import Data.Array as Array
 import Data.Number.Format as Number
 import Data.Variant (Variant, case_, inj, on)
 import Type.Proxy (Proxy(..))
-import Type.Row (type (+))
+
+-- https://github.com/purescript/purescript/issues/4105#issuecomment-1103324211
+type RowApply (f :: Row Type -> Row Type) (a :: Row Type) = f a
+
+infixr 0 type RowApply as +
 
 type Value =
   Variant
