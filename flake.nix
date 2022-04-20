@@ -62,6 +62,7 @@
               easy-ps.purescript-language-server
               easy-ps.spago
               easy-ps.spago2nix
+              pkgs.nodejs
             ];
           };
         }
