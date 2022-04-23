@@ -2,7 +2,7 @@ module Style.Declaration.Value where
 
 import Prelude
 
-import Color (cssStringRGBA)
+import Color (cssStringHSLA)
 import Color as C
 import Data.Array as Array
 import Data.Number.Format as Number
@@ -775,7 +775,7 @@ color_ :: forall v. C.Color -> Variant (ColorFields v)
 color_ = inj _color_
 
 renderColor_ :: forall v. (Variant v -> String) -> Variant (Color_ v) -> String
-renderColor_ = on _color_ cssStringRGBA
+renderColor_ = on _color_ cssStringHSLA
 
 type Number_ v = (number_ :: Number | v)
 
